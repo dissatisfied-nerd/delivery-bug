@@ -33,8 +33,7 @@ CREATE TABLE IF NOT EXISTS products
     name     varchar(100),
     price    int,
     weight   float,
-    order_id UUID REFERENCES orders (id),
-    store_id UUID REFERENCES stores (id)
+    order_id UUID REFERENCES orders (id)
 );
 
 CREATE TABLE IF NOT EXISTS products_stores

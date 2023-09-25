@@ -1,5 +1,6 @@
-drop table products;
-drop table orders;
-drop table clients;
-drop table couriers;
-drop table stores;
+drop table products cascade ;
+drop table orders cascade ;
+drop table clients cascade ;
+drop table couriers cascade ;
+drop table stores cascade ;
+drop table products_stores cascade ;

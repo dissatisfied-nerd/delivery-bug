@@ -35,4 +35,11 @@ CREATE TABLE IF NOT EXISTS products
     weight   float,
     order_id UUID REFERENCES orders (id),
     store_id UUID REFERENCES stores (id)
-    );
+);
+
+CREATE TABLE IF NOT EXISTS products_stores
+(
+    product_id UUID REFERENCES products(id),
+    store_id UUID REFERENCES stores(id),
+    PRIMARY KEY (product_id, store_id)
+)

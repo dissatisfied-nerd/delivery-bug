@@ -1,6 +1,6 @@
 # delivery-bug
 
-## Запуск 
+## Запуск при помощи `docker-compose` 
 
 
 
@@ -29,3 +29,28 @@ make up_db
 ```bash
 make down_db
 ```
+
+## Запуск при установленном `PostgreSQL`
+
+
+
+Для запуска необходимо создать базу данных с именем `<db_name>`
+
+```bash
+sudo psql -U <user_name> -c "create database <db_name>"
+```
+
+Выдать права пользователю
+
+```bash
+sudo psql -U <user_name> -c "grant all privileges on database <db_name> to <user_name>;"
+```
+
+Для запуска `SQL`- скриптов
+
+```bash
+sudo psql -U <user_name> -d <db_name> -a -f <path_to_file> 
+```
+
+
+

@@ -1,0 +1,5 @@
+# TeX compilations files
+*.aux
+*.log
+*.synctex.gz
+*.toc

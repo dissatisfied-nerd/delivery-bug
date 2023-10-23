@@ -60,4 +60,4 @@ sudo psql -U <user_name> -d <db_name> -a -f <path_to_file>
 
 База данных находится в нормальной форме Бойса-Кодда.
 
-![db-diagram](/blob/db-diagram.png)
+![db-diagram](/blob/db-diagram-1.png)

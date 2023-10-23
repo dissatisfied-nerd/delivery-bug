@@ -13,3 +13,12 @@ type Products struct {
 	description string  `db:"description"`
 	image       []byte  `db:"image"`
 }
+
+type Addresses struct {
+	id uuid.UUID
+
+	city     string
+	street   string
+	building int
+	entrsnce int
+}

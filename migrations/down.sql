@@ -7,4 +7,5 @@ drop table tags cascade;
 drop table stores cascade;
 drop table couriers cascade;
 drop table addresses cascade;
+drop table loginForm cascade;
 drop table clients cascade;

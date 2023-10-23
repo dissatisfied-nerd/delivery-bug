@@ -1,13 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE IF NOT EXISTS clients
-(
-    id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    first_name varchar(128),
-    last_name  varchar(128),
-    balance    float
-);
-
 CREATE TABLE IF NOT EXISTS addresses
 (
     id        UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -16,10 +8,26 @@ CREATE TABLE IF NOT EXISTS addresses
     building  int,
     entrance  int,
     floor     int,
-    apartment int,
+    apartment int
+);
 
+CREATE TABLE IF NOT EXISTS clients
+(
+    id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    first_name varchar(128),
+    last_name  varchar(128),
+    balance    float,
+
+    address_id UUID REFERENCES addresses (id)
+);
+
+CREATE TABLE IF NOT EXISTS loginForm
+(
+    login varchar(128) PRIMARY KEY,
+    password varchar(128),
     client_id UUID REFERENCES clients (id)
 );
+
 
 CREATE TABLE IF NOT EXISTS couriers
 (

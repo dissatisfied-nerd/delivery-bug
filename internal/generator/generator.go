@@ -25,7 +25,7 @@ func randInt(min, max int) int {
 func main() {
 	names := [5]string{"Sofa", "Table", "Chair", "Closet", "Door"}
 	prices := randFloat(1, 10, 5)
-	weights := randFloat(10, 20, 5)
+	weights := randFloat(1, 10, 5)
 
 	db, err := sqlx.Connect("postgres", "user=postgres password=postgres dbname=delivery_bug sslmode=disable")
 
@@ -35,7 +35,7 @@ func main() {
 
 	db.Ping()
 
-	numOfLines := 50
+	numOfLines := 10
 
 	for idx := 0; idx < numOfLines; idx++ {
 		query := "INSERT INTO products (name, price, weight) VALUES ($1, $2, $3)"

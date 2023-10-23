@@ -5,11 +5,11 @@ import (
 )
 
 type Products struct {
-	id uuid.UUID
+	id uuid.UUID `db:"id"`
 
-	name        string
-	price       float32
-	weight      float32
-	description string
-	image       []byte
+	name        string  `db:"name"`
+	price       float32 `db:"prive"`
+	weight      float32 `db:"weight"`
+	description string  `db:"description"`
+	image       []byte  `db:"image"`
 }

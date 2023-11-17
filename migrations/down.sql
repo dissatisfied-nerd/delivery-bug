@@ -1,3 +1,4 @@
+drop table basket;
 drop table reviews cascade;
 drop table orders cascade;
 drop table products_stores;

@@ -85,6 +85,15 @@ CREATE TABLE IF NOT EXISTS orders
     product_id    UUID REFERENCES products (id)
 );
 
+CREATE TABLE IF NOT EXISTS basket
+(
+    order_id  UUID REFERENCES orders (id),
+    product_id UUID REFERENCES products (id),
+    amount int,
+
+    PRIMARY KEY (order_id, product_id)
+);
+
 CREATE TABLE IF NOT EXISTS reviews
 (
     id        UUID DEFAULT uuid_generate_v4() PRIMARY KEY,

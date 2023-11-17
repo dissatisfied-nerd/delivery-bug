@@ -22,3 +22,8 @@ type Addresses struct {
 	building int
 	entrsnce int
 }
+
+type Clients struct {
+	if uuid.UUID
+}
+

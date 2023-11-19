@@ -3,6 +3,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS addresses
 (
     id        UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    
     city      varchar(128),
     street    varchar(128),
     building  int,
@@ -14,6 +15,7 @@ CREATE TABLE IF NOT EXISTS addresses
 CREATE TABLE IF NOT EXISTS clients
 (
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    
     first_name varchar(128),
     last_name  varchar(128),
     balance    float,
@@ -24,7 +26,9 @@ CREATE TABLE IF NOT EXISTS clients
 CREATE TABLE IF NOT EXISTS loginForm
 (
     login varchar(128) PRIMARY KEY,
+    
     password varchar(128),
+    
     client_id UUID REFERENCES clients (id)
 );
 
@@ -32,6 +36,7 @@ CREATE TABLE IF NOT EXISTS loginForm
 CREATE TABLE IF NOT EXISTS couriers
 (
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+   
     first_name varchar(128),
     last_name  varchar(128),
     propiska   boolean
@@ -40,6 +45,7 @@ CREATE TABLE IF NOT EXISTS couriers
 CREATE TABLE IF NOT EXISTS stores
 (
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    
     reputation float,
     name       varchar(128)
 );
@@ -47,12 +53,14 @@ CREATE TABLE IF NOT EXISTS stores
 CREATE TABLE IF NOT EXISTS tags
 (
     id       UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    
     tag varchar(128)
 );
 
 CREATE TABLE IF NOT EXISTS products
 (
     id               UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+   
     name             varchar(128),
     price            float CHECK (price > 0),
     weight           float,
@@ -77,9 +85,11 @@ CREATE TABLE IF NOT EXISTS products_tags
 CREATE TABLE IF NOT EXISTS orders
 (
     id            UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    
     name          varchar(128),
     creation_time timestamp,
     delivery_time timestamp,
+
     client_id     UUID REFERENCES clients (id),
     courier_id    UUID REFERENCES couriers (id),
     product_id    UUID REFERENCES products (id)
@@ -87,19 +97,21 @@ CREATE TABLE IF NOT EXISTS orders
 
 CREATE TABLE IF NOT EXISTS basket
 (
+    amount int,
+    
     order_id  UUID REFERENCES orders (id),
     product_id UUID REFERENCES products (id),
-    amount int,
-
     PRIMARY KEY (order_id, product_id)
 );
 
 CREATE TABLE IF NOT EXISTS reviews
 (
     id        UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+ 
+    mark int
+
     client_id UUID REFERENCES clients (id),
     order_id  UUID REFERENCES orders (id),
     product_id UUID REFERENCES products (id),
-    mark      int
 );
 

@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"delivery-bug/pkg/logging"
+	"delivery-bug/pkg/router"
 	"delivery-bug/pkg/storage/postgres"
 	"fmt"
 	"golang.org/x/sync/errgroup"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -28,6 +30,7 @@ func main() {
 	if err != nil {
 		logger.Fatal(err)
 	}
+	logger.Info("successfully connected to db")
 
 	// configuring graceful shutdown
 	sigQuit := make(chan os.Signal, 1)
@@ -44,4 +47,10 @@ func main() {
 			return nil
 		}
 	})
+
+	r := router.SetupRoutes()
+	err = http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), r)
+	if err != nil {
+		logger.Fatal(err)
+	}
 }

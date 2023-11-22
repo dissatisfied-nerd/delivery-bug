@@ -1,0 +1,1 @@
+![Снимок экрана 2023-11-23 в 00 16 03](https://github.com/dissatisfied-nerd/delivery-bug/assets/91160077/24ef7cff-c694-468a-94e9-50950ad6ec6e)![Снимок экрана 2023-11-23 в 00 15 39](https://github.com/dissatisfied-nerd/delivery-bug/assets/91160077/23eb55eb-a3b7-4fc5-8755-78c97cd07118)

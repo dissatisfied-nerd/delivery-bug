@@ -1,0 +1,94 @@
+<mxfile host="app.diagrams.net" modified="2023-11-22T15:40:13.773Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0" etag="cuD6tBP_BRd8HkdPtuFD" version="22.1.3" type="github">
+  <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
+    <mxGraphModel dx="1434" dy="742" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ACpa_kCevvZqvN8BtNjZ-1" target="ACpa_kCevvZqvN8BtNjZ-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="480" />
+              <mxPoint x="237" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-7" value="Использует" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ACpa_kCevvZqvN8BtNjZ-6">
+          <mxGeometry x="-0.1527" y="-2" relative="1" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ACpa_kCevvZqvN8BtNjZ-1" target="ACpa_kCevvZqvN8BtNjZ-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="610" />
+              <mxPoint x="273" y="610" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-10" value="Использует" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ACpa_kCevvZqvN8BtNjZ-9">
+          <mxGeometry x="0.034" relative="1" as="geometry">
+            <mxPoint x="16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-1" value="&amp;lt;&amp;lt;system&amp;gt;&amp;gt;&lt;br&gt;delivery_bug" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="333" y="520" width="185" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-2" value="&amp;lt;&amp;lt;person&amp;gt;&amp;gt;&lt;br&gt;Клииент&lt;br&gt;Совершает заказы" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="460" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.805;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ACpa_kCevvZqvN8BtNjZ-2" target="ACpa_kCevvZqvN8BtNjZ-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-4" value="Использует" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ACpa_kCevvZqvN8BtNjZ-3">
+          <mxGeometry x="-0.1369" y="-1" relative="1" as="geometry">
+            <mxPoint x="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-5" value="&amp;lt;&amp;lt;external_service&amp;gt;&amp;gt;&lt;br&gt;&lt;div&gt;Oauth2.0&lt;/div&gt;&lt;div&gt;Аутентификация пользователей&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="140" y="380" width="193" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-8" value="&amp;lt;&amp;lt;external_server&amp;gt;&amp;gt;&lt;br&gt;PostgreSQL&lt;br&gt;Хранение данных" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="213" y="660" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ACpa_kCevvZqvN8BtNjZ-12" target="ACpa_kCevvZqvN8BtNjZ-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-14" value="Использует" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ACpa_kCevvZqvN8BtNjZ-13">
+          <mxGeometry x="-0.0667" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-12" value="&amp;lt;&amp;lt;person&amp;gt;&amp;gt;&lt;br&gt;Курьер&lt;br&gt;Доставляет заказы" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="638" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ACpa_kCevvZqvN8BtNjZ-15" target="ACpa_kCevvZqvN8BtNjZ-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-17" value="Использует" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ACpa_kCevvZqvN8BtNjZ-16">
+          <mxGeometry x="0.0333" y="8" relative="1" as="geometry">
+            <mxPoint x="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-15" value="&amp;lt;&amp;lt;person&amp;gt;&amp;gt;&lt;br&gt;Магазин&lt;br&gt;Предоставляет товары" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="638" y="580" width="142" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-18" value="&amp;lt;&amp;lt;person&amp;gt;&amp;gt;&lt;br&gt;Администратор&lt;br&gt;Регулирует работу" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="460" y="660" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.567;entryY=-0.05;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ACpa_kCevvZqvN8BtNjZ-1" target="ACpa_kCevvZqvN8BtNjZ-18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="620" />
+              <mxPoint x="528" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACpa_kCevvZqvN8BtNjZ-23" value="Использует" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="ACpa_kCevvZqvN8BtNjZ-22">
+          <mxGeometry x="0.024" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

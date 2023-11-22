@@ -1,0 +1,16 @@
+.Navbar {
+    width: 100%;
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.title {
+    color: var(--inverted-bg-color);
+    font: var(--font-l);
+}
+
+.auth {
+    margin-left: auto;
+}

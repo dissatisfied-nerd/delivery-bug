@@ -1,4 +1,4 @@
-package model
+package models
 
 import (
 	"time"
@@ -11,7 +11,7 @@ type Addresses struct {
 
 	City      string `db:"city"`
 	Street    string `db:"street"`
-	Building  int    `db:"buildng"`
+	Building  int    `db:"building"`
 	Entrance  int    `db:"entrance"`
 	Floor     int    `db:"floor"`
 	Apartment int    `db:"apartment"`
@@ -60,7 +60,7 @@ type Products struct {
 	Id uuid.UUID `db:"id"`
 
 	Name        string  `db:"name"`
-	Price       float32 `db:"prive"`
+	Price       float32 `db:"price"`
 	Weight      float32 `db:"weight"`
 	Description string  `db:"description"`
 	Image       []byte  `db:"image"`

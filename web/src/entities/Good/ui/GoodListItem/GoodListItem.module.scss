@@ -1,8 +1,14 @@
 .GoodListItem {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    flex-basis: 320px;
     height: 500px;
+}
+
+@media (max-width: 1471px) {
+    .GoodListItem {
+        flex-basis: 22%;
+    }
 }
 
 .imgWrapper {

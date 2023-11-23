@@ -1,0 +1,10 @@
+.GoodList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+
+    &.empty {
+        justify-content: center;
+        font: var(--font-l);
+    }
+}

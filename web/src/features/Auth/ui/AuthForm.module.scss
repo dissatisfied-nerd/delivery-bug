@@ -2,18 +2,18 @@
     width: 600px;
     border: 1px solid var(--inverted-bg-color);
     border-radius: 5px;
-    padding: 40px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
 }
 
 .title {
-    font: var(--font-l);
+    font: var(--font-xl);
     margin-bottom: 20px;
 }
 
 .input {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .sendBtn {

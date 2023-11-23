@@ -7,9 +7,14 @@ export default function Navbar() {
     return (
         <header className={classNames(cls.Navbar, {}, [])}>
             <span className={cls.title}> Slavic Market </span>
-            <Link to={"/"} className={cls.auth}>
-                Авторизация
-            </Link>
+            <div className={cls.linksWrapper}>
+                <Link to={"/"} className={cls.link}>
+                    Авторизация
+                </Link>
+                <Link to={"/goods"} className={cls.link}>
+                    Товары
+                </Link>
+            </div>
         </header>
     );
 }

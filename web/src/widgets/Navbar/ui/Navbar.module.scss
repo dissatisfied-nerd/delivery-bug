@@ -1,9 +1,14 @@
 .Navbar {
     width: 100%;
+    position: sticky;
+    top: 0;
+    max-width: 1472px;
+    margin: 0 auto;
     height: var(--navbar-height);
     display: flex;
     align-items: center;
     padding: 20px;
+    background-color: var(--bg-color);
 }
 
 .title {
@@ -11,6 +16,10 @@
     font: var(--font-l);
 }
 
-.auth {
+.linksWrapper {
     margin-left: auto;
+}
+
+.link {
+    margin-right: 10px;
 }

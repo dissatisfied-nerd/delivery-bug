@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"delivery-bug/config"
 	"delivery-bug/internal/ports"
 	_ "delivery-bug/internal/ports"
 	userRepo "delivery-bug/internal/repo/user"
@@ -10,8 +9,6 @@ import (
 	"delivery-bug/pkg/logging"
 	"delivery-bug/pkg/storage/postgres"
 	"fmt"
-	"github.com/heetch/confita"
-	"github.com/heetch/confita/backend/env"
 	"github.com/joho/godotenv"
 	"golang.org/x/sync/errgroup"
 	"net/http"
@@ -32,15 +29,21 @@ func main() {
 		logger.Errorf("error loading .env file: %v", err)
 	}
 
-	var cfg config.Config
-	err = confita.NewLoader(
-		env.NewBackend(),
-	).Load(ctx, &cfg)
+	//var cfg config.Config
+	//err = confita.NewLoader(
+	//	env.NewBackend(),
+	//).Load(ctx, &cfg)
+	//if err != nil {
+	//	logger.Fatal(err)
+	//}
+
+	config, err := postgres.NewPoolConfig()
 	if err != nil {
 		logger.Fatal(err)
 	}
+	config.MaxConns = maxConns
 
-	db, err := postgres.ConnectDB(cfg.Database)
+	db, err := postgres.ConnectDB(config)
 	if err != nil {
 		logger.Fatal(err)
 	}

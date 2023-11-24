@@ -2,13 +2,16 @@ package user
 
 import (
 	"context"
-	"delivery-bug/pkg/dtos"
+	"delivery-bug/internal/dtos"
+	"delivery-bug/internal/models"
 	"delivery-bug/pkg/logging"
-	"delivery-bug/pkg/models"
+	"errors"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type UsersRepository interface {
+	CheckLogin(ctx context.Context, login string) (models.LoginForm, error)
+	CheckLoginTaken(ctx context.Context, login string) error
 	InsertAddress(ctx context.Context, addressDto dtos.AddressDTO) (string, error)
 	InsertUser(ctx context.Context, clientDto dtos.ClientDTO, addressID string) (string, error)
 	InsertLoginForm(ctx context.Context, form models.LoginForm) error
@@ -19,8 +22,29 @@ type Repository struct {
 	l  *logging.Logger
 }
 
-func NewRepository(db *pgxpool.Pool) *Repository {
-	return &Repository{db: db}
+func NewRepository(db *pgxpool.Pool, l logging.Logger) *Repository {
+	return &Repository{db: db, l: &l}
+}
+
+func (r *Repository) CheckLogin(ctx context.Context, login string) (models.LoginForm, error) {
+	var result models.LoginForm
+	err := r.db.QueryRow(ctx, checkLoginQuery, login).Scan(&result.Login, &result.Password, &result.ClientId)
+	if err != nil {
+		return models.LoginForm{}, err
+	} else if err == errors.New("no rows in result set") {
+		return models.LoginForm{}, errors.New("there's no user with such login")
+	}
+	return result, nil
+}
+
+func (r *Repository) CheckLoginTaken(ctx context.Context, login string) error {
+	rows, _ := r.db.Query(ctx, checkLoginQuery, login)
+	defer rows.Close()
+	if rows.Next() {
+		return errors.New("login has already been taken")
+	} else {
+		return nil
+	}
 }
 
 func (r *Repository) InsertAddress(ctx context.Context, addressDto dtos.AddressDTO) (string, error) {
@@ -65,6 +89,6 @@ func (r *Repository) InsertLoginForm(ctx context.Context, form models.LoginForm)
 		r.l.Errorf("ERROR while inserting loginform %s in db: %v", form.Login, err)
 		return err
 	}
-	r.l.Infof("insert loginform %s in db")
+	r.l.Infof("insert loginform %s in db", form.Login)
 	return nil
 }

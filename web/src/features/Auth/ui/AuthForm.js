@@ -14,6 +14,7 @@ import {
     getProfileStreet,
     getProfileFirstName,
     getProfileLastName,
+    getProfileType,
 } from "entities/Profile";
 import { profileActions } from "entities/Profile";
 import cls from "./AuthForm.module.scss";
@@ -31,6 +32,7 @@ export const AuthForm = () => {
     const entrance = useSelector(getProfileEntrance);
     const aparts = useSelector(getProfileAparts);
     const password = useSelector(getProfilePassword);
+    const type = useSelector(getProfileType);
 
     useEffect(() => {
         const firstInput = [
@@ -114,6 +116,13 @@ export const AuthForm = () => {
         [dispatch]
     );
 
+    const onChangeType = useCallback(
+        (data) => {
+            dispatch(profileActions.setType(data.target.value));
+        },
+        [dispatch]
+    );
+
     if (formType === "signUp") {
         return (
             <div className={classNames(cls.AuthForm, {}, [])}>
@@ -180,6 +189,18 @@ export const AuthForm = () => {
                     label="Пароль"
                     value={password}
                 />
+                <select
+                    className={cls.input}
+                    onChange={onChangeType}
+                    value={type}
+                >
+                    <option value="client" key="client">
+                        Пользователь
+                    </option>
+                    <option value="courier" key="courier">
+                        Курьер
+                    </option>
+                </select>
                 <Button className={cls.sendBtn}>Зарегистрироваться</Button>
                 <Button className={cls.changeForm} onClick={onChangeForm}>
                     Я уже смешарик

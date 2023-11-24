@@ -8,3 +8,4 @@ export const getProfileEntrance = (state) => state.profile.entrance || "";
 export const getProfileFloor = (state) => state.profile.floor || "";
 export const getProfileAparts = (state) => state.profile.aparts || "";
 export const getProfilePassword = (state) => state.profile.password || "";
+export const getProfileType = (state) => state.profile.type || "client";

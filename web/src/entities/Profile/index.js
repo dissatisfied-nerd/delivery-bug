@@ -8,6 +8,7 @@ import { getProfileEntrance } from "./model/selectors/getProfleData";
 import { getProfileFloor } from "./model/selectors/getProfleData";
 import { getProfileAparts } from "./model/selectors/getProfleData";
 import { getProfilePassword } from "./model/selectors/getProfleData";
+import { getProfileType } from "./model/selectors/getProfleData";
 
 import { profileActions } from "./model/slice/ProfileSlice";
 import { profileReducer } from "./model/slice/ProfileSlice";
@@ -25,6 +26,7 @@ export {
     getProfileFloor,
     getProfileAparts,
     getProfilePassword,
+    getProfileType,
     profileActions,
     profileReducer,
     ProfileCard,

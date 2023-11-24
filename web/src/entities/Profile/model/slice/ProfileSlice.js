@@ -12,6 +12,7 @@ const initialState = {
     floor: "",
     aparts: "",
     password: "",
+    type: "client",
     error: "",
 };
 
@@ -48,6 +49,9 @@ export const profileSlice = createSlice({
         },
         setPassword: (state, action) => {
             state.password = action.payload;
+        },
+        setType: (state, action) => {
+            state.type = action.payload;
         },
     },
     // extraReducers: (builder) => {

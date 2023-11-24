@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"delivery-bug/config"
 	"delivery-bug/internal/ports"
 	_ "delivery-bug/internal/ports"
 	userRepo "delivery-bug/internal/repo/user"
@@ -9,6 +10,8 @@ import (
 	"delivery-bug/pkg/logging"
 	"delivery-bug/pkg/storage/postgres"
 	"fmt"
+	"github.com/heetch/confita"
+	"github.com/heetch/confita/backend/env"
 	"github.com/joho/godotenv"
 	"golang.org/x/sync/errgroup"
 	"net/http"
@@ -22,29 +25,31 @@ const maxConns = 100
 var logger = logging.GetLogger()
 
 func main() {
+	ctx := context.Background()
+
 	err := godotenv.Load(".env")
 	if err != nil {
 		logger.Errorf("error loading .env file: %v", err)
 	}
 
-	ctx := context.Background()
-
-	config, err := postgres.NewPoolConfig()
+	var cfg config.Config
+	err = confita.NewLoader(
+		env.NewBackend(),
+	).Load(ctx, &cfg)
 	if err != nil {
 		logger.Fatal(err)
 	}
-	config.MaxConns = maxConns
 
-	db, err := postgres.ConnectDB(config)
+	db, err := postgres.ConnectDB(cfg.Database)
 	if err != nil {
 		logger.Fatal(err)
 	}
-	logger.Info("successfully connected to db")
 
 	_, err = db.Exec(ctx, "SELECT * from addresses")
 	if err != nil {
 		logger.Error(err)
 	}
+	logger.Info("successfully connected to db")
 
 	// configuring graceful shutdown
 	sigQuit := make(chan os.Signal, 1)

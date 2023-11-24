@@ -2,29 +2,27 @@ package models
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 type Addresses struct {
-	Id uuid.UUID `db:"id"`
+	Id string `db:"id"`
 
 	City      string `db:"city"`
 	Street    string `db:"street"`
-	Building  int    `db:"buildng"`
+	Building  int    `db:"building"`
 	Entrance  int    `db:"entrance"`
 	Floor     int    `db:"floor"`
 	Apartment int    `db:"apartment"`
 }
 
 type Clients struct {
-	Id uuid.UUID `db:"id"`
+	Id string `db:"id"`
 
 	FirstName string  `db:"first_name"`
 	LastName  string  `db:"last_name"`
 	Balance   float64 `db:"balance"`
 
-	AddressId uuid.UUID `db:"address_id"`
+	AddressId string `db:"address_id"`
 }
 
 type LoginForm struct {
@@ -32,11 +30,11 @@ type LoginForm struct {
 
 	Password string `db:"password"`
 
-	ClientId uuid.UUID `db:"client_id"`
+	ClientId string `db:"client_id"`
 }
 
 type Couriers struct {
-	Id uuid.UUID `db:"id"`
+	Id string `db:"id"`
 
 	FirstName string `db:"first_name"`
 	LastName  string `db:"last_name"`
@@ -44,63 +42,63 @@ type Couriers struct {
 }
 
 type Stores struct {
-	Id uuid.UUID `db:"id"`
+	Id string `db:"id"`
 
 	Reputation float64 `db:"reputation"`
 	Name       string  `db:"name"`
 }
 
 type Tags struct {
-	Id uuid.UUID `db:"id"`
+	Id string `db:"id"`
 
 	Tag string `db:"tag"`
 }
 
 type Products struct {
-	Id uuid.UUID `db:"id"`
+	Id string `db:"id"`
 
 	Name        string  `db:"name"`
-	Price       float32 `db:"prive"`
+	Price       float32 `db:"price"`
 	Weight      float32 `db:"weight"`
 	Description string  `db:"description"`
 	Image       []byte  `db:"image"`
 }
 
 type ProductsStores struct {
-	ProductId uuid.UUID `db:"product_id"`
-	StoreId   uuid.UUID `db:"store_id"`
+	ProductId string `db:"product_id"`
+	StoreId   string `db:"store_id"`
 }
 
 type ProductsTags struct {
-	ProductId uuid.UUID `db:"product_id"`
-	TagId     uuid.UUID `db:"tag_id"`
+	ProductId string `db:"product_id"`
+	TagId     string `db:"tag_id"`
 }
 
 type Orders struct {
-	Id uuid.UUID `db:"id"`
+	Id string `db:"id"`
 
 	Name         string    `db:"name"`
 	CreationTime time.Time `db:"creation_time"`
 	DeliveryTime time.Time `db:"delivery_time"`
 
-	ClientId  uuid.UUID `db:"client_id"`
-	CourierId uuid.UUID `db:"courier_id"`
-	ProductID uuid.UUID `db:"product_id"`
+	ClientId  string `db:"client_id"`
+	CourierId string `db:"courier_id"`
+	ProductID string `db:"product_id"`
 }
 
 type Basket struct {
 	Amount int `db:"amount"`
 
-	OrderId   uuid.UUID `db:"order_id"`
-	ProductId uuid.UUID `db:"product_id"`
+	OrderId   string `db:"order_id"`
+	ProductId string `db:"product_id"`
 }
 
 type Reviews struct {
-	Id uuid.UUID `db:"id"`
+	Id string `db:"id"`
 
 	Mark int `db:"mark"`
 
-	ClientId  uuid.UUID `db:"client_id"`
-	OrderId   uuid.UUID `db:"order_id"`
-	ProductId uuid.UUID `db:"product_id"`
+	ClientId  string `db:"client_id"`
+	OrderId   string `db:"order_id"`
+	ProductId string `db:"product_id"`
 }

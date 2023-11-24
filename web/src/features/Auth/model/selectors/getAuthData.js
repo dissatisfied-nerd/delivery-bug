@@ -1,9 +1,0 @@
-export const getAuthUsername = (state) => state.auth.username || "";
-export const getAuthEmail = (state) => state.auth.email || "";
-export const getAuthCity = (state) => state.auth.city || "";
-export const getAuthStreet = (state) => state.auth.street || "";
-export const getAuthBuilding = (state) => state.auth.building || "";
-export const getAuthEntrance = (state) => state.auth.entrance || "";
-export const getAuthFloor = (state) => state.auth.floor || "";
-export const getAuthAparts = (state) => state.auth.aparts || "";
-export const getAuthPassword = (state) => state.auth.password || "";

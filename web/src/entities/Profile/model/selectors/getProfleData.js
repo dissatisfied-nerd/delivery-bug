@@ -1,0 +1,10 @@
+export const getProfileFirstName = (state) => state.profile.firstName || "";
+export const getProfileLastName = (state) => state.profile.lastName || "";
+export const getProfileEmail = (state) => state.profile.email || "";
+export const getProfileCity = (state) => state.profile.city || "";
+export const getProfileStreet = (state) => state.profile.street || "";
+export const getProfileBuilding = (state) => state.profile.building || "";
+export const getProfileEntrance = (state) => state.profile.entrance || "";
+export const getProfileFloor = (state) => state.profile.floor || "";
+export const getProfileAparts = (state) => state.profile.aparts || "";
+export const getProfilePassword = (state) => state.profile.password || "";

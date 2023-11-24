@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isLoading: false,
-    username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     city: "",
     street: "",
@@ -14,12 +15,15 @@ const initialState = {
     error: "",
 };
 
-export const authSlice = createSlice({
-    name: "auth",
+export const profileSlice = createSlice({
+    name: "profile",
     initialState,
     reducers: {
-        setUsername: (state, action) => {
-            state.username = action.payload;
+        setFirstName: (state, action) => {
+            state.firstName = action.payload;
+        },
+        setLastName: (state, action) => {
+            state.lastName = action.payload;
         },
         setEmail: (state, action) => {
             state.email = action.payload;
@@ -48,14 +52,14 @@ export const authSlice = createSlice({
     },
     // extraReducers: (builder) => {
     //     builder
-    //         .addCase(loginByUsername.pending, (state) => {
+    //         .addCase(loginByFirstName.pending, (state) => {
     //             state.error = undefined;
     //             state.isLoading = true;
     //         })
-    //         .addCase(loginByUsername.fulfilled, (state) => {
+    //         .addCase(loginByFirstName.fulfilled, (state) => {
     //             state.isLoading = false;
     //         })
-    //         .addCase(loginByUsername.rejected, (state, action) => {
+    //         .addCase(loginByFirstName.rejected, (state, action) => {
     //             state.isLoading = false;
     //             state.error = action.payload;
     //         });
@@ -63,5 +67,5 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { actions: authActions } = authSlice;
-export const { reducer: authReducer } = authSlice;
+export const { actions: profileActions } = profileSlice;
+export const { reducer: profileReducer } = profileSlice;

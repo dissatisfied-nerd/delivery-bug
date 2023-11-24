@@ -4,31 +4,33 @@ import { classNames } from "shared/lib/classNames/classNames";
 import { Button } from "shared/ui/Button/Button";
 import { Input } from "shared/ui/Input/Input";
 import {
-    getAuthAparts,
-    getAuthBuilding,
-    getAuthCity,
-    getAuthEmail,
-    getAuthEntrance,
-    getAuthFloor,
-    getAuthPassword,
-    getAuthStreet,
-    getAuthUsername,
-} from "../model/selectors/getAuthData";
-import { authActions } from "../model/slice/AuthSlice";
+    getProfileAparts,
+    getProfileBuilding,
+    getProfileCity,
+    getProfileEmail,
+    getProfileEntrance,
+    getProfileFloor,
+    getProfilePassword,
+    getProfileStreet,
+    getProfileFirstName,
+    getProfileLastName,
+} from "entities/Profile";
+import { profileActions } from "entities/Profile";
 import cls from "./AuthForm.module.scss";
 
 export const AuthForm = () => {
     const [formType, setFormType] = useState("signUp");
     const dispatch = useDispatch();
-    const username = useSelector(getAuthUsername);
-    const email = useSelector(getAuthEmail);
-    const city = useSelector(getAuthCity);
-    const building = useSelector(getAuthBuilding);
-    const street = useSelector(getAuthStreet);
-    const floor = useSelector(getAuthFloor);
-    const entrance = useSelector(getAuthEntrance);
-    const aparts = useSelector(getAuthAparts);
-    const password = useSelector(getAuthPassword);
+    const firstName = useSelector(getProfileFirstName);
+    const lastName = useSelector(getProfileLastName);
+    const email = useSelector(getProfileEmail);
+    const city = useSelector(getProfileCity);
+    const building = useSelector(getProfileBuilding);
+    const street = useSelector(getProfileStreet);
+    const floor = useSelector(getProfileFloor);
+    const entrance = useSelector(getProfileEntrance);
+    const aparts = useSelector(getProfileAparts);
+    const password = useSelector(getProfilePassword);
 
     useEffect(() => {
         const firstInput = [
@@ -42,65 +44,72 @@ export const AuthForm = () => {
         [formType]
     );
 
-    const onChangeUsername = useCallback(
+    const onChangeFirstName = useCallback(
         (data) => {
-            dispatch(authActions.setUsername(data));
+            dispatch(profileActions.setFirstName(data));
+        },
+        [dispatch]
+    );
+
+    const onChangeLastName = useCallback(
+        (data) => {
+            dispatch(profileActions.setLastName(data));
         },
         [dispatch]
     );
 
     const onChangeEmail = useCallback(
         (data) => {
-            dispatch(authActions.setEmail(data));
+            dispatch(profileActions.setEmail(data));
         },
         [dispatch]
     );
 
     const onChangeCity = useCallback(
         (data) => {
-            dispatch(authActions.setCity(data));
+            dispatch(profileActions.setCity(data));
         },
         [dispatch]
     );
 
     const onChangeStreet = useCallback(
         (data) => {
-            dispatch(authActions.setStreet(data));
+            dispatch(profileActions.setStreet(data));
         },
         [dispatch]
     );
 
     const onChangeBuilding = useCallback(
         (data) => {
-            dispatch(authActions.setBuilding(data));
+            dispatch(profileActions.setBuilding(data));
         },
         [dispatch]
     );
 
     const onChangeEntrance = useCallback(
         (data) => {
-            dispatch(authActions.setEntrance(data));
+            dispatch(profileActions.setEntrance(data));
         },
         [dispatch]
     );
 
     const onChangeFloor = useCallback(
         (data) => {
-            dispatch(authActions.setFloor(data));
+            dispatch(profileActions.setFloor(data));
         },
         [dispatch]
     );
 
     const onChangeAparts = useCallback(
         (data) => {
-            dispatch(authActions.setAparts(data));
+            dispatch(profileActions.setAparts(data));
         },
         [dispatch]
     );
 
     const onChangePassword = useCallback(
         (data) => {
-            dispatch(authActions.setPassword(data));
+            dispatch(profileActions.setPassword(data));
         },
         [dispatch]
     );
@@ -112,8 +121,15 @@ export const AuthForm = () => {
                 <Input
                     className={cls.input}
                     label="Имя"
-                    value={username}
-                    onChange={onChangeUsername}
+                    value={firstName}
+                    onChange={onChangeFirstName}
+                    autoFocus
+                />
+                <Input
+                    className={cls.input}
+                    label="Фамилия"
+                    value={lastName}
+                    onChange={onChangeLastName}
                     autoFocus
                 />
                 <Input

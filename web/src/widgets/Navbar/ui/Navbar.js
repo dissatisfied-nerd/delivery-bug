@@ -14,6 +14,9 @@ export default function Navbar() {
                 <Link to={"/goods"} className={cls.link}>
                     Товары
                 </Link>
+                <Link to={"/profile"} className={cls.link}>
+                    Профиль
+                </Link>
             </div>
         </header>
     );

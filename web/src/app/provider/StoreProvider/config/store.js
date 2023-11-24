@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer } from "features/Auth";
+import { profileReducer } from "entities/Profile";
 // import { $api } from "shared/api/api";
 
 // const extraArg = {
@@ -8,7 +8,7 @@ import { authReducer } from "features/Auth";
 
 export const store = configureStore({
     reducer: {
-        auth: authReducer,
+        profile: profileReducer,
     },
     // middleware: (getDefaultMiddleware) =>
     //     getDefaultMiddleware({

@@ -1,0 +1,38 @@
+.ProfileCard {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.pageTitle {
+    text-align: center;
+    font: var(--font-xl);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    font: var(--font-l);
+}
+
+.name {
+    font: bold var(--font-xl);
+}
+
+.line {
+    width: 100%;
+    border-bottom: 1px solid var(--inverted-bg-color);
+}
+
+.title {
+    font: var(--font-xl);
+    margin-bottom: 10px;
+}
+
+.adress {
+    width: 80%;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    font: var(--font-l);
+}

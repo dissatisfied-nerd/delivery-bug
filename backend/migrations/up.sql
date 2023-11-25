@@ -39,15 +39,25 @@ CREATE TABLE IF NOT EXISTS couriers
 
     first_name varchar(128),
     last_name  varchar(128),
-    propiska   boolean
+    registration   varchar(128) NOT NULL -- Страна регистрации
+);
+
+CREATE TABLE IF NOT EXISTS administrators
+(
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+
+    first_name varchar(128),
+    last_name varchar(128)
 );
 
 CREATE TABLE IF NOT EXISTS stores
 (
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
-    reputation float,
-    name       varchar(128)
+    reputation int, -- Утсанавливается администратором
+    name       varchar(128),
+
+    administrator_id UUID REFERENCES administrators(id)
 );
 
 CREATE TABLE IF NOT EXISTS tags
@@ -86,7 +96,7 @@ CREATE TABLE IF NOT EXISTS orders
 (
     id            UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
-    name          varchar(128),
+    price float, 
     creation_time timestamp,
     delivery_time timestamp,
 
@@ -95,7 +105,7 @@ CREATE TABLE IF NOT EXISTS orders
     product_id    UUID REFERENCES products (id)
 );
 
-CREATE TABLE IF NOT EXISTS basket
+CREATE TABLE IF NOT EXISTS order_products
 (
     amount int,
 

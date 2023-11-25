@@ -4,7 +4,7 @@ import { GoodListItem } from "../GoodListItem/GoodListItem";
 import cls from "./GoodList.module.scss";
 
 export const GoodList = memo((props) => {
-    const { className, goods, isLoading } = props;
+    const { className, goods, onAddToCart, onRemoveFromCart, cart } = props;
 
     // if (isLoading) {
     //     return <Loader />;
@@ -13,7 +13,15 @@ export const GoodList = memo((props) => {
     return (
         <div className={classNames(cls.GoodList, {}, [className])}>
             {goods.map((good) => {
-                return <GoodListItem key={good.id} good={good} />;
+                return (
+                    <GoodListItem
+                        key={good.id}
+                        good={good}
+                        onAddToCart={onAddToCart}
+                        onRemoveFromCart={onRemoveFromCart}
+                        count={cart[good.id]?.[1] || 0}
+                    />
+                );
             })}
         </div>
     );

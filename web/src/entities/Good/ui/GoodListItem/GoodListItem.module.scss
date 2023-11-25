@@ -39,7 +39,17 @@
     -webkit-box-orient: vertical;
 }
 
-.toCartBtn {
+.btn {
     color: var(--inverted-primary-color);
     background-color: var(--inverted-bg-color);
+}
+
+.counterWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.count {
+    line-height: 40px;
+    margin: 0 10px 0 10px;
 }

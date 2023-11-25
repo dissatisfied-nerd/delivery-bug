@@ -17,6 +17,9 @@ export default function Navbar() {
                 <Link to={"/profile"} className={cls.link}>
                     Профиль
                 </Link>
+                <Link to={"/cart"} className={cls.link}>
+                    Корзина
+                </Link>
             </div>
         </header>
     );

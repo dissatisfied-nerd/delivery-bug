@@ -1,0 +1,37 @@
+.CartListItem {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 20px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.img {
+    width: 100px;
+    height: 100px;
+}
+
+.titleWrapper {
+    width: 300px;
+}
+
+.price {
+    width: 80px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.countsControlWrapper {
+    width: 80px;
+    display: flex;
+    justify-content: space-around;
+
+    // & button {
+    //     height: 10px;
+    // }
+}
+
+.count {
+    line-height: 40px;
+}

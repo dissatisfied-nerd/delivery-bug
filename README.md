@@ -12,6 +12,7 @@ DB_PASSWORD=
 DB_NAME=
 DB_HOST=
 DB_PORT=
+DB_POOL_SIZE=
 ```
 
 и выполнить команду

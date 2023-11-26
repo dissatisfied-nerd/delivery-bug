@@ -1,26 +1,27 @@
 package auth
 
 import (
-	"github.com/golang-jwt/jwt"
 	"time"
+
+	"github.com/golang-jwt/jwt"
 )
 
 type SignUpInput struct {
-	Login     string `json:"login"`
-	Password  string `json:"password"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	City      string `json:"city"`
-	Street    string `json:"street"`
-	Building  int    `json:"building"`
-	Entrance  int    `json:"entrance"`
-	Floor     int    `json:"floor"`
-	Apartment int    `json:"apartment"`
+	Login     string `json:"login" validate:"required"`
+	Password  string `json:"password" validate:"required"`
+	FirstName string `json:"first_name" validate:"required"`
+	LastName  string `json:"last_name" validate:"required"`
+	City      string `json:"city" validate:"required"`
+	Street    string `json:"street" validate:"required"`
+	Building  int    `json:"building" validate:"required"`
+	Entrance  int    `json:"entrance" validate:"required"`
+	Floor     int    `json:"floor" validate:"required"`
+	Apartment int    `json:"apartment" validate:"required"`
 }
 
 type SignInInput struct {
-	Login    string `json:"login"`
-	Password string `json:"password"`
+	Login    string `json:"login" validate:"required"`
+	Password string `json:"password" validate:"required"`
 }
 
 type Claims struct {

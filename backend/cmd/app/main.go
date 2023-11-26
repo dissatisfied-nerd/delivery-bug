@@ -2,48 +2,43 @@ package main
 
 import (
 	"context"
+	"delivery-bug/config"
 	"delivery-bug/internal/ports"
-	_ "delivery-bug/internal/ports"
 	userRepo "delivery-bug/internal/repo/user"
 	userService "delivery-bug/internal/service/user"
 	"delivery-bug/pkg/logging"
 	"delivery-bug/pkg/storage/postgres"
 	"fmt"
-	"github.com/joho/godotenv"
-	"golang.org/x/sync/errgroup"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/heetch/confita"
+	"github.com/heetch/confita/backend/env"
+	"golang.org/x/sync/errgroup"
 )
 
-const maxConns = 100
-
-var logger = logging.GetLogger()
-
 func main() {
+	logger := logging.GetLogger()
+
 	ctx := context.Background()
 
-	err := godotenv.Load(".env")
-	if err != nil {
-		logger.Errorf("error loading .env file: %v", err)
-	}
-
-	//var cfg config.Config
-	//err = confita.NewLoader(
-	//	env.NewBackend(),
-	//).Load(ctx, &cfg)
-	//if err != nil {
-	//	logger.Fatal(err)
-	//}
-
-	config, err := postgres.NewPoolConfig()
+	var cfg config.Config
+	err := confita.NewLoader(
+		env.NewBackend(),
+	).Load(ctx, &cfg)
 	if err != nil {
 		logger.Fatal(err)
 	}
-	config.MaxConns = maxConns
 
-	db, err := postgres.ConnectDB(config)
+	validator := validator.New()
+	if err := validator.Struct(&cfg); err != nil {
+		logger.Fatal(err)
+	}
+
+	db, err := postgres.ConnectDB(cfg.Database)
 	if err != nil {
 		logger.Fatal(err)
 	}
@@ -74,11 +69,11 @@ func main() {
 
 	serv := userService.NewService(repo, logger)
 
-	r := ports.SetupRoutes(serv, logger)
+	r := ports.SetupRoutes(serv, logger, validator)
 
-	logger.Infof("port:%s", os.Getenv("PORT"))
+	logger.Infof("port:%s", cfg.Port)
 
-	err = http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), r)
+	err = http.ListenAndServe(fmt.Sprintf(":%s", cfg.Port), r)
 	if err != nil {
 		logger.Fatal(err)
 	}

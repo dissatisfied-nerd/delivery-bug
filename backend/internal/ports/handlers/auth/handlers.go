@@ -5,10 +5,12 @@ import (
 	"delivery-bug/internal/service/user"
 	"delivery-bug/pkg/logging"
 	"errors"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 var secretKey = os.Getenv("SECRET_KEY")
@@ -20,12 +22,13 @@ type IHandler interface {
 }
 
 type Handler struct {
-	service user.UsersService
-	l       *logging.Logger
+	service   user.UsersService
+	validator *validator.Validate
+	l         *logging.Logger
 }
 
-func NewHandler(service user.UsersService, l logging.Logger) *Handler {
-	return &Handler{service: service, l: &l}
+func NewHandler(service user.UsersService, l logging.Logger, validator *validator.Validate) *Handler {
+	return &Handler{service: service, l: &l, validator: validator}
 }
 
 func (h *Handler) SignUpUser(ctx *gin.Context) {
@@ -36,7 +39,7 @@ func (h *Handler) SignUpUser(ctx *gin.Context) {
 		return
 	}
 
-	err := auth.ValidateSignUpInput(payload)
+	err := h.validator.Struct(&payload)
 	if err != nil {
 		h.l.Error(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -71,7 +74,7 @@ func (h *Handler) SignInUser(ctx *gin.Context) {
 		return
 	}
 
-	if err := auth.ValidateSignInInput(payload); err != nil {
+	if err := h.validator.Struct(&payload); err != nil {
 		h.l.Error(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

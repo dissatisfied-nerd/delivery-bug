@@ -102,7 +102,6 @@ CREATE TABLE IF NOT EXISTS orders
 
     client_id     UUID REFERENCES clients (id),
     courier_id    UUID REFERENCES couriers (id),
-    product_id    UUID REFERENCES products (id)
 );
 
 CREATE TABLE IF NOT EXISTS order_products

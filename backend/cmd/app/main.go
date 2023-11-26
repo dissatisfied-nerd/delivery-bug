@@ -33,8 +33,8 @@ func main() {
 		logger.Fatal(err)
 	}
 
-	validator := validator.New()
-	if err := validator.Struct(&cfg); err != nil {
+	valid := validator.New()
+	if err := valid.Struct(&cfg); err != nil {
 		logger.Fatal(err)
 	}
 
@@ -69,7 +69,7 @@ func main() {
 
 	serv := userService.NewService(repo, logger)
 
-	r := ports.SetupRoutes(serv, logger, validator)
+	r := ports.SetupRoutes(serv, logger, valid)
 
 	logger.Infof("port:%s", cfg.Port)
 

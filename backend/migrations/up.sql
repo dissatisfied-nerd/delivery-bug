@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS stores
 (
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
-    reputation int, -- Утсанавливается администратором
+    reputation int, -- Устанавливается администратором
     name       varchar(128),
 
     administrator_id UUID REFERENCES administrators(id)

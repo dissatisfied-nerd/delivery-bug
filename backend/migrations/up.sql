@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS orders
     delivery_time timestamp,
 
     client_id     UUID REFERENCES clients (id),
-    courier_id    UUID REFERENCES couriers (id),
+    courier_id    UUID REFERENCES couriers (id)
 );
 
 CREATE TABLE IF NOT EXISTS order_products

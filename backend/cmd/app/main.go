@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"delivery-bug/config"
+	"delivery-bug/internal/auth"
 	"delivery-bug/internal/ports"
 	userRepo "delivery-bug/internal/repo/user"
 	userService "delivery-bug/internal/service/user"
@@ -69,7 +70,9 @@ func main() {
 
 	serv := userService.NewService(repo, logger)
 
-	r := ports.SetupRoutes(serv, logger, valid)
+	auth := auth.NewAuth(cfg.Auth)
+
+	r := ports.SetupRoutes(serv, logger, valid, auth)
 
 	logger.Infof("port:%s", cfg.Port)
 

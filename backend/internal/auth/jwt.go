@@ -6,9 +6,22 @@ import (
 	"time"
 )
 
+type Auth interface {
+	GenerateJWT(userID string) (string, error)
+	GetHost() string
+}
+
+type auth struct {
+	Config Config
+}
+
+func NewAuth(config Config) Auth {
+	return &auth{Config: config}
+}
+
 var log = logging.GetLogger()
 
-func GenerateJWT(secret string, userID string) (string, error) {
+func (a *auth) GenerateJWT(userID string) (string, error) {
 	claims := &Claims{
 		UserID:    userID,
 		IssuedAt:  time.Now().Unix(),
@@ -16,11 +29,15 @@ func GenerateJWT(secret string, userID string) (string, error) {
 	}
 
 	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, err := jwtToken.SignedString([]byte(secret))
+	signedToken, err := jwtToken.SignedString([]byte(a.Config.SecretKey))
 	log.Debugf("signedToken: %s", signedToken)
 	if err != nil {
 		return "", err
 	}
 
 	return signedToken, nil
+}
+
+func (a *auth) GetHost() string {
+	return a.Config.Host
 }

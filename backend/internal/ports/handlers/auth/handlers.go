@@ -23,12 +23,14 @@ type IHandler interface {
 
 type Handler struct {
 	service   user.UsersService
+	auth      auth.Auth
 	validator *validator.Validate
 	l         *logging.Logger
 }
 
-func NewHandler(service user.UsersService, l logging.Logger, validator *validator.Validate) *Handler {
-	return &Handler{service: service, l: &l, validator: validator}
+func NewHandler(service user.UsersService, l logging.Logger,
+	validator *validator.Validate, auth auth.Auth) *Handler {
+	return &Handler{service: service, l: &l, validator: validator, auth: auth}
 }
 
 func (h *Handler) SignUpUser(ctx *gin.Context) {
@@ -52,7 +54,7 @@ func (h *Handler) SignUpUser(ctx *gin.Context) {
 		return
 	}
 
-	tokenString, err := auth.GenerateJWT(secretKey, userID)
+	tokenString, err := h.auth.GenerateJWT(userID)
 	if err != nil {
 		h.l.Errorf("ERROR while generating jwt: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -86,7 +88,7 @@ func (h *Handler) SignInUser(ctx *gin.Context) {
 		return
 	}
 
-	tokenString, err := auth.GenerateJWT(secretKey, userID)
+	tokenString, err := h.auth.GenerateJWT(userID)
 	if err != nil {
 		h.l.Errorf("ERROR while generating jwt: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -96,9 +98,9 @@ func (h *Handler) SignInUser(ctx *gin.Context) {
 	ctx.SetCookie("jwt", tokenString, int(time.Now().Add(time.Hour*24*3).Unix()), "/",
 		os.Getenv("HOST"), true, true)
 
-	ctx.JSON(http.StatusOK, gin.H{})
+	ctx.Status(http.StatusOK)
 }
 
 func (h *Handler) Logout(ctx *gin.Context) {
-	ctx.SetCookie("jwt", "", 0, "/", os.Getenv("HOST"), true, true)
+	ctx.SetCookie("jwt", "", 0, "/", h.auth.GetHost(), true, true)
 }

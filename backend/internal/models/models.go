@@ -77,9 +77,9 @@ type ProductsTags struct {
 type Orders struct {
 	Id string `db:"id"`
 
-	Name         string    `db:"name"`
-	CreationTime time.Time `db:"creation_time"`
-	DeliveryTime time.Time `db:"delivery_time"`
+	Name         string     `db:"name"`
+	CreationTime *time.Time `db:"creation_time"`
+	DeliveryTime *time.Time `db:"delivery_time"`
 
 	ClientId  string `db:"client_id"`
 	CourierId string `db:"courier_id"`

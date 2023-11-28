@@ -18,6 +18,7 @@ import {
 } from "entities/Profile";
 import { profileActions } from "entities/Profile";
 import cls from "./AuthForm.module.scss";
+import { useNavigate } from "react-router-dom";
 
 export const AuthForm = () => {
     const [formType, setFormType] = useState("signUp");
@@ -33,6 +34,7 @@ export const AuthForm = () => {
     const aparts = useSelector(getProfileAparts);
     const password = useSelector(getProfilePassword);
     const type = useSelector(getProfileType);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const firstInput = [
@@ -123,6 +125,20 @@ export const AuthForm = () => {
         [dispatch]
     );
 
+    const onSuccess = useCallback(() => {
+        dispatch(profileActions.setIsAuth(true));
+        dispatch(profileActions.saveAuthData());
+        navigate("/profile", { replace: true });
+    }, [dispatch, navigate]);
+
+    const onSignUp = useCallback(() => {
+        onSuccess();
+    }, [onSuccess]);
+
+    const onLogin = useCallback(() => {
+        onSuccess();
+    }, [onSuccess]);
+
     if (formType === "signUp") {
         return (
             <div className={classNames(cls.AuthForm, {}, [])}>
@@ -201,7 +217,9 @@ export const AuthForm = () => {
                         Курьер
                     </option>
                 </select>
-                <Button className={cls.sendBtn}>Зарегистрироваться</Button>
+                <Button className={cls.sendBtn} onClick={onSignUp}>
+                    Зарегистрироваться
+                </Button>
                 <Button className={cls.changeForm} onClick={onChangeForm}>
                     Я уже смешарик
                 </Button>
@@ -224,7 +242,9 @@ export const AuthForm = () => {
                     label="Пароль"
                     value={password}
                 />
-                <Button className={cls.sendBtn}>Войти</Button>
+                <Button className={cls.sendBtn} onClick={onLogin}>
+                    Войти
+                </Button>
                 <Button className={cls.changeForm} onClick={onChangeForm}>
                     ЭЭЭ бля я не смешарик еще
                 </Button>

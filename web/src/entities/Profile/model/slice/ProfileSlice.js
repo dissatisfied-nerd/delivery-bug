@@ -1,18 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 
 const initialState = {
     isLoading: false,
-    firstName: "",
-    lastName: "",
-    email: "",
-    city: "",
-    street: "",
-    building: "",
-    entrance: "",
-    floor: "",
-    aparts: "",
-    password: "",
-    type: "client",
+    data: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        city: "",
+        street: "",
+        building: "",
+        entrance: "",
+        floor: "",
+        aparts: "",
+        password: "",
+        type: "client",
+    },
+    isAuth: false,
     error: "",
 };
 
@@ -20,52 +24,73 @@ export const profileSlice = createSlice({
     name: "profile",
     initialState,
     reducers: {
+        initProfileData: (state, action) => {
+            const data = localStorage.getItem(PROFILE_LOCALSTORAGE_KEY);
+            if (data) {
+                state.data = JSON.parse(data);
+                state.isAuth = true;
+            }
+        },
         setFirstName: (state, action) => {
-            state.firstName = action.payload;
+            state.data.firstName = action.payload;
         },
         setLastName: (state, action) => {
-            state.lastName = action.payload;
+            state.data.lastName = action.payload;
         },
         setEmail: (state, action) => {
-            state.email = action.payload;
+            state.data.email = action.payload;
         },
         setCity: (state, action) => {
-            state.city = action.payload;
+            state.data.city = action.payload;
         },
         setStreet: (state, action) => {
-            state.street = action.payload;
+            state.data.street = action.payload;
         },
         setBuilding: (state, action) => {
-            state.building = action.payload;
+            state.data.building = action.payload;
         },
         setEntrance: (state, action) => {
-            state.entrance = action.payload;
+            state.data.entrance = action.payload;
         },
         setFloor: (state, action) => {
-            state.floor = action.payload;
+            state.data.floor = action.payload;
         },
         setAparts: (state, action) => {
-            state.aparts = action.payload;
+            state.data.aparts = action.payload;
         },
         setPassword: (state, action) => {
-            state.password = action.payload;
+            state.data.password = action.payload;
         },
         setType: (state, action) => {
-            state.type = action.payload;
+            state.data.type = action.payload;
+        },
+        setIsAuth: (state, action) => {
+            state.isAuth = action.payload;
+        },
+        saveAuthData: (state, action) => {
+            localStorage.setItem(
+                PROFILE_LOCALSTORAGE_KEY,
+                JSON.stringify(state.data)
+            );
+        },
+        logout: (state, action) => {
+            state.data = {};
+            state.isAuth = false;
+            localStorage.removeItem(PROFILE_LOCALSTORAGE_KEY);
         },
     },
     // extraReducers: (builder) => {
     //     builder
     //         .addCase(loginByFirstName.pending, (state) => {
-    //             state.error = undefined;
-    //             state.isLoading = true;
+    //             state.data.error = undefined;
+    //             state.data.isLoading = true;
     //         })
     //         .addCase(loginByFirstName.fulfilled, (state) => {
-    //             state.isLoading = false;
+    //             state.data.isLoading = false;
     //         })
     //         .addCase(loginByFirstName.rejected, (state, action) => {
-    //             state.isLoading = false;
-    //             state.error = action.payload;
+    //             state.data.isLoading = false;
+    //             state.data.error = action.payload;
     //         });
     // },
 });

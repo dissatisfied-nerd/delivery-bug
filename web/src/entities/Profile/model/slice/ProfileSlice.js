@@ -16,6 +16,7 @@ const initialState = {
         password: "",
         type: "client",
     },
+    orders: [],
     isAuth: false,
     error: "",
 };
@@ -66,6 +67,9 @@ export const profileSlice = createSlice({
         },
         setIsAuth: (state, action) => {
             state.isAuth = action.payload;
+        },
+        addOrder: (state, action) => {
+            state.orders = [...state.orders, action.payload];
         },
         saveAuthData: (state, action) => {
             localStorage.setItem(

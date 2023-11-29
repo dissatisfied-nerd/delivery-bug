@@ -47,6 +47,9 @@ export default function Navbar() {
         } else {
             links = (
                 <>
+                    <Link to={"/orders"} className={cls.link}>
+                        Заказы
+                    </Link>
                     <Link to={"/profile"} className={cls.link}>
                         Профиль
                     </Link>

@@ -3,6 +3,7 @@ import { AuthPage } from "pages/AuthPage";
 import { CartPage } from "pages/CartPage";
 import { GoodsPage } from "pages/GoodsPage";
 import { NotFoundPage } from "pages/NotFoundPage";
+import { OrdersPage } from "pages/OrdersPage";
 import { ProfilePage } from "pages/ProfilePage";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -28,6 +29,7 @@ export const RouterProvider = () => {
         } else {
             routes = (
                 <>
+                    <Route element={<OrdersPage />} path="/orders" />
                     <Route element={<ProfilePage />} path="/profile" />
                 </>
             );

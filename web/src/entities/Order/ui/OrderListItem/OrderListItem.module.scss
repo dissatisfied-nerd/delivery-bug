@@ -24,14 +24,27 @@
     padding: 20px;
 }
 
-.goods {
+.goodsImgList {
     width: 400px;
     display: flex;
     flex-wrap: wrap;
 }
 
-.goodsItem {
+.goodsImgItem {
     width: 84px;
     height: 84px;
     margin-right: 10px;
+}
+
+.headerText {
+    font-weight: normal;
+}
+
+.takeOrderWrapper {
+    margin-right: 100px;
+}
+
+.takeOrderBtn {
+    background: var(--inverted-bg-color);
+    color: var(--bg-color);
 }

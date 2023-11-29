@@ -1,11 +1,20 @@
 import { OrderList } from "entities/Order";
-import { ProfileCard } from "entities/Profile";
+import {
+    getProfileOrders,
+    getProfileType,
+    profileActions,
+    ProfileCard,
+} from "entities/Profile";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Card } from "shared/ui/Card/Card";
 import { Page } from "widgets/Page/Page";
 import cls from "./ProfilePage.module.scss";
 
 export const ProfilePage = () => {
+    const accountType = useSelector(getProfileType);
+    const orders = useSelector(getProfileOrders);
+
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
@@ -24,6 +33,16 @@ export const ProfilePage = () => {
                 />
                 <div className={cls.title}>Активные заказы</div>
                 <OrderList
+                    account={accountType}
+                    orders={orders.filter((order) => !Boolean(order.delivered))}
+                />
+                <div className={cls.title}>История заказов</div>
+                <OrderList
+                    account={accountType}
+                    orders={orders.filter((order) => Boolean(order.delivered))}
+                />
+                {/* <OrderList
+                    account={accountType}
                     orders={[
                         {
                             created: "22.11.23",
@@ -158,6 +177,7 @@ export const ProfilePage = () => {
                 />
                 <div className={cls.title}>История заказов</div>
                 <OrderList
+                    account={accountType}
                     orders={[
                         {
                             created: "22.11.23",
@@ -288,7 +308,7 @@ export const ProfilePage = () => {
                             delivered: "24.11.23",
                         },
                     ].filter((order) => Boolean(order.delivered))}
-                />
+                /> */}
             </Card>
         </Page>
     );

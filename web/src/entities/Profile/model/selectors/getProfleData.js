@@ -11,3 +11,4 @@ export const getProfileAparts = (state) => state.profile.data.aparts || "";
 export const getProfilePassword = (state) => state.profile.data.password || "";
 export const getProfileType = (state) => state.profile.data.type || "client";
 export const getProfileIsAuth = (state) => state.profile.isAuth;
+export const getProfileOrders = (state) => state.profile.orders;

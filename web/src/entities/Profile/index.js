@@ -10,6 +10,7 @@ import { getProfileAparts } from "./model/selectors/getProfleData";
 import { getProfilePassword } from "./model/selectors/getProfleData";
 import { getProfileType } from "./model/selectors/getProfleData";
 import { getProfileIsAuth } from "./model/selectors/getProfleData";
+import { getProfileOrders } from "./model/selectors/getProfleData";
 
 import { profileActions } from "./model/slice/ProfileSlice";
 import { profileReducer } from "./model/slice/ProfileSlice";
@@ -32,4 +33,5 @@ export {
     profileReducer,
     ProfileCard,
     getProfileIsAuth,
+    getProfileOrders,
 };

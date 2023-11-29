@@ -4,6 +4,7 @@ import (
 	"context"
 	"delivery-bug/config"
 	"delivery-bug/internal/auth"
+	"delivery-bug/internal/migrations"
 	"delivery-bug/internal/ports"
 	userRepo "delivery-bug/internal/repo/user"
 	userService "delivery-bug/internal/service/user"
@@ -43,12 +44,13 @@ func main() {
 	if err != nil {
 		logger.Fatal(err)
 	}
-
-	_, err = db.Exec(ctx, "SELECT * from addresses")
+	err = db.Ping(ctx)
 	if err != nil {
-		logger.Error(err)
+		logger.Fatal(err)
 	}
 	logger.Info("successfully connected to db")
+
+	migrations.MigrateDB("up", logger, cfg.Database, "./internal/migrations")
 
 	// configuring graceful shutdown
 	sigQuit := make(chan os.Signal, 1)
@@ -73,8 +75,6 @@ func main() {
 	auth := auth.NewAuth(cfg.Auth)
 
 	r := ports.SetupRoutes(serv, logger, valid, auth)
-
-	logger.Infof("port:%s", cfg.Port)
 
 	err = http.ListenAndServe(fmt.Sprintf(":%s", cfg.Port), r)
 	if err != nil {

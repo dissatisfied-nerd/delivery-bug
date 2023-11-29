@@ -103,4 +103,6 @@ func (h *Handler) SignInUser(ctx *gin.Context) {
 
 func (h *Handler) Logout(ctx *gin.Context) {
 	ctx.SetCookie("jwt", "", 0, "/", h.auth.GetHost(), true, true)
+
+	ctx.Status(http.StatusOK)
 }

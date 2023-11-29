@@ -21,8 +21,8 @@ func SetupRoutes(service user.UsersService, logger logging.Logger, validator *va
 	})
 
 	router.POST("/login", h.SignInUser)
-	router.POST("register", h.SignUpUser)
-	router.GET("/logout", h.Logout)
+	router.POST("/register", h.SignUpUser)
+	router.POST("/logout", h.Logout)
 
 	return router
 }

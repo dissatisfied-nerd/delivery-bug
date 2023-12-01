@@ -1,5 +1,6 @@
 import { OrderList } from "entities/Order";
 import {
+    getProfileData,
     getProfileOrders,
     getProfileType,
     profileActions,
@@ -12,9 +13,9 @@ import { Page } from "widgets/Page/Page";
 import cls from "./ProfilePage.module.scss";
 
 export const ProfilePage = () => {
-    const accountType = useSelector(getProfileType);
+    const profile = useSelector(getProfileData)
     const orders = useSelector(getProfileOrders);
-
+    
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
@@ -33,12 +34,14 @@ export const ProfilePage = () => {
                 />
                 <div className={cls.title}>Активные заказы</div>
                 <OrderList
-                    account={accountType}
+                    page="profile"
+                    type={profile.type}
                     orders={orders.filter((order) => !Boolean(order.delivered))}
                 />
                 <div className={cls.title}>История заказов</div>
                 <OrderList
-                    account={accountType}
+                    page="profile"
+                    type={profile.type}
                     orders={orders.filter((order) => Boolean(order.delivered))}
                 />
                 {/* <OrderList

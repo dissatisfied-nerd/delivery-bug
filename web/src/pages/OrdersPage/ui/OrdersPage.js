@@ -9,7 +9,7 @@ export const OrdersPage = () => {
             <span className={cls.title}> Заказы </span>
             <OrderList
                 className={cls.orderList}
-                account="courier"
+                type="courier"
                 orders={[
                     {
                         created: "22.11.23",

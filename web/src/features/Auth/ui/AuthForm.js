@@ -4,17 +4,7 @@ import { classNames } from "shared/lib/classNames/classNames";
 import { Button } from "shared/ui/Button/Button";
 import { Input } from "shared/ui/Input/Input";
 import {
-    getProfileAparts,
-    getProfileBuilding,
-    getProfileCity,
-    getProfileEmail,
-    getProfileEntrance,
-    getProfileFloor,
-    getProfilePassword,
-    getProfileStreet,
-    getProfileFirstName,
-    getProfileLastName,
-    getProfileType,
+    getProfileData,
 } from "entities/Profile";
 import { profileActions } from "entities/Profile";
 import cls from "./AuthForm.module.scss";
@@ -23,17 +13,17 @@ import { useNavigate } from "react-router-dom";
 export const AuthForm = () => {
     const [formType, setFormType] = useState("signUp");
     const dispatch = useDispatch();
-    const firstName = useSelector(getProfileFirstName);
-    const lastName = useSelector(getProfileLastName);
-    const email = useSelector(getProfileEmail);
-    const city = useSelector(getProfileCity);
-    const building = useSelector(getProfileBuilding);
-    const street = useSelector(getProfileStreet);
-    const floor = useSelector(getProfileFloor);
-    const entrance = useSelector(getProfileEntrance);
-    const aparts = useSelector(getProfileAparts);
-    const password = useSelector(getProfilePassword);
-    const type = useSelector(getProfileType);
+    const {firstName
+        ,lastName
+        ,email
+        ,city
+        ,building
+        ,street
+        ,floor
+        ,entrance
+        ,aparts
+        ,password
+        ,type} = useSelector(getProfileData);
     const navigate = useNavigate();
 
     useEffect(() => {

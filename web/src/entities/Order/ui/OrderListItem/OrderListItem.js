@@ -16,17 +16,18 @@ const getWeight = (goods) => {
 };
 
 export const OrderListItem = (props) => {
-    const { order, account = "client" } = props;
-    const [taken, setTaken] = useState(false);
+    const { order, type = "client", taken = false, page } = props;
     const dispatch = useDispatch();
 
     const onTakeOrder = useCallback(() => {
-        setTaken(true);
         dispatch(profileActions.addOrder(order));
-    }, [dispatch, setTaken, order]);
+    }, [dispatch, order]);
+
+    const onCancelOrder = useCallback(() => {
+    }, []);
 
     const content =
-        account === "client" ? (
+        type === "client" ? (
             <>
                 <div className={cls.header}>
                     <span>Заказ от {order.created}</span>
@@ -88,7 +89,14 @@ export const OrderListItem = (props) => {
                         })}
                     </div>
                     <div className={cls.takeOrderWrapper}>
-                        {!taken ? (
+                        {page === "profile" ?
+                            <Button
+                            className={cls.takeOrderBtn}
+                            onClick={onCancelOrder}
+                        >
+                            Завершить
+                        </Button>
+                        : !taken ? (
                             <Button
                                 className={cls.takeOrderBtn}
                                 onClick={onTakeOrder}

@@ -4,12 +4,12 @@ import { OrderListItem } from "../OrderListItem/OrderListItem";
 import cls from "./OrderList.module.scss";
 
 export const OrderList = (props) => {
-    const { className, orders, account } = props;
+    const { className, orders, type, page } = props;
     return (
         <div className={classNames(cls.OrderList, {}, [className])}>
             {orders.length ? (
                 orders.map((order) => {
-                    return <OrderListItem order={order} account={account} />;
+                    return <OrderListItem page={page} order={order} type={type} />;
                 })
             ) : (
                 <span>Заказов нет</span>

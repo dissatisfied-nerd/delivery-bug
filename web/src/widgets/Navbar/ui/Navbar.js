@@ -1,4 +1,5 @@
 import {
+    getProfileData,
     getProfileIsAuth,
     getProfileType,
     profileActions,
@@ -12,7 +13,7 @@ import cls from "./Navbar.module.scss";
 export default function Navbar() {
     const dispatch = useDispatch();
     const isAuth = useSelector(getProfileIsAuth);
-    const profileType = useSelector(getProfileType);
+    const profile = useSelector(getProfileData);
 
     let links = null;
 
@@ -27,7 +28,7 @@ export default function Navbar() {
             </Link>
         );
     } else {
-        if (profileType === "client") {
+        if (profile.type === "client") {
             links = (
                 <>
                     <Link to={"/goods"} className={cls.link}>

@@ -1,47 +1,35 @@
 import { OrderList } from "entities/Order";
-import {
-    getProfileData,
-    getProfileOrders,
-    getProfileType,
-    profileActions,
-    ProfileCard,
-} from "entities/Profile";
+import { getAuthData, getAuthType } from "features/Auth";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Card } from "shared/ui/Card/Card";
 import { Page } from "widgets/Page/Page";
 import cls from "./ProfilePage.module.scss";
+import { ProfileCard } from "../ProfileCard/ProfileCard";
+import { getClientOrders } from "entities/Client";
+import { getCourierOrders } from "entities/Courier";
 
 export const ProfilePage = () => {
-    const profile = useSelector(getProfileData)
-    const orders = useSelector(getProfileOrders);
-    
+    const profile = useSelector(getAuthData);
+    const type = useSelector(getAuthType);
+    const clientOrders = useSelector(getClientOrders);
+    const courierOrders = useSelector(getCourierOrders);
+    const orders = type === "client" ? clientOrders : courierOrders;
+
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
-                <ProfileCard
-                    profile={{
-                        firstName: "Артемий",
-                        lastName: "Знай",
-                        balance: "5000",
-                        city: "Королев",
-                        street: "пр-т Королева",
-                        building: "1",
-                        entrance: "3",
-                        floor: "5",
-                        aparts: "86",
-                    }}
-                />
+                <ProfileCard profile={{ balance: 5000, ...profile }} />
                 <div className={cls.title}>Активные заказы</div>
                 <OrderList
                     page="profile"
-                    type={profile.type}
+                    type={type}
                     orders={orders.filter((order) => !Boolean(order.delivered))}
                 />
                 <div className={cls.title}>История заказов</div>
                 <OrderList
                     page="profile"
-                    type={profile.type}
+                    type={type}
                     orders={orders.filter((order) => Boolean(order.delivered))}
                 />
                 {/* <OrderList

@@ -1,4 +1,4 @@
-import { getProfileData, getProfileIsAuth, getProfileType } from "entities/Profile";
+import { getAuthIsAuth, getAuthType } from "features/Auth";
 import { AuthPage } from "pages/AuthPage";
 import { CartPage } from "pages/CartPage";
 import { GoodsPage } from "pages/GoodsPage";
@@ -10,19 +10,18 @@ import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
 export const RouterProvider = () => {
-
-    const isAuth = useSelector(getProfileIsAuth)
-    const profile = useSelector(getProfileData)
+    const isAuth = useSelector(getAuthIsAuth);
+    const type = useSelector(getAuthType);
 
     let routes = null;
 
     if (!isAuth) {
         routes = <Route element={<AuthPage />} path="/auth" />;
     } else {
-        if (profile.type === "client") {
+        if (type === "client") {
             routes = (
                 <>
-                    <Route element={<GoodsPage />} path="/goods" />
+                    <Route element={<GoodsPage />} path="/" />
                     <Route element={<ProfilePage />} path="/profile" />
                     <Route element={<CartPage />} path="/cart" />
                 </>
@@ -30,7 +29,7 @@ export const RouterProvider = () => {
         } else {
             routes = (
                 <>
-                    <Route element={<OrdersPage />} path="/orders" />
+                    <Route element={<OrdersPage />} path="/" />
                     <Route element={<ProfilePage />} path="/profile" />
                 </>
             );

@@ -6,10 +6,6 @@ import cls from "./GoodList.module.scss";
 export const GoodList = memo((props) => {
     const { className, goods, onAddToCart, onRemoveFromCart, cart } = props;
 
-    // if (isLoading) {
-    //     return <Loader />;
-    // }
-
     return (
         <div className={classNames(cls.GoodList, {}, [className])}>
             {goods.map((good) => {

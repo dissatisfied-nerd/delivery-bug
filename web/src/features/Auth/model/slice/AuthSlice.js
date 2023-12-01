@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 
 const initialState = {
-    isLoading: false,
     data: {
         firstName: "",
         lastName: "",
@@ -14,23 +13,21 @@ const initialState = {
         floor: "",
         aparts: "",
         password: "",
-        type: "client",
     },
-    orders: [],
+    type: "client",
     isAuth: false,
     error: "",
 };
 
-export const profileSlice = createSlice({
-    name: "profile",
+export const authSlice = createSlice({
+    name: "auth",
     initialState,
     reducers: {
-        initProfileData: (state, action) => {
-            const data = localStorage.getItem(PROFILE_LOCALSTORAGE_KEY);
-            if (data) {
-                state.data = JSON.parse(data);
-                state.isAuth = true;
-            }
+        initAuthData: (state, action) => {
+            const { type, ...data } = action.payload;
+            state.isAuth = true;
+            state.data = data;
+            state.type = type;
         },
         setFirstName: (state, action) => {
             state.data.firstName = action.payload;
@@ -63,22 +60,20 @@ export const profileSlice = createSlice({
             state.data.password = action.payload;
         },
         setType: (state, action) => {
-            state.data.type = action.payload;
+            state.type = action.payload;
         },
         setIsAuth: (state, action) => {
             state.isAuth = action.payload;
         },
-        addOrder: (state, action) => {
-            state.orders = [...state.orders, action.payload];
-        },
         saveAuthData: (state, action) => {
             localStorage.setItem(
                 PROFILE_LOCALSTORAGE_KEY,
-                JSON.stringify(state.data)
+                JSON.stringify({ ...state.data, type: state.type })
             );
         },
         logout: (state, action) => {
             state.data = {};
+            state.type = "client";
             state.isAuth = false;
             localStorage.removeItem(PROFILE_LOCALSTORAGE_KEY);
         },
@@ -100,5 +95,5 @@ export const profileSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { actions: profileActions } = profileSlice;
-export const { reducer: profileReducer } = profileSlice;
+export const { actions: authActions } = authSlice;
+export const { reducer: authReducer } = authSlice;

@@ -3,27 +3,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { classNames } from "shared/lib/classNames/classNames";
 import { Button } from "shared/ui/Button/Button";
 import { Input } from "shared/ui/Input/Input";
-import {
-    getProfileData,
-} from "entities/Profile";
-import { profileActions } from "entities/Profile";
 import cls from "./AuthForm.module.scss";
 import { useNavigate } from "react-router-dom";
+import { sendRegisterData } from "../model/services/sendRegisterData";
+import { getAuthData, getAuthType } from "../model/selectors/getAuthData";
+import { authActions } from "../model/slice/AuthSlice";
 
 export const AuthForm = () => {
     const [formType, setFormType] = useState("signUp");
     const dispatch = useDispatch();
-    const {firstName
-        ,lastName
-        ,email
-        ,city
-        ,building
-        ,street
-        ,floor
-        ,entrance
-        ,aparts
-        ,password
-        ,type} = useSelector(getProfileData);
+    const data = useSelector(getAuthData);
+    const type = useSelector(getAuthType);
+    const {
+        firstName = "",
+        lastName = "",
+        email = "",
+        city = "",
+        building = "",
+        street = "",
+        floor = "",
+        entrance = "",
+        aparts = "",
+        password = "",
+    } = data;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,90 +42,96 @@ export const AuthForm = () => {
 
     const onChangeFirstName = useCallback(
         (data) => {
-            dispatch(profileActions.setFirstName(data));
+            dispatch(authActions.setFirstName(data));
         },
         [dispatch]
     );
 
     const onChangeLastName = useCallback(
         (data) => {
-            dispatch(profileActions.setLastName(data));
+            dispatch(authActions.setLastName(data));
         },
         [dispatch]
     );
 
     const onChangeEmail = useCallback(
         (data) => {
-            dispatch(profileActions.setEmail(data));
+            dispatch(authActions.setEmail(data));
         },
         [dispatch]
     );
 
     const onChangeCity = useCallback(
         (data) => {
-            dispatch(profileActions.setCity(data));
+            dispatch(authActions.setCity(data));
         },
         [dispatch]
     );
 
     const onChangeStreet = useCallback(
         (data) => {
-            dispatch(profileActions.setStreet(data));
+            dispatch(authActions.setStreet(data));
         },
         [dispatch]
     );
 
     const onChangeBuilding = useCallback(
         (data) => {
-            dispatch(profileActions.setBuilding(data));
+            dispatch(
+                authActions.setBuilding(Number(data?.replace(/\D/gm, "")))
+            );
         },
         [dispatch]
     );
 
     const onChangeEntrance = useCallback(
         (data) => {
-            dispatch(profileActions.setEntrance(data));
+            dispatch(
+                authActions.setEntrance(Number(data?.replace(/\D/gm, "")))
+            );
         },
         [dispatch]
     );
 
     const onChangeFloor = useCallback(
         (data) => {
-            dispatch(profileActions.setFloor(data));
+            dispatch(authActions.setFloor(Number(data?.replace(/\D/gm, ""))));
         },
         [dispatch]
     );
 
     const onChangeAparts = useCallback(
         (data) => {
-            dispatch(profileActions.setAparts(data));
+            dispatch(authActions.setAparts(Number(data?.replace(/\D/gm, ""))));
         },
         [dispatch]
     );
 
     const onChangePassword = useCallback(
         (data) => {
-            dispatch(profileActions.setPassword(data));
+            dispatch(authActions.setPassword(data));
         },
         [dispatch]
     );
 
     const onChangeType = useCallback(
         (data) => {
-            dispatch(profileActions.setType(data.target.value));
+            dispatch(authActions.setType(data.target.value));
         },
         [dispatch]
     );
 
     const onSuccess = useCallback(() => {
-        dispatch(profileActions.setIsAuth(true));
-        dispatch(profileActions.saveAuthData());
-        navigate("/profile", { replace: true });
+        dispatch(authActions.setIsAuth(true));
+        dispatch(authActions.saveAuthData());
+        navigate("/", { replace: true });
+        window.scrollTo(0, 0);
     }, [dispatch, navigate]);
 
     const onSignUp = useCallback(() => {
+        dispatch(sendRegisterData(data));
         onSuccess();
-    }, [onSuccess]);
+    }, [onSuccess, data, dispatch]);
 
     const onLogin = useCallback(() => {
         onSuccess();

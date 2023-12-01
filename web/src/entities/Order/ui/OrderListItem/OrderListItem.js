@@ -1,4 +1,4 @@
-import { profileActions } from "entities/Profile";
+import { profileActions } from "entities/Client";
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { classNames } from "shared/lib/classNames/classNames";
@@ -16,15 +16,14 @@ const getWeight = (goods) => {
 };
 
 export const OrderListItem = (props) => {
-    const { order, type = "client", taken = false, page } = props;
-    const dispatch = useDispatch();
-
-    const onTakeOrder = useCallback(() => {
-        dispatch(profileActions.addOrder(order));
-    }, [dispatch, order]);
-
-    const onCancelOrder = useCallback(() => {
-    }, []);
+    const {
+        order,
+        type = "client",
+        taken = false,
+        page,
+        onTakeOrder,
+        onCancelOrder,
+    } = props;
 
     const content =
         type === "client" ? (
@@ -89,17 +88,17 @@ export const OrderListItem = (props) => {
                         })}
                     </div>
                     <div className={cls.takeOrderWrapper}>
-                        {page === "profile" ?
-                            <Button
-                            className={cls.takeOrderBtn}
-                            onClick={onCancelOrder}
-                        >
-                            Завершить
-                        </Button>
-                        : !taken ? (
+                        {page === "profile" ? (
                             <Button
                                 className={cls.takeOrderBtn}
-                                onClick={onTakeOrder}
+                                onClick={onCancelOrder}
+                            >
+                                Завершить
+                            </Button>
+                        ) : !taken ? (
+                            <Button
+                                className={cls.takeOrderBtn}
+                                onClick={() => onTakeOrder(order)}
                             >
                                 Взять заказ
                             </Button>

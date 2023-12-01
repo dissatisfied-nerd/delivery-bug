@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useCallback } from "react";
 import cls from "./OrdersPage.module.scss";
 import { Page } from "widgets/Page/Page";
 import { OrderList } from "entities/Order";
+import { useDispatch } from "react-redux";
+import { courierActions } from "entities/Courier";
 
 export const OrdersPage = () => {
+    const dispatch = useDispatch();
+
+    const onTakeOrder = useCallback(
+        (order) => {
+            dispatch(courierActions.addOrder(order));
+        },
+        [dispatch]
+    );
+
+    const onCancelOrder = useCallback(() => {}, []);
+
     return (
         <Page>
             <span className={cls.title}> Заказы </span>
             <OrderList
                 className={cls.orderList}
                 type="courier"
+                onTakeOrder={onTakeOrder}
+                onCancelOrder={onCancelOrder}
                 orders={[
                     {
                         created: "22.11.23",

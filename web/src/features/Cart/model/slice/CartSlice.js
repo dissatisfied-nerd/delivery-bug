@@ -10,9 +10,13 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         initCart: (state, _) => {
-            state.cart = JSON.parse(
+            const cart = JSON.parse(
                 localStorage.getItem(CART_LOCALSTORAGE_KEY)
             );
+
+            if (cart) {
+                state.cart = cart;
+            }
         },
         addToCart: (state, action) => {
             if (state.cart[action.payload.id] !== undefined) {

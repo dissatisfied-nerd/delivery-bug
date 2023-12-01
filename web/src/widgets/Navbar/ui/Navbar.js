@@ -1,9 +1,6 @@
-import {
-    getProfileData,
-    getProfileIsAuth,
-    getProfileType,
-    profileActions,
-} from "entities/Profile";
+import { clientActions } from "entities/Client";
+import { authActions } from "features/Auth";
+import { getAuthIsAuth, getAuthType } from "features/Auth";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -12,13 +9,15 @@ import cls from "./Navbar.module.scss";
 
 export default function Navbar() {
     const dispatch = useDispatch();
-    const isAuth = useSelector(getProfileIsAuth);
-    const profile = useSelector(getProfileData);
+    const isAuth = useSelector(getAuthIsAuth);
+    const type = useSelector(getAuthType);
 
     let links = null;
 
     const onLogout = useCallback(() => {
-        dispatch(profileActions.logout());
+        dispatch(authActions.logout());
+        // dispatch(clientActions.logout());
+        // dispatch(courierActions.logout());
     }, [dispatch]);
 
     if (!isAuth) {
@@ -28,10 +27,10 @@ export default function Navbar() {
             </Link>
         );
     } else {
-        if (profile.type === "client") {
+        if (type === "client") {
             links = (
                 <>
-                    <Link to={"/goods"} className={cls.link}>
+                    <Link to={"/"} className={cls.link}>
                         Товары
                     </Link>
                     <Link to={"/profile"} className={cls.link}>
@@ -48,7 +47,7 @@ export default function Navbar() {
         } else {
             links = (
                 <>
-                    <Link to={"/orders"} className={cls.link}>
+                    <Link to={"/"} className={cls.link}>
                         Заказы
                     </Link>
                     <Link to={"/profile"} className={cls.link}>

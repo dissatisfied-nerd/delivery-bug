@@ -1,0 +1,14 @@
+.ProfilePageCard {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-color);
+    border: 1px solid var(--inverted-bg-color);
+    border-radius: 5px;
+    gap: 30px;
+    height: 100%;
+}
+
+.title {
+    font: var(--font-xl);
+    margin-bottom: 10px;
+}

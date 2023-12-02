@@ -1,0 +1,27 @@
+.AuthForm {
+    width: 600px;
+    border: 1px solid var(--inverted-bg-color);
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font: var(--font-xl);
+    margin-bottom: 20px;
+}
+
+.input {
+    margin-bottom: 10px;
+}
+
+.sendBtn {
+    background-color: var(--inverted-bg-color);
+    color: var(--inverted-primary-color);
+}
+
+.changeForm {
+    opacity: 0.9;
+    color: var(--inverted-bg-color);
+}

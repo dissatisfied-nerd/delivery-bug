@@ -1,0 +1,16 @@
+@import "./reset.scss";
+@import "./variables/global.scss";
+
+.app {
+    font: var(--font-m);
+    color: var(--primary-color);
+    background: var(--bg-color);
+    min-height: 100vh;
+    width: 100%;
+}
+
+.content-page {
+    display: flex;
+    max-width: 1472px;
+    margin: 0 auto;
+}

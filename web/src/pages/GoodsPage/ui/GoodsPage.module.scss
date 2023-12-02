@@ -1,0 +1,13 @@
+.GoodsPage {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font: var(--font-xl);
+}
+
+.GoodList {
+    margin-top: 30px;
+    align-self: center;
+}

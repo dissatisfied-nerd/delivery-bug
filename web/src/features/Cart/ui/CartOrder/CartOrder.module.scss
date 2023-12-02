@@ -1,0 +1,30 @@
+.CartOrder {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font: bold var(--font-l);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--secondary-color);
+    padding: 5px;
+}
+
+.information {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding: 0 5px;
+}
+
+.cost {
+    font-weight: bold;
+}
+
+.orderBtn {
+    margin-top: 15px;
+    background: var(--inverted-bg-color);
+    color: var(--bg-color);
+}

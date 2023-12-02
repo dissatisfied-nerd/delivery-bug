@@ -8,7 +8,6 @@ export const NotFoundPage = () => {
     const isAuth = useSelector(getAuthIsAuth);
     const navigate = useNavigate();
     if (!isAuth) {
-        console.log(1);
         navigate("/auth", { replace: true });
     }
     // useEffect(() => {

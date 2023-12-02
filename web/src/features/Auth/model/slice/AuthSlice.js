@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
+import { sendRegisterData } from "../services/sendRegisterData";
 
 const initialState = {
     data: {
@@ -78,20 +79,20 @@ export const authSlice = createSlice({
             localStorage.removeItem(PROFILE_LOCALSTORAGE_KEY);
         },
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(loginByFirstName.pending, (state) => {
-    //             state.data.error = undefined;
-    //             state.data.isLoading = true;
-    //         })
-    //         .addCase(loginByFirstName.fulfilled, (state) => {
-    //             state.data.isLoading = false;
-    //         })
-    //         .addCase(loginByFirstName.rejected, (state, action) => {
-    //             state.data.isLoading = false;
-    //             state.data.error = action.payload;
-    //         });
-    // },
+    extraReducers: (builder) => {
+        builder
+            // .addCase(loginByFirstName.pending, (state) => {
+            //     state.data.error = undefined;
+            //     state.data.isLoading = true;
+            // })
+            .addCase(sendRegisterData.fulfilled, (state) => {
+                state.isAuth = true;
+                state.error = "";
+            })
+            .addCase(sendRegisterData.rejected, (state, action) => {
+                state.error = action.payload;
+            });
+    },
 });
 
 // Action creators are generated for each case reducer function

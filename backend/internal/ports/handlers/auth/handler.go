@@ -13,8 +13,6 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-var secretKey = os.Getenv("SECRET_KEY")
-
 type IHandler interface {
 	SignUpUser(ctx *gin.Context)
 	SignInUser(ctx *gin.Context)

@@ -24,5 +24,8 @@ func SetupRoutes(service user.UsersService, logger logging.Logger, validator *va
 	router.POST("/register", h.SignUpUser)
 	router.POST("/logout", h.Logout)
 
+	router.StaticFile("/swagger/api.json", "./api/api.json")
+	router.Static("/swagger-ui", "./static/swagger-ui/dist")
+
 	return router
 }

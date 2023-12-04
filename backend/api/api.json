@@ -8,6 +8,7 @@
     "/login": {
       "post": {
         "summary": "sign in user",
+        "tags": ["user"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -50,6 +51,7 @@
     "/register": {
       "post": {
         "summary": "sign up user",
+        "tags": ["user"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -91,6 +93,7 @@
     },
     "/logout": {
       "post": {
+        "tags": ["user"],
         "summary": "logout",
         "responses": {
           "200": {
@@ -99,6 +102,112 @@
               "application/json": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "tags": ["order"],
+        "summary": "create order",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderDTOInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "description": "uuid order"
+                },
+                "example": "6b7a5f36-9c84-42fa-9951-5939ed7f2973"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["order"],
+        "summary": "get orders",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDTOInput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -172,6 +281,73 @@
           "apartment": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "OrderProductDTO": {
+        "required": [
+          "amount",
+          "product_id"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderDTOInput": {
+        "required": [
+          "price",
+          "client_id",
+          "products"
+        ],
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "integer"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderProductDTO"
+            }
+          }
+        }
+      },
+      "OrderDTOOutput": {
+        "required": [
+          "price",
+          "client_id",
+          "creation_time",
+          "delivery_time",
+          "products"
+        ],
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "integer"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "creation_time": {
+            "type": "string"
+          },
+          "delivery_time": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderProductDTO"
+            }
           }
         }
       }

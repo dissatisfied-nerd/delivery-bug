@@ -5,7 +5,7 @@ import (
 )
 
 type Addresses struct {
-	Id string `db:"id"`
+	ID string `db:"id"`
 
 	City      string `db:"city"`
 	Street    string `db:"street"`
@@ -16,7 +16,7 @@ type Addresses struct {
 }
 
 type Clients struct {
-	Id string `db:"id"`
+	ID string `db:"id"`
 
 	FirstName string  `db:"first_name"`
 	LastName  string  `db:"last_name"`
@@ -34,28 +34,28 @@ type LoginForm struct {
 }
 
 type Couriers struct {
-	Id string `db:"id"`
+	ID string `db:"id"`
 
-	FirstName string `db:"first_name"`
-	LastName  string `db:"last_name"`
-	Propiska  bool   `db:"propiska"`
+	FirstName    string `db:"first_name"`
+	LastName     string `db:"last_name"`
+	Registration bool   `db:"registration"`
 }
 
 type Stores struct {
-	Id string `db:"id"`
+	ID string `db:"id"`
 
 	Reputation float64 `db:"reputation"`
 	Name       string  `db:"name"`
 }
 
 type Tags struct {
-	Id string `db:"id"`
+	ID string `db:"id"`
 
 	Tag string `db:"tag"`
 }
 
 type Products struct {
-	Id string `db:"id"`
+	ID string `db:"id"`
 
 	Name        string  `db:"name"`
 	Price       float32 `db:"price"`
@@ -75,18 +75,17 @@ type ProductsTags struct {
 }
 
 type Orders struct {
-	Id string `db:"id"`
+	ID string `db:"id"`
 
-	Name         string     `db:"name"`
+	Price        float64    `db: "price"`
 	CreationTime *time.Time `db:"creation_time"`
 	DeliveryTime *time.Time `db:"delivery_time"`
 
 	ClientId  string `db:"client_id"`
 	CourierId string `db:"courier_id"`
-	ProductID string `db:"product_id"`
 }
 
-type Basket struct {
+type OrderProducts struct {
 	Amount int `db:"amount"`
 
 	OrderId   string `db:"order_id"`
@@ -94,7 +93,7 @@ type Basket struct {
 }
 
 type Reviews struct {
-	Id string `db:"id"`
+	ID string `db:"id"`
 
 	Mark int `db:"mark"`
 

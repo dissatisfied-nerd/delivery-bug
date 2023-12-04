@@ -6,14 +6,20 @@ import { Input } from "shared/ui/Input/Input";
 import cls from "./AuthForm.module.scss";
 import { useNavigate } from "react-router-dom";
 import { sendRegisterData } from "../model/services/sendRegisterData";
-import { getAuthData, getAuthType } from "../model/selectors/getAuthData";
+import {
+    getAuthData,
+    getAuthError,
+    getAuthType,
+} from "../model/selectors/getAuthData";
 import { authActions } from "../model/slice/AuthSlice";
+import { validateNumber } from "../model/services/validateForm/validateNumber";
 
 export const AuthForm = () => {
     const [formType, setFormType] = useState("signUp");
     const dispatch = useDispatch();
     const data = useSelector(getAuthData);
     const type = useSelector(getAuthType);
+    const error = useSelector(getAuthError);
     const {
         firstName = "",
         lastName = "",
@@ -77,32 +83,28 @@ export const AuthForm = () => {
 
     const onChangeBuilding = useCallback(
         (data) => {
-            dispatch(
-                authActions.setBuilding(Number(data?.replace(/\D/gm, "")))
-            );
+            dispatch(authActions.setBuilding(validateNumber(data)));
         },
         [dispatch]
     );
 
     const onChangeEntrance = useCallback(
         (data) => {
-            dispatch(
-                authActions.setEntrance(Number(data?.replace(/\D/gm, "")))
-            );
+            dispatch(authActions.setEntrance(validateNumber(data)));
         },
         [dispatch]
     );
 
     const onChangeFloor = useCallback(
         (data) => {
-            dispatch(authActions.setFloor(Number(data?.replace(/\D/gm, ""))));
+            dispatch(authActions.setFloor(validateNumber(data)));
         },
         [dispatch]
     );
 
     const onChangeAparts = useCallback(
         (data) => {
-            dispatch(authActions.setAparts(Number(data?.replace(/\D/gm, ""))));
+            dispatch(authActions.setAparts(validateNumber(data)));
         },
         [dispatch]
     );
@@ -122,15 +124,15 @@ export const AuthForm = () => {
     );
 
     const onSuccess = useCallback(() => {
-        dispatch(authActions.setIsAuth(true));
-        dispatch(authActions.saveAuthData());
         navigate("/", { replace: true });
         window.scrollTo(0, 0);
-    }, [dispatch, navigate]);
+    }, [navigate]);
 
-    const onSignUp = useCallback(() => {
-        dispatch(sendRegisterData(data));
-        onSuccess();
+    const onSignUp = useCallback(async () => {
+        const result = await dispatch(sendRegisterData(data));
+        if (!result.meta.rejectedWithValue) {
+            onSuccess();
+        }
     }, [onSuccess, data, dispatch]);
 
     const onLogin = useCallback(() => {
@@ -141,6 +143,7 @@ export const AuthForm = () => {
         return (
             <div className={classNames(cls.AuthForm, {}, [])}>
                 <span className={cls.title}>Регистрация</span>
+                <span style={{ color: "red" }}>{error}</span>
                 <Input
                     className={cls.input}
                     label="Имя"
@@ -240,6 +243,18 @@ export const AuthForm = () => {
                     label="Пароль"
                     value={password}
                 />
+                <select
+                    className={cls.input}
+                    onChange={onChangeType}
+                    value={type}
+                >
+                    <option value="client" key="client">
+                        Пользователь
+                    </option>
+                    <option value="courier" key="courier">
+                        Курьер
+                    </option>
+                </select>
                 <Button className={cls.sendBtn} onClick={onLogin}>
                     Войти
                 </Button>

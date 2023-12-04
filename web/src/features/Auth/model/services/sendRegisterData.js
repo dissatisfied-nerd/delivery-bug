@@ -2,6 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clientActions } from "entities/Client";
 import { courierActions } from "entities/Courier";
 import { getAuthType } from "../selectors/getAuthData";
+import { authActions } from "../slice/AuthSlice";
+import { validateForm } from "./validateForm/validateForm";
 
 export const sendRegisterData = createAsyncThunk(
     "auth/sendRegisterData",
@@ -10,6 +12,9 @@ export const sendRegisterData = createAsyncThunk(
         const type = getAuthType(getState());
 
         try {
+            if (!validateForm(registerData)) {
+                return rejectWithValue("Все поля должны быть заполнены");
+            }
             // const response = await extra.api.post("/register", registerData, {
             //     headers: {
             //         "Access-Control-Allow-Origin": "*",
@@ -26,6 +31,7 @@ export const sendRegisterData = createAsyncThunk(
             } else {
                 dispatch(courierActions.setCourierData(registerData));
             }
+            dispatch(authActions.saveAuthData());
             // return response.data;
         } catch (e) {
             return rejectWithValue("error");

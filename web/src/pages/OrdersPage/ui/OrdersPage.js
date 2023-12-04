@@ -29,7 +29,7 @@ export const OrdersPage = () => {
                     {
                         created: "22.11.23",
                         client: {
-                            adress: {
+                            address: {
                                 city: "Москва",
                                 street: "Охотный ряд",
                                 building: "1",
@@ -70,7 +70,7 @@ export const OrdersPage = () => {
                     {
                         created: "22.11.23",
                         client: {
-                            adress: {
+                            address: {
                                 city: "Москва",
                                 street: "Охотный ряд",
                                 building: "1",
@@ -111,7 +111,7 @@ export const OrdersPage = () => {
                     {
                         created: "22.11.23",
                         client: {
-                            adress: {
+                            address: {
                                 city: "Москва",
                                 street: "Охотный ряд",
                                 building: "1",
@@ -152,7 +152,7 @@ export const OrdersPage = () => {
                     {
                         created: "22.11.23",
                         client: {
-                            adress: {
+                            address: {
                                 city: "Москва",
                                 street: "Охотный ряд",
                                 building: "1",
@@ -193,7 +193,7 @@ export const OrdersPage = () => {
                     {
                         created: "22.11.23",
                         client: {
-                            adress: {
+                            address: {
                                 city: "Москва",
                                 street: "Охотный ряд",
                                 building: "1",
@@ -234,7 +234,7 @@ export const OrdersPage = () => {
                     {
                         created: "22.11.23",
                         client: {
-                            adress: {
+                            address: {
                                 city: "Москва",
                                 street: "Охотный ряд",
                                 building: "1",
@@ -275,7 +275,7 @@ export const OrdersPage = () => {
                     {
                         created: "22.11.23",
                         client: {
-                            adress: {
+                            address: {
                                 city: "Москва",
                                 street: "Охотный ряд",
                                 building: "1",
@@ -316,7 +316,7 @@ export const OrdersPage = () => {
                     {
                         created: "22.11.23",
                         client: {
-                            adress: {
+                            address: {
                                 city: "Москва",
                                 street: "Охотный ряд",
                                 building: "1",

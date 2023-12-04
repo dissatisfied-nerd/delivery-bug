@@ -69,7 +69,7 @@ export const authSlice = createSlice({
         saveAuthData: (state, action) => {
             localStorage.setItem(
                 PROFILE_LOCALSTORAGE_KEY,
-                JSON.stringify({ ...state.data, type: state.type })
+                JSON.stringify({ ...action.payload, type: state.type })
             );
         },
         logout: (state, action) => {

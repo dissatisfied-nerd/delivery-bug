@@ -4,15 +4,19 @@ import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 const initialState = {
     isLoading: false,
     data: {
+        address: [
+            {
+                email: "",
+                city: "",
+                street: "",
+                building: "",
+                entrance: "",
+                floor: "",
+                aparts: "",
+            },
+        ],
         firstName: "",
         lastName: "",
-        email: "",
-        city: "",
-        street: "",
-        building: "",
-        entrance: "",
-        floor: "",
-        aparts: "",
         password: "",
     },
     orders: [],
@@ -28,6 +32,9 @@ export const clientSlice = createSlice({
         },
         logout: (state, action) => {
             state.data = {};
+        },
+        addAddress: (state, action) => {
+            state.data.address = [...state.data.address, action.payload];
         },
     },
     // extraReducers: (builder) => {

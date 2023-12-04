@@ -60,12 +60,12 @@ export const OrderListItem = (props) => {
                     <span>
                         Адрес{" "}
                         <span className={cls.headerText}>
-                            {order.client.adress.city}, ул.{" "}
-                            {order.client.adress.street}, д.{" "}
-                            {order.client.adress.building}, подъезд{" "}
-                            {order.client.adress.entrance}, этаж{" "}
-                            {order.client.adress.floor}, кв{" "}
-                            {order.client.adress.aparts}
+                            {order.client.address.city}, ул.{" "}
+                            {order.client.address.street}, д.{" "}
+                            {order.client.address.building}, подъезд{" "}
+                            {order.client.address.entrance}, этаж{" "}
+                            {order.client.address.floor}, кв{" "}
+                            {order.client.address.aparts}
                         </span>
                     </span>
                     <span>

@@ -26,12 +26,31 @@ export const sendRegisterData = createAsyncThunk(
             // if (!response.data) {
             //     throw new Error();
             // }
+            const data =
+                type === "client"
+                    ? {
+                          address: [
+                              {
+                                  city: registerData.city,
+                                  street: registerData.street,
+                                  building: registerData.building,
+                                  entrance: registerData.entrance,
+                                  floor: registerData.floor,
+                                  aparts: registerData.aparts,
+                              },
+                          ],
+                          firstName: registerData.firstName,
+                          lastName: registerData.lastName,
+                          email: registerData.email,
+                          password: registerData.password,
+                      }
+                    : registerData;
             if (type === "client") {
-                dispatch(clientActions.setClientData(registerData));
+                dispatch(clientActions.setClientData(data));
             } else {
-                dispatch(courierActions.setCourierData(registerData));
+                dispatch(courierActions.setCourierData(data));
             }
-            dispatch(authActions.saveAuthData());
+            dispatch(authActions.saveAuthData(data));
             // return response.data;
         } catch (e) {
             return rejectWithValue("error");

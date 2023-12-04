@@ -29,10 +29,22 @@
     margin-bottom: 10px;
 }
 
-.adress {
-    width: 80%;
+.address {
     flex-wrap: wrap;
     display: flex;
-    justify-content: space-between;
+
+    margin-bottom: 20px;
     font: var(--font-l);
+}
+
+.addressItem {
+    width: 400px;
+}
+
+.addressItemNumber {
+    width: 120px;
+}
+
+.addAddress {
+    margin-top: 20px;
 }

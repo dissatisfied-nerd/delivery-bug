@@ -26,6 +26,7 @@ INSERT INTO couriers (first_name, last_name, registration) VALUES ('A3', 'B3', f
 
 INSERT INTO clients (first_name, last_name) VALUES('A1', 'B1');
 INSERT INTO clients (first_name, last_name) VALUES('A2', 'B2');
+INSERT INTO clients (first_name, last_name) VALUES('A4', 'B4');
 
 SELECT first_name, last_name
 FROM couriers
@@ -46,3 +47,6 @@ UNION ALL
 SELECT first_name, last_name
 FROM clients
 ORDER BY first_name
+
+
+SELECT

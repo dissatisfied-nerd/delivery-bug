@@ -18,9 +18,7 @@ CREATE TABLE IF NOT EXISTS clients
 
     first_name varchar(128),
     last_name  varchar(128),
-    balance    float,
-
-    address_id UUID REFERENCES addresses (id)
+    balance    float
 );
 
 CREATE TABLE IF NOT EXISTS loginForm
@@ -76,6 +74,7 @@ CREATE TABLE IF NOT EXISTS products
     weight           float,
     description      varchar(512),
     image            bytea
+
 );
 
 CREATE TABLE IF NOT EXISTS products_stores
@@ -101,7 +100,8 @@ CREATE TABLE IF NOT EXISTS orders
     delivery_time timestamp,
 
     client_id     UUID REFERENCES clients (id),
-    courier_id    UUID REFERENCES couriers (id)
+    courier_id    UUID REFERENCES couriers (id),
+    address_id UUID REFERENCES addresses (id)
 );
 
 CREATE TABLE IF NOT EXISTS order_products

@@ -1,3 +1,7 @@
+SELECT * FROM clients;
+
+SELECT * FROM addresses;
+
 -- Адресы с одинаковыми улицами
 SELECT a.id as id1, b.id as id2, a.city, a.street
 FROM addresses as a, addresses as b

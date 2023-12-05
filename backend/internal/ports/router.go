@@ -2,7 +2,7 @@ package ports
 
 import (
 	"delivery-bug/internal/auth"
-	handlers "delivery-bug/internal/ports/handlers/auth"
+	handlers "delivery-bug/internal/ports/handlers/auth/client"
 	"delivery-bug/internal/service/user"
 	"delivery-bug/pkg/logging"
 	"net/http"
@@ -20,8 +20,8 @@ func SetupRoutes(service user.UsersService, logger logging.Logger, validator *va
 		c.String(http.StatusOK, "Check")
 	})
 
-	router.POST("/login", h.SignInUser)
-	router.POST("/register", h.SignUpUser)
+	router.POST("/login", h.SignInClient)
+	router.POST("/register", h.SignUpClient)
 	router.POST("/logout", h.Logout)
 
 	router.StaticFile("/swagger/api.json", "./api/api.json")

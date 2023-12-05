@@ -1,4 +1,4 @@
-package handlers
+package client
 
 import (
 	"delivery-bug/internal/auth"
@@ -13,9 +13,11 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type IHandler interface {
-	SignUpUser(ctx *gin.Context)
-	SignInUser(ctx *gin.Context)
+const role = "client"
+
+type ClientsAuthHandler interface {
+	SignUpClient(ctx *gin.Context)
+	SignInClient(ctx *gin.Context)
 	Logout(ctx *gin.Context)
 }
 
@@ -31,8 +33,8 @@ func NewHandler(service user.UsersService, l logging.Logger,
 	return &Handler{service: service, l: &l, validator: validator, auth: auth}
 }
 
-func (h *Handler) SignUpUser(ctx *gin.Context) {
-	var payload auth.SignUpInput
+func (h *Handler) SignUpClient(ctx *gin.Context) {
+	var payload auth.ClientSignUpInput
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		h.l.Errorf("ERROR can't bind json: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -52,7 +54,7 @@ func (h *Handler) SignUpUser(ctx *gin.Context) {
 		return
 	}
 
-	tokenString, err := h.auth.GenerateJWT(userID)
+	tokenString, err := h.auth.GenerateJWT(userID, role)
 	if err != nil {
 		h.l.Errorf("ERROR while generating jwt: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -62,10 +64,10 @@ func (h *Handler) SignUpUser(ctx *gin.Context) {
 	ctx.SetCookie("jwt", tokenString, int(time.Now().Add(time.Hour*24*3).Unix()), "/",
 		os.Getenv("HOST"), true, true)
 
-	ctx.JSON(http.StatusOK, gin.H{})
+	ctx.JSON(http.StatusOK, gin.H{"client_id": userID})
 }
 
-func (h *Handler) SignInUser(ctx *gin.Context) {
+func (h *Handler) SignInClient(ctx *gin.Context) {
 	var payload auth.SignInInput
 
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
@@ -86,7 +88,7 @@ func (h *Handler) SignInUser(ctx *gin.Context) {
 		return
 	}
 
-	tokenString, err := h.auth.GenerateJWT(userID)
+	tokenString, err := h.auth.GenerateJWT(userID, role)
 	if err != nil {
 		h.l.Errorf("ERROR while generating jwt: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -96,7 +98,7 @@ func (h *Handler) SignInUser(ctx *gin.Context) {
 	ctx.SetCookie("jwt", tokenString, int(time.Now().Add(time.Hour*24*3).Unix()), "/",
 		os.Getenv("HOST"), true, true)
 
-	ctx.Status(http.StatusOK)
+	ctx.JSON(http.StatusOK, gin.H{"client_id": userID})
 }
 
 func (h *Handler) Logout(ctx *gin.Context) {

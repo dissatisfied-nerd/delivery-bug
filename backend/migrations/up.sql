@@ -21,13 +21,22 @@ CREATE TABLE IF NOT EXISTS clients
     balance    float
 );
 
-CREATE TABLE IF NOT EXISTS loginForm
+CREATE TABLE IF NOT EXISTS clients_loginform
 (
     login varchar(128) PRIMARY KEY,
 
     password varchar(128),
 
     client_id UUID REFERENCES clients (id)
+);
+
+CREATE TABLE IF NOT EXISTS couriers_loginform
+(
+    login varchar(128) PRIMARY KEY,
+
+    password varchar(128),
+
+    courier_id UUID REFERENCES couriers (id)
 );
 
 
@@ -37,7 +46,8 @@ CREATE TABLE IF NOT EXISTS couriers
 
     first_name varchar(128),
     last_name  varchar(128),
-    registration   varchar(128) NOT NULL -- Страна регистрации
+    registration   bool NOT NULL, -- Страна регистрации
+    address_id UUID REFERENCES addresses (id)
 );
 
 CREATE TABLE IF NOT EXISTS administrators

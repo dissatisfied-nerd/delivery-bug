@@ -25,12 +25,20 @@ type Clients struct {
 	AddressId string `db:"address_id"`
 }
 
-type LoginForm struct {
+type ClientsLoginForm struct {
 	Login string `db:"login"`
 
 	Password string `db:"password"`
 
 	ClientId string `db:"client_id"`
+}
+
+type CouriersLoginForm struct {
+	Login string `db:"login"`
+
+	Password string `db:"password"`
+
+	CourierId string `db:"courier_id"`
 }
 
 type Couriers struct {

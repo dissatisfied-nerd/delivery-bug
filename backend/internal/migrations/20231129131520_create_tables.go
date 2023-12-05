@@ -44,7 +44,7 @@ func upCreateTables(tx *sql.Tx) error {
 		return err
 	}
 
-	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS loginForm
+	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS clients_loginForm
 (
     login varchar(128) PRIMARY KEY,
 
@@ -62,9 +62,22 @@ func upCreateTables(tx *sql.Tx) error {
 
     first_name varchar(128),
     last_name  varchar(128),
-    registration   varchar(128) NOT NULL -- Страна регистрации
+    registration  bool NOT NULL, -- Страна регистрации
+    address_id UUID REFERENCES addresses (id)
 );
 `)
+	if err != nil {
+		return err
+	}
+
+	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS couriers_loginform
+(
+    login varchar(128) PRIMARY KEY,
+
+    password varchar(128),
+
+    courier_id UUID REFERENCES couriers (id)
+);`)
 	if err != nil {
 		return err
 	}
@@ -223,7 +236,11 @@ func downCreateTables(tx *sql.Tx) error {
 	if err != nil {
 		return err
 	}
-	_, err = tx.Exec(`drop table loginForm cascade;`)
+	_, err = tx.Exec(`drop table clients_loginform cascade;`)
+	if err != nil {
+		return err
+	}
+	_, err = tx.Exec(`drop table couriers_loginform cascade;`)
 	if err != nil {
 		return err
 	}

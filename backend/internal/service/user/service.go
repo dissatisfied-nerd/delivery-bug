@@ -12,7 +12,7 @@ import (
 )
 
 type UsersService interface {
-	CreateUser(ctx context.Context, input auth.SignUpInput) (string, error)
+	CreateUser(ctx context.Context, input auth.ClientSignUpInput) (string, error)
 	CheckUser(ctx context.Context, input auth.SignInInput) (string, error)
 }
 
@@ -41,7 +41,7 @@ func (s *Service) CheckUser(ctx context.Context, input auth.SignInInput) (string
 	return form.ClientId, nil
 }
 
-func (s *Service) CreateUser(ctx context.Context, input auth.SignUpInput) (string, error) {
+func (s *Service) CreateUser(ctx context.Context, input auth.ClientSignUpInput) (string, error) {
 	err := s.repo.CheckLoginTaken(ctx, input.Login)
 	if err != nil && err != errors.New("no rows in result set") {
 		s.l.Error(err)
@@ -68,7 +68,7 @@ func (s *Service) CreateUser(ctx context.Context, input auth.SignUpInput) (strin
 		return "", err
 	}
 
-	form := models.LoginForm{Login: input.Login, Password: string(hashedPassword), ClientId: userID}
+	form := models.ClientsLoginForm{Login: input.Login, Password: string(hashedPassword), ClientId: userID}
 	err = s.repo.InsertLoginForm(ctx, form)
 	if err != nil {
 		return "", err

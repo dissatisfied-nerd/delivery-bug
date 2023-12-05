@@ -1,4 +1,4 @@
-package user
+package courier
 
 import (
 	"context"
@@ -9,12 +9,12 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type UsersRepository interface {
-	CheckLogin(ctx context.Context, login string) (models.ClientsLoginForm, error)
-	CheckLoginTaken(ctx context.Context, login string) error
+type CouriersRepository interface {
 	InsertAddress(ctx context.Context, addressDto dtos.AddressDTO) (string, error)
-	InsertUser(ctx context.Context, clientDto dtos.ClientDTO, addressID string) (string, error)
-	InsertLoginForm(ctx context.Context, form models.ClientsLoginForm) error
+	InsertCourier(ctx context.Context, courierDto dtos.CourierDTO, addressID string) (string, error)
+	InsertLoginForm(ctx context.Context, form models.CouriersLoginForm) error
+	CheckLoginTaken(ctx context.Context, login string) error
+	CheckLogin(ctx context.Context, login string) (models.CouriersLoginForm, error)
 }
 
 type Repository struct {
@@ -26,13 +26,13 @@ func NewRepository(db *pgxpool.Pool, l logging.Logger) *Repository {
 	return &Repository{db: db, l: &l}
 }
 
-func (r *Repository) CheckLogin(ctx context.Context, login string) (models.ClientsLoginForm, error) {
-	var result models.ClientsLoginForm
-	err := r.db.QueryRow(ctx, checkLoginQuery, login).Scan(&result.Login, &result.Password, &result.ClientId)
+func (r *Repository) CheckLogin(ctx context.Context, login string) (models.CouriersLoginForm, error) {
+	var result models.CouriersLoginForm
+	err := r.db.QueryRow(ctx, checkLoginQuery, login).Scan(&result.Login, &result.Password, &result.CourierId)
 	if err != nil {
-		return models.ClientsLoginForm{}, err
+		return models.CouriersLoginForm{}, err
 	} else if errors.Is(err, errors.New("no rows in result set")) {
-		return models.ClientsLoginForm{}, errors.New("there's no user with such login")
+		return models.CouriersLoginForm{}, errors.New("there's no user with such login")
 	}
 	return result, nil
 }
@@ -67,23 +67,23 @@ func (r *Repository) InsertAddress(ctx context.Context, addressDto dtos.AddressD
 	return insertedAddressId, nil
 }
 
-func (r *Repository) InsertUser(ctx context.Context, clientDto dtos.ClientDTO, addressID string) (string, error) {
-	var insertedUserID string
-	err := r.db.QueryRow(ctx, insertClientQuery, clientDto.FirstName, clientDto.LastName, clientDto.Balance,
-		addressID).Scan(&insertedUserID)
+func (r *Repository) InsertCourier(ctx context.Context, courierDto dtos.CourierDTO, addressID string) (string, error) {
+	var insertedCourierID string
+	err := r.db.QueryRow(ctx, insertCourierQuery, courierDto.FirstName, courierDto.LastName, courierDto.Registration,
+		addressID).Scan(&insertedCourierID)
 	if err != nil {
-		r.l.Errorf("ERROR while inserting user %s %s in db: %v", clientDto.FirstName, clientDto.LastName, err)
+		r.l.Errorf("error inserting courier %s %s to db: %v", courierDto.FirstName, courierDto.LastName, err)
 		return "", err
 	}
-	r.l.Infof("insert user %s %s in db", clientDto.FirstName, clientDto.LastName)
-	return insertedUserID, nil
+	r.l.Infof("insert courier %s %s to db", courierDto.FirstName, courierDto.LastName)
+	return insertedCourierID, nil
 }
 
-func (r *Repository) InsertLoginForm(ctx context.Context, form models.ClientsLoginForm) error {
+func (r *Repository) InsertLoginForm(ctx context.Context, form models.CouriersLoginForm) error {
 	_, err := r.db.Exec(ctx, insertLoginFormQuery,
 		form.Login,
 		form.Password,
-		form.ClientId,
+		form.CourierId,
 	)
 	if err != nil {
 		r.l.Errorf("ERROR while inserting loginform %s in db: %v", form.Login, err)

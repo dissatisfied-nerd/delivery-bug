@@ -7,7 +7,7 @@ import (
 )
 
 type Auth interface {
-	GenerateJWT(userID string) (string, error)
+	GenerateJWT(id string, role string) (string, error)
 	GetHost() string
 }
 
@@ -21,9 +21,10 @@ func NewAuth(config Config) Auth {
 
 var log = logging.GetLogger()
 
-func (a *auth) GenerateJWT(userID string) (string, error) {
+func (a *auth) GenerateJWT(id string, role string) (string, error) {
 	claims := &Claims{
-		UserID:    userID,
+		ID:        id,
+		Role:      role,
 		IssuedAt:  time.Now().Unix(),
 		ExpiresAt: time.Now().Add(time.Hour * 24 * 3).Unix(),
 	}

@@ -9,21 +9,21 @@ import (
 	"time"
 )
 
-type Repository interface {
+type OrdersRepository interface {
 	CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error)
 	GetOrders(ctx context.Context) ([]*dtos.OrderDTOOutput, error)
 }
 
-type repository struct {
+type Repository struct {
 	db *pgxpool.Pool
 	l  *logging.Logger
 }
 
-func NewRepository(db *pgxpool.Pool, l *logging.Logger) Repository {
-	return &repository{db: db, l: l}
+func NewRepository(db *pgxpool.Pool, l logging.Logger) *Repository {
+	return &Repository{db: db, l: &l}
 }
 
-func (r *repository) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error) {
+func (r *Repository) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error) {
 	tx, err := r.db.Begin(ctx)
 	if err != nil {
 		r.l.Errorf("ERROR while start tx: %v", err)
@@ -72,7 +72,7 @@ func (r *repository) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput)
 	return orderID, nil
 }
 
-func (r *repository) GetOrders(ctx context.Context) ([]*dtos.OrderDTOOutput, error) {
+func (r *Repository) GetOrders(ctx context.Context) ([]*dtos.OrderDTOOutput, error) {
 	rowsOrders, err := r.db.Query(ctx, getOrders)
 	if err != nil {
 		r.l.Errorf("ERROR while get orders %s: %v", getOrders, err)

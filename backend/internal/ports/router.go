@@ -2,8 +2,8 @@ package ports
 
 import (
 	"delivery-bug/internal/auth"
-	handlers "delivery-bug/internal/ports/handlers/auth/client"
-	"delivery-bug/internal/service/user"
+	"delivery-bug/internal/ports/handlers"
+	"delivery-bug/internal/service"
 	"delivery-bug/pkg/logging"
 	"net/http"
 
@@ -11,18 +11,29 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func SetupRoutes(service user.UsersService, logger logging.Logger, validator *validator.Validate, auth auth.Auth) *gin.Engine {
+func SetupRoutes(service service.Service, logger logging.Logger, validator *validator.Validate, auth auth.Auth) *gin.Engine {
 	router := gin.Default()
 
-	h := handlers.NewHandler(service, logger, validator, auth)
+	h := handlers.NewHandler(service, auth, validator, logger)
 
 	router.GET("/healthcheck", func(c *gin.Context) {
 		c.String(http.StatusOK, "Check")
 	})
 
-	router.POST("/login", h.SignInClient)
-	router.POST("/register", h.SignUpClient)
-	router.POST("/logout", h.Logout)
+	api := router.Group("/api")
+	{
+		client := api.Group("/client")
+		{
+			client.POST("/login", h.ClientAuthHandler.SignInClient)
+			client.POST("/register", h.ClientAuthHandler.SignUpClient)
+		}
+		courier := api.Group("/courier")
+		{
+			courier.POST("/login", h.CourierAuthHandler.SignInCourier)
+			courier.POST("/register", h.CourierAuthHandler.SignUpCourier)
+		}
+		api.POST("/logout", h.ClientAuthHandler.Logout)
+	}
 
 	router.StaticFile("/swagger/api.json", "./api/api.json")
 	router.Static("/swagger-ui", "./static/swagger-ui/dist")

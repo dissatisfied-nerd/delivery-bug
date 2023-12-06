@@ -6,8 +6,8 @@ import (
 	"delivery-bug/internal/auth"
 	"delivery-bug/internal/migrations"
 	"delivery-bug/internal/ports"
-	userRepo "delivery-bug/internal/repo/user"
-	userService "delivery-bug/internal/service/user"
+	"delivery-bug/internal/repo"
+	"delivery-bug/internal/service"
 	"delivery-bug/pkg/logging"
 	"delivery-bug/pkg/storage/postgres"
 	"fmt"
@@ -68,9 +68,9 @@ func main() {
 		}
 	})
 
-	repo := userRepo.NewRepository(db, logger)
+	repository := repo.NewRepository(db, logger)
 
-	serv := userService.NewService(repo, logger)
+	serv := service.NewService(repository, logger)
 
 	auth := auth.NewAuth(cfg.Auth)
 

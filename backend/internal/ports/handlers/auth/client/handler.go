@@ -41,6 +41,7 @@ func (h *Handler) SignUpClient(ctx *gin.Context) {
 		return
 	}
 
+	h.l.Debug(payload)
 	err := h.validator.Struct(&payload)
 	if err != nil {
 		h.l.Error(err)

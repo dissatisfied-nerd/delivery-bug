@@ -25,7 +25,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "client_id": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -68,7 +73,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "courier_id": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -91,7 +101,7 @@
         }
       }
     },
-    "/register": {
+    "/api/client/register": {
       "post": {
         "summary": "sign up user",
         "tags": ["user"],
@@ -111,7 +121,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "client_id": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -154,7 +169,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "courier_id": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }

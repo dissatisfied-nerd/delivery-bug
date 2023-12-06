@@ -218,7 +218,7 @@ export const AuthForm = () => {
                         Курьер
                     </option>
                 </select>
-                <Button className={cls.sendBtn} onClick={onSignUp}>
+                <Button theme="primary" onClick={onSignUp}>
                     Зарегистрироваться
                 </Button>
                 <Button className={cls.changeForm} onClick={onChangeForm}>
@@ -255,7 +255,7 @@ export const AuthForm = () => {
                         Курьер
                     </option>
                 </select>
-                <Button className={cls.sendBtn} onClick={onLogin}>
+                <Button theme="primary" onClick={onLogin}>
                     Войти
                 </Button>
                 <Button className={cls.changeForm} onClick={onChangeForm}>

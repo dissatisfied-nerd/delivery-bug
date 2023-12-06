@@ -17,22 +17,19 @@ export const GoodListItem = (props) => {
                 <span className={cls.title}>{good.title}</span>
             </div>
             {!count ? (
-                <Button className={cls.btn} onClick={() => onAddToCart(good)}>
+                <Button theme="primary" onClick={() => onAddToCart(good)}>
                     В корзину
                 </Button>
             ) : (
                 <div className={cls.counterWrapper}>
                     <Button
-                        className={cls.btn}
+                        theme="primary"
                         onClick={() => onRemoveFromCart([good.id, false])}
                     >
                         -
                     </Button>
                     <span className={cls.count}>{count}</span>
-                    <Button
-                        className={cls.btn}
-                        onClick={() => onAddToCart(good)}
-                    >
+                    <Button theme="primary" onClick={() => onAddToCart(good)}>
                         +
                     </Button>
                 </div>

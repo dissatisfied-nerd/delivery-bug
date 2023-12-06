@@ -6,7 +6,7 @@ const initialState = {
     data: {
         firstName: "",
         lastName: "",
-        email: "",
+        login: "",
         city: "",
         street: "",
         building: "",
@@ -36,8 +36,8 @@ export const authSlice = createSlice({
         setLastName: (state, action) => {
             state.data.lastName = action.payload;
         },
-        setEmail: (state, action) => {
-            state.data.email = action.payload;
+        setLogin: (state, action) => {
+            state.data.login = action.payload;
         },
         setCity: (state, action) => {
             state.data.city = action.payload;

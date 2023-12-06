@@ -23,7 +23,7 @@ export const AuthForm = () => {
     const {
         firstName = "",
         lastName = "",
-        email = "",
+        login = "",
         city = "",
         building = "",
         street = "",
@@ -60,9 +60,9 @@ export const AuthForm = () => {
         [dispatch]
     );
 
-    const onChangeEmail = useCallback(
+    const onChangeLogin = useCallback(
         (data) => {
-            dispatch(authActions.setEmail(data));
+            dispatch(authActions.setLogin(data));
         },
         [dispatch]
     );
@@ -161,8 +161,8 @@ export const AuthForm = () => {
                 <Input
                     className={cls.input}
                     label="Почта"
-                    value={email}
-                    onChange={onChangeEmail}
+                    value={login}
+                    onChange={onChangeLogin}
                 />
                 <Input
                     className={cls.input}
@@ -233,8 +233,8 @@ export const AuthForm = () => {
                 <Input
                     className={cls.input}
                     label="Почта"
-                    value={email}
-                    onChange={onChangeEmail}
+                    value={login}
+                    onChange={onChangeLogin}
                     autoFocus
                 />
                 <Input

@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS clients
 
     first_name varchar(128),
     last_name  varchar(128),
-    balance    float
+    balance    float,
+
+    address_id UUID REFERENCES addresses (id)
 );
 
 CREATE TABLE IF NOT EXISTS clients_loginform
@@ -63,16 +65,7 @@ CREATE TABLE IF NOT EXISTS stores
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
     reputation int, -- Устанавливается администратором
-    name       varchar(128),
-
-    administrator_id UUID REFERENCES administrators(id)
-);
-
-CREATE TABLE IF NOT EXISTS tags
-(
-    id       UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-
-    tag varchar(128)
+    name       varchar(128)
 );
 
 CREATE TABLE IF NOT EXISTS products
@@ -83,8 +76,9 @@ CREATE TABLE IF NOT EXISTS products
     price            float CHECK (price > 0),
     weight           float,
     description      varchar(512),
-    image            bytea
-
+    image            bytea,
+    
+    adminstrator_id UUID REFERENCES administrators(id)
 );
 
 CREATE TABLE IF NOT EXISTS products_stores
@@ -92,13 +86,6 @@ CREATE TABLE IF NOT EXISTS products_stores
     product_id UUID REFERENCES products (id),
     store_id UUID REFERENCES stores (id),
     PRIMARY KEY (product_id, store_id)
-);
-
-CREATE TABLE IF NOT EXISTS products_tags
-(
-    product_id  UUID REFERENCES products (id),
-    tag_id UUID REFERENCES tags (id),
-    PRIMARY KEY (product_id, tag_id)
 );
 
 CREATE TABLE IF NOT EXISTS orders
@@ -110,8 +97,7 @@ CREATE TABLE IF NOT EXISTS orders
     delivery_time timestamp,
 
     client_id     UUID REFERENCES clients (id),
-    courier_id    UUID REFERENCES couriers (id),
-    address_id UUID REFERENCES addresses (id)
+    courier_id    UUID REFERENCES couriers (id)
 );
 
 CREATE TABLE IF NOT EXISTS order_products

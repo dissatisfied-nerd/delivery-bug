@@ -5,10 +5,53 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/login": {
+    "/api/client/login": {
       "post": {
         "summary": "sign in user",
         "tags": ["user"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/courier/login": {
+      "post": {
+        "summary": "sign in courier",
+        "tags": ["courier"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -56,7 +99,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignUpInput"
+                "$ref": "#/components/schemas/ClientSignUpInput"
               }
             }
           },
@@ -91,9 +134,51 @@
         }
       }
     },
-    "/logout": {
+    "/api/courier/register": {
       "post": {
-        "tags": ["user"],
+        "summary": "sign up courier",
+        "tags": ["courier"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CourierSignUpInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/logout": {
+      "post": {
         "summary": "logout",
         "responses": {
           "200": {
@@ -109,7 +194,7 @@
         }
       }
     },
-    "/orders": {
+    "/api/orders": {
       "post": {
         "tags": ["order"],
         "summary": "create order",
@@ -233,7 +318,7 @@
           }
         }
       },
-      "SignUpInput": {
+      "ClientSignUpInput": {
         "required": [
           "login",
           "password",
@@ -281,6 +366,61 @@
           "apartment": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "CourierSignUpInput": {
+        "required": [
+          "login",
+          "password",
+          "first_name",
+          "last_name",
+          "city",
+          "street",
+          "building",
+          "entrance",
+          "floor",
+          "apartment",
+          "registration"
+        ],
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "building": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "entrance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "floor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "apartment": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registration": {
+            "type": "boolean"
           }
         }
       },

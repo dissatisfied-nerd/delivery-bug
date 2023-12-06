@@ -38,7 +38,7 @@ type Couriers struct {
 
 	FirstName    string `db:"first_name"`
 	LastName     string `db:"last_name"`
-	Registration bool   `db:"registration"`
+	Registration string `db:"registration"`
 }
 
 type Stores struct {
@@ -46,12 +46,6 @@ type Stores struct {
 
 	Reputation float64 `db:"reputation"`
 	Name       string  `db:"name"`
-}
-
-type Tags struct {
-	ID string `db:"id"`
-
-	Tag string `db:"tag"`
 }
 
 type Products struct {
@@ -69,15 +63,10 @@ type ProductsStores struct {
 	StoreId   string `db:"store_id"`
 }
 
-type ProductsTags struct {
-	ProductId string `db:"product_id"`
-	TagId     string `db:"tag_id"`
-}
-
 type Orders struct {
 	ID string `db:"id"`
 
-	Price        float64    `db: "price"`
+	Price        float64    `db:"price"`
 	CreationTime *time.Time `db:"creation_time"`
 	DeliveryTime *time.Time `db:"delivery_time"`
 

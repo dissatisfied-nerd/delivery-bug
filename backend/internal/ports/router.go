@@ -3,6 +3,7 @@ package ports
 import (
 	"delivery-bug/internal/auth"
 	"delivery-bug/internal/ports/handlers"
+	"delivery-bug/internal/ports/middlewares/cors"
 	"delivery-bug/internal/service"
 	"delivery-bug/pkg/logging"
 	"net/http"
@@ -20,6 +21,7 @@ func SetupRoutes(service service.Service, logger logging.Logger, validator *vali
 		c.String(http.StatusOK, "Check")
 	})
 
+	router.Use(cors.Middleware())
 	api := router.Group("/api")
 	{
 		client := api.Group("/client")

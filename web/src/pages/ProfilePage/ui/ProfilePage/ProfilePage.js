@@ -6,12 +6,14 @@ import { Card } from "shared/ui/Card/Card";
 import { Page } from "widgets/Page/Page";
 import cls from "./ProfilePage.module.scss";
 import { ProfileCard } from "../ProfileCard/ProfileCard";
-import { getClientOrders } from "entities/Client";
-import { getCourierOrders } from "entities/Courier";
+import { getClientData, getClientOrders } from "entities/Client";
+import { getCourierData, getCourierOrders } from "entities/Courier";
 
 export const ProfilePage = () => {
-    const profile = useSelector(getAuthData);
     const type = useSelector(getAuthType);
+    const client = useSelector(getClientData);
+    const courier = useSelector(getCourierData);
+    const profile = type === "client" ? client : courier;
     const clientOrders = useSelector(getClientOrders);
     const courierOrders = useSelector(getCourierOrders);
     const orders = type === "client" ? clientOrders : courierOrders;
@@ -19,7 +21,7 @@ export const ProfilePage = () => {
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
-                <ProfileCard profile={{ balance: 5000, ...profile }} />
+                <ProfileCard profile={{ balance: 0, ...profile }} />
                 <div className={cls.title}>Активные заказы</div>
                 <OrderList
                     page="profile"

@@ -5,7 +5,7 @@ import { Button } from "shared/ui/Button/Button";
 import { Input } from "shared/ui/Input/Input";
 import cls from "./AuthForm.module.scss";
 import { useNavigate } from "react-router-dom";
-import { sendRegisterData } from "../model/services/sendRegisterData";
+import { sendRegisterData } from "../model/services/sendRegisterData/sendRegisterData";
 import {
     getAuthData,
     getAuthError,
@@ -13,6 +13,7 @@ import {
 } from "../model/selectors/getAuthData";
 import { authActions } from "../model/slice/AuthSlice";
 import { validateNumber } from "../model/services/validateForm/validateNumber";
+import { sendLoginData } from "../model/services/sendLoginData/sendLoginData";
 
 export const AuthForm = () => {
     const [formType, setFormType] = useState("signUp");
@@ -21,15 +22,15 @@ export const AuthForm = () => {
     const type = useSelector(getAuthType);
     const error = useSelector(getAuthError);
     const {
-        firstName = "",
-        lastName = "",
+        first_name = "",
+        last_name = "",
         login = "",
         city = "",
         building = "",
         street = "",
         floor = "",
         entrance = "",
-        aparts = "",
+        apartment = "",
         password = "",
     } = data;
     const navigate = useNavigate();
@@ -135,9 +136,12 @@ export const AuthForm = () => {
         }
     }, [onSuccess, data, dispatch]);
 
-    const onLogin = useCallback(() => {
-        onSuccess();
-    }, [onSuccess]);
+    const onLogin = useCallback(async () => {
+        const result = await dispatch(sendLoginData({ login, password }));
+        if (!result.meta.rejectedWithValue) {
+            onSuccess();
+        }
+    }, [onSuccess, login, password, dispatch]);
 
     if (formType === "signUp") {
         return (
@@ -147,14 +151,14 @@ export const AuthForm = () => {
                 <Input
                     className={cls.input}
                     label="Имя"
-                    value={firstName}
+                    value={first_name}
                     onChange={onChangeFirstName}
                     autoFocus
                 />
                 <Input
                     className={cls.input}
                     label="Фамилия"
-                    value={lastName}
+                    value={last_name}
                     onChange={onChangeLastName}
                     autoFocus
                 />
@@ -198,7 +202,7 @@ export const AuthForm = () => {
                     className={cls.input}
                     onChange={onChangeAparts}
                     label="Квартира"
-                    value={aparts}
+                    value={apartment}
                 />
                 <Input
                     className={cls.input}

@@ -6,10 +6,10 @@ import (
 	"delivery-bug/internal/ports/middlewares/cors"
 	"delivery-bug/internal/service"
 	"delivery-bug/pkg/logging"
+	"github.com/go-playground/validator/v10"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 )
 
 func SetupRoutes(service service.Service, logger logging.Logger, validator *validator.Validate, auth auth.Auth) *gin.Engine {

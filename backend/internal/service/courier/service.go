@@ -45,35 +45,35 @@ func (s *Service) CheckCourier(ctx context.Context, input auth.SignInInput) (str
 }
 
 func (s *Service) CreateCourier(ctx context.Context, input auth.CourierSignUpInput) (string, error) {
-	err := s.repo.CheckLoginTaken(ctx, input.SignUpInput.Login)
+	err := s.repo.CheckLoginTaken(ctx, input.Login)
 	if err != nil && err != errors.New("no rows in result set") {
 		s.l.Error(err)
 		return "", err
 	}
 
-	address := dtos.AddressDTO{City: input.SignUpInput.City, Street: input.SignUpInput.Street,
-		Building: input.SignUpInput.Building, Entrance: input.SignUpInput.Entrance, Floor: input.SignUpInput.Floor,
-		Apartment: input.SignUpInput.Apartment}
+	address := dtos.AddressDTO{City: input.City, Street: input.Street,
+		Building: input.Building, Entrance: input.Entrance, Floor: input.Floor,
+		Apartment: input.Apartment}
 	addressID, err := s.repo.InsertAddress(ctx, address)
 	if err != nil {
 		return "", err
 	}
 
-	courier := dtos.CourierDTO{FirstName: input.SignUpInput.FirstName, LastName: input.SignUpInput.LastName,
+	courier := dtos.CourierDTO{FirstName: input.FirstName, LastName: input.LastName,
 		Registration: true}
 	courierID, err := s.repo.InsertCourier(ctx, courier, addressID)
 	if err != nil {
 		return "", err
 	}
 
-	password := input.SignUpInput.Password
+	password := input.Password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		s.l.Errorf("ERROR while genering password : %v", err)
 		return "", err
 	}
 
-	form := models.CouriersLoginForm{Login: input.SignUpInput.Login, Password: string(hashedPassword), CourierId: courierID}
+	form := models.CouriersLoginForm{Login: input.Login, Password: string(hashedPassword), CourierId: courierID}
 	err = s.repo.InsertLoginForm(ctx, form)
 	if err != nil {
 		return "", err

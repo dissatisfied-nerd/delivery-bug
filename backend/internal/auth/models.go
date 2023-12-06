@@ -20,8 +20,17 @@ type ClientSignUpInput struct {
 }
 
 type CourierSignUpInput struct {
-	SignUpInput  ClientSignUpInput
-	Registration bool `json:"registration" validate:"required"`
+	Login        string `json:"login" validate:"required"`
+	Password     string `json:"password" validate:"required"`
+	FirstName    string `json:"first_name" validate:"required"`
+	LastName     string `json:"last_name" validate:"required"`
+	City         string `json:"city" validate:"required"`
+	Street       string `json:"street" validate:"required"`
+	Building     int    `json:"building" validate:"required"`
+	Entrance     int    `json:"entrance" validate:"required"`
+	Floor        int    `json:"floor" validate:"required"`
+	Apartment    int    `json:"apartment" validate:"required"`
+	Registration bool   `json:"registration" validate:"required"`
 }
 
 type SignInInput struct {

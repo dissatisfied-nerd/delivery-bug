@@ -15,24 +15,18 @@ export const sendRegisterData = createAsyncThunk(
             if (!validateForm(registerData)) {
                 return rejectWithValue("Все поля должны быть заполнены");
             }
-            // const response = await extra.api.post("/register", registerData, {
-            //     headers: {
-            //         "Access-Control-Allow-Origin": "*",
-            //         "Access-Control-Allow-Methods":
-            //             "POST, GET, OPTIONS, PUT, DELETE",
-            //     },
-            // });
+            const response = await extra.api.post("/api/client/register", registerData);
 
-            // if (!response.data) {
-            //     throw new Error();
-            // }
+            if (!response.data) {
+                throw new Error();
+            }
             if (type === "client") {
                 dispatch(clientActions.setClientData(registerData));
             } else {
                 dispatch(courierActions.setCourierData(registerData));
             }
             dispatch(authActions.saveAuthData());
-            // return response.data;
+            return response.data;
         } catch (e) {
             return rejectWithValue("error");
         }

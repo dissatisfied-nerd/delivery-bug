@@ -1,5 +1,5 @@
 import { clientActions } from "entities/Client";
-import { authActions } from "features/Auth";
+import { authActions, logout } from "features/Auth";
 import { getAuthIsAuth, getAuthType } from "features/Auth";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,7 @@ export default function Navbar() {
     let links = null;
 
     const onLogout = useCallback(() => {
-        dispatch(authActions.logout());
+        dispatch(logout());
         // dispatch(clientActions.logout());
         // dispatch(courierActions.logout());
     }, [dispatch]);

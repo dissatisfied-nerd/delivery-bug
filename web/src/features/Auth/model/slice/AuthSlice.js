@@ -1,18 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
-import { sendRegisterData } from "../services/sendRegisterData";
+import { sendLoginData } from "../services/sendLoginData/sendLoginData";
+import { sendRegisterData } from "../services/sendRegisterData/sendRegisterData";
 
 const initialState = {
     data: {
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         login: "",
         city: "",
         street: "",
         building: "",
         entrance: "",
         floor: "",
-        aparts: "",
+        apartment: "",
         password: "",
     },
     type: "client",
@@ -31,10 +32,10 @@ export const authSlice = createSlice({
             state.type = type;
         },
         setFirstName: (state, action) => {
-            state.data.firstName = action.payload;
+            state.data.first_name = action.payload;
         },
         setLastName: (state, action) => {
-            state.data.lastName = action.payload;
+            state.data.last_name = action.payload;
         },
         setLogin: (state, action) => {
             state.data.login = action.payload;
@@ -55,7 +56,7 @@ export const authSlice = createSlice({
             state.data.floor = action.payload;
         },
         setAparts: (state, action) => {
-            state.data.aparts = action.payload;
+            state.data.apartment = action.payload;
         },
         setPassword: (state, action) => {
             state.data.password = action.payload;
@@ -69,7 +70,11 @@ export const authSlice = createSlice({
         saveAuthData: (state, action) => {
             localStorage.setItem(
                 PROFILE_LOCALSTORAGE_KEY,
-                JSON.stringify({ ...state.data, type: state.type })
+                JSON.stringify({
+                    ...state.data,
+                    type: state.type,
+                    ...action.payload,
+                })
             );
         },
         logout: (state, action) => {
@@ -90,6 +95,13 @@ export const authSlice = createSlice({
                 state.error = "";
             })
             .addCase(sendRegisterData.rejected, (state, action) => {
+                state.error = action.payload;
+            })
+            .addCase(sendLoginData.fulfilled, (state) => {
+                state.isAuth = true;
+                state.error = "";
+            })
+            .addCase(sendLoginData.rejected, (state, action) => {
                 state.error = action.payload;
             });
     },

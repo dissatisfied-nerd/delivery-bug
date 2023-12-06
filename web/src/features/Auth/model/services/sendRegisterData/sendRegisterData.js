@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clientActions } from "entities/Client";
 import { courierActions } from "entities/Courier";
-import { getAuthType } from "../selectors/getAuthData";
-import { authActions } from "../slice/AuthSlice";
-import { validateForm } from "./validateForm/validateForm";
+import { getAuthType } from "../../selectors/getAuthData";
+import { authActions } from "../../slice/AuthSlice";
+import { validateForm } from "../validateForm/validateForm";
 
 export const sendRegisterData = createAsyncThunk(
     "auth/sendRegisterData",
@@ -15,18 +15,23 @@ export const sendRegisterData = createAsyncThunk(
             if (!validateForm(registerData)) {
                 return rejectWithValue("Все поля должны быть заполнены");
             }
-            const response = await extra.api.post("/api/client/register", registerData);
+            const response = await extra.api.post(
+                `api/${type}/register`,
+                registerData
+            );
 
             if (!response.data) {
                 throw new Error();
             }
+
+            const data = { ...registerData, ...response.data };
             if (type === "client") {
-                dispatch(clientActions.setClientData(registerData));
+                dispatch(clientActions.setClientData(data));
             } else {
-                dispatch(courierActions.setCourierData(registerData));
+                dispatch(courierActions.setCourierData(data));
             }
-            dispatch(authActions.saveAuthData());
-            return response.data;
+            dispatch(authActions.saveAuthData(response.data));
+            // return response.data;
         } catch (e) {
             return rejectWithValue("error");
         }

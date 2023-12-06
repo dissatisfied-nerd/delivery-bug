@@ -65,7 +65,7 @@ export const OrderListItem = (props) => {
                             {order.client.adress.building}, подъезд{" "}
                             {order.client.adress.entrance}, этаж{" "}
                             {order.client.adress.floor}, кв{" "}
-                            {order.client.adress.aparts}
+                            {order.client.adress.apartment}
                         </span>
                     </span>
                     <span>

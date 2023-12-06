@@ -35,7 +35,7 @@ export const OrdersPage = () => {
                                 building: "1",
                                 entrance: "1",
                                 floor: "1",
-                                aparts: "1",
+                                apartment: "1",
                             },
                         },
                         goods: [
@@ -76,7 +76,7 @@ export const OrdersPage = () => {
                                 building: "1",
                                 entrance: "1",
                                 floor: "1",
-                                aparts: "1",
+                                apartment: "1",
                             },
                         },
                         goods: [
@@ -117,7 +117,7 @@ export const OrdersPage = () => {
                                 building: "1",
                                 entrance: "1",
                                 floor: "1",
-                                aparts: "1",
+                                apartment: "1",
                             },
                         },
                         goods: [
@@ -158,7 +158,7 @@ export const OrdersPage = () => {
                                 building: "1",
                                 entrance: "1",
                                 floor: "1",
-                                aparts: "1",
+                                apartment: "1",
                             },
                         },
                         goods: [
@@ -199,7 +199,7 @@ export const OrdersPage = () => {
                                 building: "1",
                                 entrance: "1",
                                 floor: "1",
-                                aparts: "1",
+                                apartment: "1",
                             },
                         },
                         goods: [
@@ -240,7 +240,7 @@ export const OrdersPage = () => {
                                 building: "1",
                                 entrance: "1",
                                 floor: "1",
-                                aparts: "1",
+                                apartment: "1",
                             },
                         },
                         goods: [
@@ -281,7 +281,7 @@ export const OrdersPage = () => {
                                 building: "1",
                                 entrance: "1",
                                 floor: "1",
-                                aparts: "1",
+                                apartment: "1",
                             },
                         },
                         goods: [
@@ -322,7 +322,7 @@ export const OrdersPage = () => {
                                 building: "1",
                                 entrance: "1",
                                 floor: "1",
-                                aparts: "1",
+                                apartment: "1",
                             },
                         },
                         goods: [

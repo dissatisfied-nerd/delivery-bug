@@ -92,3 +92,22 @@ func (r *Repository) InsertLoginForm(ctx context.Context, form models.ClientsLog
 	r.l.Infof("insert loginform %s in db", form.Login)
 	return nil
 }
+
+func (r *Repository) GetInfoById(ctx context.Context, id string) (dtos.ClientInfo, error) {
+	var info dtos.ClientInfo
+	var addressID string
+	err := r.db.QueryRow(ctx, getClientQuery, id).Scan(&info.FirstName, &info.LastName, &info.Balance,
+		&addressID)
+	if err != nil {
+		r.l.Errorf("error getting client info %s : %v", id, err)
+		return dtos.ClientInfo{}, err
+	}
+	err = r.db.QueryRow(ctx, getAddressQuery, addressID).Scan(&info.City, &info.Street, &info.Building, &info.Entrance,
+		&info.Floor, &info.Apartment)
+	if err != nil {
+		r.l.Errorf("error getting client info %s : %v", id, err)
+		return dtos.ClientInfo{}, err
+	}
+	r.l.Infof("get client info %s from db", id)
+	return info, nil
+}

@@ -158,7 +158,7 @@ func upCreateTables(tx *sql.Tx) error {
     price float, 
     creation_time timestamp,
     delivery_time timestamp,
-
+	status varchar(255),
     client_id     UUID REFERENCES clients (id),
     courier_id    UUID REFERENCES couriers (id)
 );`)

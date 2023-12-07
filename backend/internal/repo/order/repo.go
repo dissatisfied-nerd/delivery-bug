@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+const statusCreated = "created"
+
 type OrdersRepository interface {
 	CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error)
 	GetOrders(ctx context.Context) ([]*dtos.OrderDTOOutput, error)
@@ -31,7 +33,7 @@ func (r *Repository) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput)
 	}
 
 	var orderID string
-	if err := tx.QueryRow(ctx, createOrder, order.Price, time.Now(), order.ClientID).Scan(&orderID); err != nil {
+	if err := tx.QueryRow(ctx, createOrder, order.Price, time.Now(), order.ClientID, statusCreated).Scan(&orderID); err != nil {
 		r.l.Errorf("ERROR while inserting order %f %v %s in db: %v",
 			order.Price,
 			time.Now(),
@@ -115,3 +117,5 @@ func (r *Repository) GetOrders(ctx context.Context) ([]*dtos.OrderDTOOutput, err
 
 	return ordersDto, nil
 }
+
+//func (r *Repository) GetFreeOrders(ctx context.Context, id string)

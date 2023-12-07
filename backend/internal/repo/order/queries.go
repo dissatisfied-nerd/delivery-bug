@@ -13,7 +13,7 @@ const (
 	`
 
 	createOrder = `
-	INSERT INTO orders(price, creation_time, client_id) VALUES($1, $2, $3) RETURNING id
+	INSERT INTO orders(price, creation_time, client_id, status) VALUES($1, $2, $3, $4) RETURNING id
 	`
 
 	createOrderProducts = `

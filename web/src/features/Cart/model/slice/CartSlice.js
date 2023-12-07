@@ -81,6 +81,13 @@ export const cartSlice = createSlice({
                 JSON.stringify(state.cart)
             );
         },
+        emptyCart: (state, _) => {
+            state.cart = {};
+            state.weight = "";
+            state.cost = 0;
+            state.count = 0;
+            localStorage.removeItem(CART_LOCALSTORAGE_KEY);
+        },
     },
 });
 

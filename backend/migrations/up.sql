@@ -32,15 +32,6 @@ CREATE TABLE IF NOT EXISTS clients_loginform
     client_id UUID REFERENCES clients (id)
 );
 
-CREATE TABLE IF NOT EXISTS couriers_loginform
-(
-    login      varchar(128) PRIMARY KEY,
-
-    password   varchar(128),
-
-    courier_id UUID REFERENCES couriers (id)
-);
-
 
 CREATE TABLE IF NOT EXISTS couriers
 (
@@ -50,6 +41,15 @@ CREATE TABLE IF NOT EXISTS couriers
     last_name    varchar(128),
     registration bool NOT NULL, -- Страна регистрации
     address_id   UUID REFERENCES addresses (id)
+);
+
+CREATE TABLE IF NOT EXISTS couriers_loginform
+(
+    login      varchar(128) PRIMARY KEY,
+
+    password   varchar(128),
+
+    courier_id UUID REFERENCES couriers (id)
 );
 
 CREATE TABLE IF NOT EXISTS administrators
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS products
     description     varchar(512),
     image           bytea,
 
-    adminstrator_id UUID REFERENCES administrators (id)
+    administrator_id UUID REFERENCES administrators (id)
 );
 
 CREATE TABLE IF NOT EXISTS products_stores

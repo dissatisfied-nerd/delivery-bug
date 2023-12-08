@@ -6,6 +6,7 @@ drop table products cascade;
 drop table stores cascade;
 drop table administrators cascade;
 drop table couriers cascade;
-drop table loginForm cascade;
+drop table couriers_loginform cascade;
+drop table clients_loginform;
 drop table clients cascade;
 drop table addresses cascade;

@@ -18,7 +18,7 @@ VALUES
 
 
 -- Заполнение таблицы "loginForm"
-INSERT INTO loginForm (login, password, client_id)
+INSERT INTO login_form (login, password, client_id)
 VALUES
     ('user1', 'password1', (SELECT id FROM clients WHERE first_name = 'Client1_First')),
     ('user2', 'password2', (SELECT id FROM clients WHERE first_name = 'Client2_First')),

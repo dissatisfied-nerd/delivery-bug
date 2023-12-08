@@ -56,14 +56,14 @@ type Stores struct {
 	Name       string  `db:"name"`
 }
 
-type Products struct {
-	ID string `db:"id"`
+type Product struct {
+	ID string `db:"id" json:"id"`
 
-	Name        string  `db:"name"`
-	Price       float32 `db:"price"`
-	Weight      float32 `db:"weight"`
-	Description string  `db:"description"`
-	Image       []byte  `db:"image"`
+	Name        string  `db:"name" json:"name"`
+	Price       float32 `db:"price" json:"price"`
+	Weight      float32 `db:"weight" json:"weight"`
+	Description string  `db:"description" json:"description"`
+	Image       []byte  `db:"image" json:"image"`
 }
 
 type ProductsStores struct {

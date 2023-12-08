@@ -5,6 +5,7 @@ import (
 	"delivery-bug/internal/ports/handlers"
 	authMiddleware "delivery-bug/internal/ports/middlewares/auth"
 	"delivery-bug/internal/ports/middlewares/cors"
+	"delivery-bug/internal/repo"
 	"delivery-bug/internal/service"
 	"delivery-bug/pkg/logging"
 	"github.com/go-playground/validator/v10"
@@ -13,10 +14,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(service service.Service, logger logging.Logger, validator *validator.Validate, auth auth.Auth) *gin.Engine {
+func SetupRoutes(service service.Service, repo repo.Repository, logger logging.Logger, validator *validator.Validate, auth auth.Auth) *gin.Engine {
 	router := gin.Default()
 
-	h := handlers.NewHandler(service, auth, validator, logger)
+	h := handlers.NewHandler(service, repo, auth, validator, logger)
 
 	router.GET("/healthcheck", func(c *gin.Context) {
 		c.String(http.StatusOK, "Check")
@@ -37,6 +38,10 @@ func SetupRoutes(service service.Service, logger logging.Logger, validator *vali
 			courier.POST("/login", h.CourierAuthHandler.SignInCourier)
 			courier.POST("/register", h.CourierAuthHandler.SignUpCourier)
 			courier.Use(authMiddleware.Middleware(&logger))
+		}
+		products := api.Group("/products")
+		{
+			products.GET("/", h.ProductHandler.GetProducts)
 		}
 		api.POST("/logout", h.ClientAuthHandler.Logout)
 	}

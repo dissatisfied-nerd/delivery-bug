@@ -74,7 +74,7 @@ func main() {
 
 	auth := auth.NewAuth(cfg.Auth)
 
-	r := ports.SetupRoutes(serv, logger, valid, auth)
+	r := ports.SetupRoutes(serv, repository, logger, valid, auth)
 
 	err = http.ListenAndServe(fmt.Sprintf(":%s", cfg.Port), r)
 	if err != nil {

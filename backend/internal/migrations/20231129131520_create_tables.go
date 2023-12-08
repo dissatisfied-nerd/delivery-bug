@@ -125,7 +125,7 @@ func upCreateTables(tx *sql.Tx) error {
     price            float CHECK (price > 0),
     weight           float,
     description      varchar(512),
-    image            bytea
+    image            varchar(255)
 );`)
 	if err != nil {
 		return err

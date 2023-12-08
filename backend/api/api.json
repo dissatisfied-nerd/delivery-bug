@@ -258,6 +258,24 @@
         }
       }
     },
+    "/api/products" : {
+      "get": {
+        "summary": "get all products",
+        "tags": ["product"],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/orders": {
       "post": {
         "tags": ["order"],
@@ -712,6 +730,53 @@
           "apartment": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "Product": {
+        "required": [
+          "id",
+          "name",
+          "price",
+          "weight",
+          "description",
+          "image"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "float64"
+          },
+          "weight": {
+            "type": "number",
+            "format": "float64"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      },
+      "GetProductsResponse": {
+        "required": [
+          "products"
+        ],
+        "type": "object",
+        "properties": {
+          "products" : {
+            "type": "array",
+            "items":{
+              "$ref": "#/components/schemas/Product"
+            }
           }
         }
       }

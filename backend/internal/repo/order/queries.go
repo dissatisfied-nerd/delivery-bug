@@ -1,9 +1,16 @@
 package order
 
 const (
-	getOrders = `
-	SELECT id, price, creation_time, delivery_time, client_id, courier_id
+	getOrdersByUserID = `
+	SELECT id, price, status, creation_time, delivery_time, client_id, courier_id
 	FROM orders
+	WHERE client_id = $1
+	`
+
+	getOrdersByCourierSID = `
+	SELECT id, price, status, creation_time, delivery_time, client_id, courier_id
+	FROM orders
+	WHERE courier_id = $1
 	`
 
 	getOrderProducts = `

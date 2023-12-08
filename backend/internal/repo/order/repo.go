@@ -13,7 +13,8 @@ const statusCreated = "created"
 
 type OrdersRepository interface {
 	CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error)
-	GetOrders(ctx context.Context) ([]*dtos.OrderDTOOutput, error)
+	GetOrdersByUserID(ctx context.Context, userID string) ([]*dtos.OrderUserDTOOutput, error)
+	GetOrdersByCourierID(ctx context.Context, courierID string) ([]*dtos.OrderCourierDTOOutput, error)
 }
 
 type Repository struct {
@@ -74,15 +75,15 @@ func (r *Repository) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput)
 	return orderID, nil
 }
 
-func (r *Repository) GetOrders(ctx context.Context) ([]*dtos.OrderDTOOutput, error) {
-	rowsOrders, err := r.db.Query(ctx, getOrders)
+func (r *Repository) GetOrdersByUserID(ctx context.Context, userID string) ([]*dtos.OrderUserDTOOutput, error) {
+	rowsOrders, err := r.db.Query(ctx, getOrdersByUserID, userID)
 	if err != nil {
-		r.l.Errorf("ERROR while get orders %s: %v", getOrders, err)
+		r.l.Errorf("ERROR while get orders %s: %v", getOrdersByUserID, err)
 	}
 
 	defer rowsOrders.Close()
 
-	ordersDto := make([]*dtos.OrderDTOOutput, 0)
+	ordersDto := make([]*dtos.OrderUserDTOOutput, 0)
 
 	for rowsOrders.Next() {
 		var order models.Orders
@@ -94,7 +95,7 @@ func (r *Repository) GetOrders(ctx context.Context) ([]*dtos.OrderDTOOutput, err
 
 		rowsOrdersProduct, err := r.db.Query(ctx, getOrderProducts, order.ID)
 		if err != nil {
-			r.l.Errorf("ERROR while get order products %s: %v", getOrders, err)
+			r.l.Errorf("ERROR while get order products %s: %v", getOrderProducts, err)
 		}
 
 		var ordersProducts []models.OrderProducts
@@ -111,7 +112,51 @@ func (r *Repository) GetOrders(ctx context.Context) ([]*dtos.OrderDTOOutput, err
 
 		rowsOrdersProduct.Close()
 
-		ordersDto = append(ordersDto, dtos.ToOrderDTOOutput(order, ordersProducts))
+		ordersDto = append(ordersDto, dtos.ToOrderUserDTOOutput(order, ordersProducts))
+
+	}
+
+	return ordersDto, nil
+}
+
+func (r *Repository) GetOrdersByCourierID(ctx context.Context, courierID string) ([]*dtos.OrderCourierDTOOutput, error) {
+	rowsOrders, err := r.db.Query(ctx, getOrdersByCourierSID, courierID)
+	if err != nil {
+		r.l.Errorf("ERROR while get orders %s: %v", getOrdersByUserID, err)
+	}
+
+	defer rowsOrders.Close()
+
+	ordersDto := make([]*dtos.OrderCourierDTOOutput, 0)
+
+	for rowsOrders.Next() {
+		var order models.Orders
+		err := rowsOrders.Scan(&order)
+		if err != nil {
+			r.l.Errorf("ERROR while get order: %v", err)
+			return nil, err
+		}
+
+		rowsOrdersProduct, err := r.db.Query(ctx, getOrderProducts, order.ID)
+		if err != nil {
+			r.l.Errorf("ERROR while get order products %s: %v", getOrderProducts, err)
+		}
+
+		var ordersProducts []models.OrderProducts
+
+		for rowsOrdersProduct.Next() {
+			var orderProduct models.OrderProducts
+			err := rowsOrdersProduct.Scan(&orderProduct)
+			if err != nil {
+				r.l.Errorf("ERROR while get orderProduct: %v", err)
+			}
+
+			ordersProducts = append(ordersProducts, orderProduct)
+		}
+
+		rowsOrdersProduct.Close()
+
+		ordersDto = append(ordersDto, dtos.ToOrderCourierDTOOutput(order, ordersProducts))
 
 	}
 

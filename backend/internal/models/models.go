@@ -75,11 +75,12 @@ type Orders struct {
 	ID string `db:"id"`
 
 	Price        float64    `db:"price"`
+	Status       string     `db:"status"`
 	CreationTime *time.Time `db:"creation_time"`
 	DeliveryTime *time.Time `db:"delivery_time"`
 
-	ClientId  string `db:"client_id"`
-	CourierId string `db:"courier_id"`
+	ClientId  string  `db:"client_id"`
+	CourierId *string `db:"courier_id"`
 }
 
 type OrderProducts struct {

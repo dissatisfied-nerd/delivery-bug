@@ -272,10 +272,24 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/orders{userID}": {
       "get": {
-        "tags": ["order"],
-        "summary": "get orders",
+        "tags": [
+          "order"
+        ],
+        "summary": "get orders users",
+        "parameters": [
+          {
+            "name": "userID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "ok",
@@ -323,15 +337,15 @@
         }
       }
     },
-    "/api/orders{userID}": {
+    "/api/orders{courierID}": {
       "get": {
         "tags": [
           "order"
         ],
-        "summary": "get orders users",
+        "summary": "get orders couriers",
         "parameters": [
           {
-            "name": "userID",
+            "name": "courierID",
             "in": "path",
             "required": true,
             "schema": {
@@ -347,7 +361,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrderUserDTOOutput"
+                    "$ref": "#/components/schemas/OrderCourierDTOOutput"
                   }
                 }
               }
@@ -551,6 +565,7 @@
         "required": [
           "price",
           "client_id",
+          "status",
           "creation_time",
           "delivery_time",
           "products"
@@ -561,6 +576,37 @@
             "type": "integer"
           },
           "client_id": {
+            "type": "string"
+          },
+          "creation_time": {
+            "type": "string"
+          },
+          "delivery_time": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderProductDTO"
+            }
+          }
+        }
+      },
+      "OrderCourierDTOOutput": {
+        "required": [
+          "price",
+          "courier_id",
+          "status",
+          "creation_time",
+          "delivery_time",
+          "products"
+        ],
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "integer"
+          },
+          "courier_id": {
             "type": "string"
           },
           "creation_time": {

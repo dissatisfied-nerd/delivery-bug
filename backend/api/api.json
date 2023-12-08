@@ -323,15 +323,15 @@
         }
       }
     },
-    "/api/orders{id}": {
+    "/api/orders{userID}": {
       "get": {
         "tags": [
           "order"
         ],
-        "summary": "create order",
+        "summary": "get orders users",
         "parameters": [
           {
-            "name": "id",
+            "name": "userID",
             "in": "path",
             "required": true,
             "schema": {

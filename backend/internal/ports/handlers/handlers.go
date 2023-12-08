@@ -26,6 +26,7 @@ func NewHandler(service service.Service, repo repo.Repository, auth auth.Auth, v
 		ClientAuthHandler:  client.NewHandler(service.UserService, l, validator, auth),
 		CourierAuthHandler: courier.NewHandler(service.CourierService, auth, validator, l),
 		ClientHandler:      clients.NewHandler(service.UserService, l),
+		OrderHandler:       orders.NewHandler(repo.OrderRepo, validator, l),
 		ProductHandler:     products.NewHandler(repo.ProductRepo, l),
 	}
 }

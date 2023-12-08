@@ -284,7 +284,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrderDTOInput"
+                    "$ref": "#/components/schemas/OrderUserDTOOutput"
                   }
                 }
               }
@@ -347,7 +347,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrderDTOInput"
+                    "$ref": "#/components/schemas/OrderUserDTOOutput"
                   }
                 }
               }
@@ -547,7 +547,7 @@
           }
         }
       },
-      "OrderDTOOutput": {
+      "OrderUserDTOOutput": {
         "required": [
           "price",
           "client_id",

@@ -10,7 +10,7 @@ type OrderDTOInput struct {
 	Products []*OrderProductDTO `json:"products" validate:"required"`
 }
 
-type OrderDTOOutput struct {
+type OrderUserDTOOutput struct {
 	Price        float64            `json:"price"`
 	ClientID     string             `json:"client_id"`
 	CreationTime string             `json:"creation_time"`
@@ -23,8 +23,8 @@ type OrderProductDTO struct {
 	ProductID string `json:"product_id" validate:"required"`
 }
 
-func ToOrderDTOOutput(order models.Orders, orderProducts []models.OrderProducts) *OrderDTOOutput {
-	orderDTOOutput := new(OrderDTOOutput)
+func ToOrderDTOOutput(order models.Orders, orderProducts []models.OrderProducts) *OrderUserDTOOutput {
+	orderDTOOutput := new(OrderUserDTOOutput)
 
 	orderDTOOutput.Price = order.Price
 

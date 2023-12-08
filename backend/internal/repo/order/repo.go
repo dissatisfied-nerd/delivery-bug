@@ -163,4 +163,24 @@ func (r *Repository) GetOrdersByCourierID(ctx context.Context, courierID string)
 	return ordersDto, nil
 }
 
-//func (r *Repository) GetFreeOrders(ctx context.Context)
+func (r *Repository) GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error) {
+	rows, err := r.db.Query(ctx, selectFreeOrdersQuery, statusCreated)
+	if err != nil {
+		r.l.Errorf("error getting free orders from db: %v", err)
+		return nil, err
+	}
+	defer rows.Close()
+	var orders []dtos.OrderDTO
+
+	for rows.Next() {
+		var order dtos.OrderDTO
+		err = rows.Scan(&order)
+		if err != nil {
+			r.l.Errorf("error getting free orders from db: %v", err)
+			return nil, err
+		}
+		orders = append(orders, order)
+	}
+	r.l.Info("get free orders from db")
+	return orders, nil
+}

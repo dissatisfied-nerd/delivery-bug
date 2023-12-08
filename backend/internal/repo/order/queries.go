@@ -26,4 +26,7 @@ const (
 	createOrderProducts = `
 	INSERT INTO order_products(amount, order_id, product_id) VALUES ($1, $2, $3)
 	`
+
+	selectFreeOrdersQuery = `SELECT id, price, status, creation_time, delivery_time, client_id FROM orders
+		WHERE status=$1`
 )

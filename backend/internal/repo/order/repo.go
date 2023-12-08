@@ -163,4 +163,4 @@ func (r *Repository) GetOrdersByCourierID(ctx context.Context, courierID string)
 	return ordersDto, nil
 }
 
-//func (r *Repository) GetFreeOrders(ctx context.Context, id string)
+//func (r *Repository) GetFreeOrders(ctx context.Context)

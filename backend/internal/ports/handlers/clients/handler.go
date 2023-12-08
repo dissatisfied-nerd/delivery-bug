@@ -1,0 +1,36 @@
+package clients
+
+import (
+	"delivery-bug/internal/service/user"
+	"delivery-bug/pkg/logging"
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+type ClientHandler interface {
+	GetInfoByID(ctx *gin.Context)
+}
+
+type Handler struct {
+	service user.UsersService
+	l       *logging.Logger
+}
+
+func NewHandler(service user.UsersService, l logging.Logger) *Handler {
+	return &Handler{
+		service: service,
+		l:       &l,
+	}
+}
+
+func (h *Handler) GetInfoByID(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	info, err := h.service.GetInfoById(ctx, id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"client": info})
+}

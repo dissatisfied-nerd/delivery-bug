@@ -10,6 +10,7 @@ import (
 )
 
 type UsersRepository interface {
+	SelectInfoById(ctx context.Context, id string) (dtos.ClientInfo, error)
 	CheckLogin(ctx context.Context, login string) (models.ClientsLoginForm, error)
 	CheckLoginTaken(ctx context.Context, login string) error
 	InsertAddress(ctx context.Context, addressDto dtos.AddressDTO) (string, error)
@@ -93,7 +94,7 @@ func (r *Repository) InsertLoginForm(ctx context.Context, form models.ClientsLog
 	return nil
 }
 
-func (r *Repository) GetInfoById(ctx context.Context, id string) (dtos.ClientInfo, error) {
+func (r *Repository) SelectInfoById(ctx context.Context, id string) (dtos.ClientInfo, error) {
 	var info dtos.ClientInfo
 	var addressID string
 	err := r.db.QueryRow(ctx, getClientQuery, id).Scan(&info.FirstName, &info.LastName, &info.Balance,

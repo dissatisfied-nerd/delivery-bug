@@ -14,6 +14,7 @@ import (
 type UsersService interface {
 	CreateUser(ctx context.Context, input auth.ClientSignUpInput) (string, error)
 	CheckUser(ctx context.Context, input auth.SignInInput) (string, error)
+	GetInfoById(ctx context.Context, id string) (dtos.ClientInfo, error)
 }
 
 type Service struct {
@@ -75,4 +76,8 @@ func (s *Service) CreateUser(ctx context.Context, input auth.ClientSignUpInput) 
 	}
 
 	return userID, nil
+}
+
+func (s *Service) GetInfoById(ctx context.Context, id string) (dtos.ClientInfo, error) {
+	return s.repo.SelectInfoById(ctx, id)
 }

@@ -3,7 +3,6 @@ package ports
 import (
 	"delivery-bug/internal/auth"
 	"delivery-bug/internal/ports/handlers"
-	authMiddleware "delivery-bug/internal/ports/middlewares/auth"
 	"delivery-bug/internal/ports/middlewares/cors"
 	"delivery-bug/internal/repo"
 	"delivery-bug/internal/service"
@@ -30,14 +29,14 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 		{
 			client.POST("/login", h.ClientAuthHandler.SignInClient)
 			client.POST("/register", h.ClientAuthHandler.SignUpClient)
-			client.Use(authMiddleware.Middleware(&logger))
+			//client.Use(authMiddleware.Middleware(&logger))
 			client.GET("/:id", h.ClientHandler.GetInfoByID)
 		}
 		courier := api.Group("/courier")
 		{
 			courier.POST("/login", h.CourierAuthHandler.SignInCourier)
 			courier.POST("/register", h.CourierAuthHandler.SignUpCourier)
-			courier.Use(authMiddleware.Middleware(&logger))
+			//courier.Use(authMiddleware.Middleware(&logger))
 			api.GET("/orders/free", h.OrderHandler.GetFreeOrders)
 		}
 		products := api.Group("/products")

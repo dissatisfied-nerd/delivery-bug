@@ -34,7 +34,7 @@ func NewHandler(service user.UsersService, l logging.Logger,
 }
 
 func (h *Handler) SignUpClient(ctx *gin.Context) {
-	var payload auth.ClientSignUpInput
+	var payload auth.SignUpInput
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		h.l.Errorf("ERROR can't bind json: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

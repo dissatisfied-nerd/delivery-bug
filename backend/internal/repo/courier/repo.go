@@ -69,7 +69,7 @@ func (r *Repository) InsertAddress(ctx context.Context, addressDto dtos.AddressD
 
 func (r *Repository) InsertCourier(ctx context.Context, courierDto dtos.CourierDTO, addressID string) (string, error) {
 	var insertedCourierID string
-	err := r.db.QueryRow(ctx, insertCourierQuery, courierDto.FirstName, courierDto.LastName, courierDto.Registration,
+	err := r.db.QueryRow(ctx, insertCourierQuery, courierDto.FirstName, courierDto.LastName,
 		addressID).Scan(&insertedCourierID)
 	if err != nil {
 		r.l.Errorf("error inserting courier %s %s to db: %v", courierDto.FirstName, courierDto.LastName, err)

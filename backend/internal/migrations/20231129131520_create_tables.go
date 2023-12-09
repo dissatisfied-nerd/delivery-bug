@@ -62,7 +62,6 @@ func upCreateTables(tx *sql.Tx) error {
 
     first_name varchar(128),
     last_name  varchar(128),
-    registration  bool NOT NULL, -- Страна регистрации
     address_id UUID REFERENCES addresses (id)
 );
 `)

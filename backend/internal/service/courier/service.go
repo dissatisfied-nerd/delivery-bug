@@ -13,7 +13,7 @@ import (
 
 type CouriersService interface {
 	CheckCourier(ctx context.Context, input auth.SignInInput) (string, error)
-	CreateCourier(ctx context.Context, input auth.CourierSignUpInput) (string, error)
+	CreateCourier(ctx context.Context, input auth.SignUpInput) (string, error)
 }
 
 type Service struct {
@@ -44,7 +44,7 @@ func (s *Service) CheckCourier(ctx context.Context, input auth.SignInInput) (str
 	return form.CourierId, nil
 }
 
-func (s *Service) CreateCourier(ctx context.Context, input auth.CourierSignUpInput) (string, error) {
+func (s *Service) CreateCourier(ctx context.Context, input auth.SignUpInput) (string, error) {
 	err := s.repo.CheckLoginTaken(ctx, input.Login)
 	if err != nil && err != errors.New("no rows in result set") {
 		s.l.Error(err)
@@ -59,8 +59,7 @@ func (s *Service) CreateCourier(ctx context.Context, input auth.CourierSignUpInp
 		return "", err
 	}
 
-	courier := dtos.CourierDTO{FirstName: input.FirstName, LastName: input.LastName,
-		Registration: true}
+	courier := dtos.CourierDTO{FirstName: input.FirstName, LastName: input.LastName}
 	courierID, err := s.repo.InsertCourier(ctx, courier, addressID)
 	if err != nil {
 		return "", err

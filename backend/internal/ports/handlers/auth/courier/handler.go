@@ -32,7 +32,7 @@ func NewHandler(service courier.CouriersService, auth auth.Auth,
 }
 
 func (h *Handler) SignUpCourier(ctx *gin.Context) {
-	var payload auth.CourierSignUpInput
+	var payload auth.SignUpInput
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		h.l.Errorf("ERROR can't bind json: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

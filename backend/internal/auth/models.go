@@ -6,7 +6,7 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-type ClientSignUpInput struct {
+type SignUpInput struct {
 	Login     string `json:"login" validate:"required"`
 	Password  string `json:"password" validate:"required"`
 	FirstName string `json:"first_name" validate:"required"`
@@ -17,20 +17,6 @@ type ClientSignUpInput struct {
 	Entrance  int    `json:"entrance" validate:"required"`
 	Floor     int    `json:"floor" validate:"required"`
 	Apartment int    `json:"apartment" validate:"required"`
-}
-
-type CourierSignUpInput struct {
-	Login        string `json:"login" validate:"required"`
-	Password     string `json:"password" validate:"required"`
-	FirstName    string `json:"first_name" validate:"required"`
-	LastName     string `json:"last_name" validate:"required"`
-	City         string `json:"city" validate:"required"`
-	Street       string `json:"street" validate:"required"`
-	Building     int    `json:"building" validate:"required"`
-	Entrance     int    `json:"entrance" validate:"required"`
-	Floor        int    `json:"floor" validate:"required"`
-	Apartment    int    `json:"apartment" validate:"required"`
-	Registration bool   `json:"registration" validate:"required"`
 }
 
 type SignInInput struct {

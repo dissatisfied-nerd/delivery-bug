@@ -68,11 +68,15 @@ export const authSlice = createSlice({
             state.isAuth = action.payload;
         },
         saveAuthData: (state, action) => {
+            const profile =
+                JSON.parse(localStorage.getItem(PROFILE_LOCALSTORAGE_KEY)) ||
+                {};
             localStorage.setItem(
                 PROFILE_LOCALSTORAGE_KEY,
                 JSON.stringify({
                     ...state.data,
                     type: state.type,
+                    ...profile,
                     ...action.payload,
                 })
             );

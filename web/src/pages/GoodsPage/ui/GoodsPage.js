@@ -4,13 +4,17 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { classNames } from "shared/lib/classNames/classNames";
 import { Page } from "widgets/Page/Page";
+import { getGoodsPageData } from "../model/selectors/getGoodsPageData";
+import { fetchGoodsPageData } from "../model/services/fetchGoodsPageData";
 import cls from "./GoodsPage.module.scss";
 
 export const GoodsPage = () => {
     const dispatch = useDispatch();
     const cart = useSelector(getCartData);
+    const goods = useSelector(getGoodsPageData);
 
     useEffect(() => {
+        dispatch(fetchGoodsPageData());
         dispatch(cartActions.initCart());
     }, [dispatch]);
 
@@ -40,35 +44,35 @@ export const GoodsPage = () => {
                     {
                         id: 1,
                         img: "https://ir-2.ozone.ru/s3/multimedia-w/wc1000/6656314532.jpg",
-                        title: "Гейнер dr.Hoffman со вкусом твикс",
+                        name: "Гейнер dr.Hoffman со вкусом твикс",
                         price: "1000",
                         weight: "2.5",
                     },
                     {
                         id: 2,
                         img: "https://ir-2.ozone.ru/s3/multimedia-w/wc1000/6656314532.jpg",
-                        title: "Гейнер dr.Hoffman со вкусом твикс",
+                        name: "Гейнер dr.Hoffman со вкусом твикс",
                         price: "1000",
                         weight: "1.5",
                     },
                     {
                         id: 3,
                         img: "https://ir-2.ozone.ru/s3/multimedia-w/wc1000/6656314532.jpg",
-                        title: "Гейнер dr.Hoffman со вкусом твикс",
+                        name: "Гейнер dr.Hoffman со вкусом твикс",
                         price: "1000",
                         weight: "0.7",
                     },
                     {
                         id: 4,
                         img: "https://ir-2.ozone.ru/s3/multimedia-w/wc1000/6656314532.jpg",
-                        title: "Гейнер dr.Hoffman со вкусом твикс",
+                        name: "Гейнер dr.Hoffman со вкусом твикс",
                         price: "1000",
                         weight: "2.5",
                     },
                     {
                         id: 5,
                         img: "https://ir-2.ozone.ru/s3/multimedia-w/wc1000/6656314532.jpg",
-                        title: "Гейнер dr.Hoffman со вкусом твикс",
+                        name: "Гейнер dr.Hoffman со вкусом твикс",
                         price: "1000",
                         weight: "2.5",
                     },

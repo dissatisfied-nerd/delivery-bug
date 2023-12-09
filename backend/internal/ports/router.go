@@ -39,9 +39,9 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 			//courier.Use(authMiddleware.Middleware(&logger))
 			api.GET("/orders/free", h.OrderHandler.GetFreeOrders)
 		}
-		products := api.Group("/products")
+		//products := api.Group("/products")
 		{
-			products.GET("/", h.ProductHandler.GetProducts)
+			router.GET("/products", h.ProductHandler.GetProducts)
 		}
 		orders := api.Group("/orders")
 		{

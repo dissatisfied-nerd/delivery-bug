@@ -17,11 +17,11 @@ export const getProfileData = createAsyncThunk(
             }
 
             if (type === "client") {
-                dispatch(clientActions.setClientData(response.data));
+                dispatch(clientActions.setClientData(response.data.client));
             } else {
                 dispatch(courierActions.setCourierData(response.data));
             }
-            dispatch(authActions.saveAuthData(response.data));
+            dispatch(authActions.saveAuthData(response.data[type]));
             return response.data;
         } catch (e) {
             return rejectWithValue("error");

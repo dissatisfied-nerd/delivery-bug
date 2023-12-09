@@ -14,6 +14,7 @@ const initialState = {
         floor: "",
         apartment: "",
         password: "",
+        balance: 0,
     },
     client_id: "",
     orders: [],
@@ -26,7 +27,7 @@ export const clientSlice = createSlice({
     reducers: {
         setClientData: (state, action) => {
             const { client_id, ...data } = action.payload;
-            state.client_id = client_id;
+            state.client_id = client_id ? client_id : state.client_id;
             state.data = data;
         },
         logout: (state, action) => {

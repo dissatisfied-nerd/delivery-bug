@@ -336,6 +336,42 @@
         }
       }
     },
+    "/api/orders/free": {
+      "get": {
+        "tags": ["order"],
+        "summary": "get free orders for couriers",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/orders{userID}": {
       "get": {
         "tags": [
@@ -777,6 +813,34 @@
             "items":{
               "$ref": "#/components/schemas/Product"
             }
+          }
+        }
+      },
+      "OrderDTO": {
+        "required": [
+          "price",
+          "status",
+          "creation_time",
+          "delivery_time",
+          "client_id"
+        ],
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "number",
+            "format": "float64"
+          },
+          "status": {
+            "type": "string"
+          },
+          "creation_time": {
+            "type": "string"
+          },
+          "delivery_time": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
           }
         }
       }

@@ -4,17 +4,18 @@ import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 const initialState = {
     isLoading: false,
     data: {
-        firstName: "",
-        lastName: "",
-        email: "",
+        first_name: "",
+        last_name: "",
+        login: "",
         city: "",
         street: "",
         building: "",
         entrance: "",
         floor: "",
-        aparts: "",
+        apartment: "",
         password: "",
     },
+    courier_id: "",
     orders: [],
     error: "",
 };
@@ -24,7 +25,9 @@ export const courierSlice = createSlice({
     initialState,
     reducers: {
         setCourierData: (state, action) => {
-            state.data = action.payload;
+            const { courier_id, ...data } = action.payload;
+            state.data = data;
+            state.courier_id = courier_id;
         },
         addOrder: (state, action) => {
             state.orders = [...state.orders, action.payload];

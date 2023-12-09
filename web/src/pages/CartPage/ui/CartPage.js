@@ -12,20 +12,6 @@ export const CartPage = () => {
         dispatch(cartActions.initCart());
     }, [dispatch]);
 
-    const onAddToCart = useCallback(
-        (good) => {
-            dispatch(cartActions.addToCart(good));
-        },
-        [dispatch]
-    );
-
-    const onRemoveFromCart = useCallback(
-        (id) => {
-            dispatch(cartActions.removeFromCart(id));
-        },
-        [dispatch]
-    );
-
     return (
         <Page>
             {!Object.keys(cart).length ? (
@@ -33,11 +19,7 @@ export const CartPage = () => {
             ) : (
                 <>
                     <span className={cls.title}>Корзина</span>
-                    <Cart
-                        cart={cart}
-                        onAddToCart={onAddToCart}
-                        onRemoveFromCart={onRemoveFromCart}
-                    />
+                    <Cart cart={cart} />
                 </>
             )}
         </Page>

@@ -14,6 +14,7 @@ import { getCourierOrders } from "./model/selectors/getCourierData";
 import { courierActions } from "./model/slice/CourierSlice";
 import { courierReducer } from "./model/slice/CourierSlice";
 import { getCourierData } from "./model/selectors/getCourierData";
+import { getCourierId } from "./model/selectors/getCourierData";
 
 // export {
 //     getCourierFirstName,
@@ -30,4 +31,10 @@ import { getCourierData } from "./model/selectors/getCourierData";
 //     getCourierOrders,
 // };
 
-export { courierReducer, courierActions, getCourierData, getCourierOrders };
+export {
+    courierReducer,
+    courierActions,
+    getCourierData,
+    getCourierOrders,
+    getCourierId,
+};

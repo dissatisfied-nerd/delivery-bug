@@ -10,8 +10,8 @@ export const ProfileCard = (props) => {
         <div className={cls.ProfileCard}>
             <span className={cls.pageTitle}> Профиль </span>
             <div className={cls.header}>
-                <span className={cls.name}>{profile.lastName}</span>
-                <span className={cls.name}>{profile.firstName}</span>
+                <span className={cls.name}>{profile.last_name}</span>
+                <span className={cls.name}>{profile.first_name}</span>
                 <span>Баланс: {profile.balance} ₽</span>
             </div>
             <div className={cls.line}></div>
@@ -23,7 +23,7 @@ export const ProfileCard = (props) => {
                     <span>Дом: {profile.building}</span>
                     <span>Подъезд: {profile.entrance}</span>
                     <span>Этаж: {profile.floor}</span>
-                    <span>Квартира: {profile.aparts}</span>
+                    <span>Квартира: {profile.apartment}</span>
                 </div>
             </div>
             <div className={cls.line}></div>

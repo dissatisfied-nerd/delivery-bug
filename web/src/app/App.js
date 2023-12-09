@@ -16,12 +16,16 @@ function App() {
         );
 
         if (profile) {
-            const { type, ...data } = profile;
-            dispatch(authActions.initAuthData(profile));
+            const { type, [`${type}_id`]: id, ...data } = profile;
+            dispatch(authActions.initAuthData({ ...data, type }));
             if (profile?.type === "client") {
-                dispatch(clientActions.setClientData(data));
+                dispatch(
+                    clientActions.setClientData({ client_id: id, ...data })
+                );
             } else if (profile?.type === "courier") {
-                dispatch(courierActions.setCourierData(data));
+                dispatch(
+                    courierActions.setCourierData({ courier_id: id, ...data })
+                );
             }
         }
     }, [dispatch]);

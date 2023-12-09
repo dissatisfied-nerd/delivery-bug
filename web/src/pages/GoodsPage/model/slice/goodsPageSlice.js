@@ -11,10 +11,7 @@ export const goodsPageSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchGoodsPageData.fulfilled, (state, action) => {
-            state.goods = action.payload;
-        });
-        builder.addCase(fetchGoodsPageData.rejected, (state, action) => {
-            // console.log(action.payload);
+            state.goods = action.payload ?? [];
         });
     },
 });

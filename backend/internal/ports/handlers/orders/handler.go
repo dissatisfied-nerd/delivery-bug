@@ -36,13 +36,13 @@ func (h *Handler) CreateOrder(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
-	id, err := h.repo.CreateOrder(ctx, &input)
+	res, err := h.repo.CreateOrder(ctx, &input)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"order_id": id})
+	ctx.JSON(http.StatusOK, gin.H{"order": res})
 }
 
 func (h *Handler) GetFreeOrders(ctx *gin.Context) {

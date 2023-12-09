@@ -71,7 +71,7 @@ type ProductsStores struct {
 	StoreId   string `db:"store_id"`
 }
 
-type Orders struct {
+type Order struct {
 	ID string `db:"id"`
 
 	Price        float64    `db:"price"`

@@ -8,7 +8,7 @@ import (
 )
 
 type OrderService interface {
-	CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error)
+	//CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error)
 	GetOrdersByUserID(ctx context.Context, userID string) ([]*dtos.OrderUserDTOOutput, error)
 	GetOrdersByCourierID(ctx context.Context, courierID string) ([]*dtos.OrderCourierDTOOutput, error)
 }
@@ -22,9 +22,9 @@ func NewService(repo orderRepo.OrdersRepository, l logging.Logger) *Service {
 	return &Service{repo: repo, l: &l}
 }
 
-func (s *Service) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error) {
-	return s.repo.CreateOrder(ctx, order)
-}
+//func (s *Service) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error) {
+//	return s.repo.CreateOrder(ctx, order)
+//}
 
 func (s *Service) GetOrdersByUserID(ctx context.Context, userID string) ([]*dtos.OrderUserDTOOutput, error) {
 	return s.repo.GetOrdersByUserID(ctx, userID)

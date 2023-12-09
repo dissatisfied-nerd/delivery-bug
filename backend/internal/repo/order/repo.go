@@ -12,7 +12,7 @@ import (
 const statusCreated = "created"
 
 type OrdersRepository interface {
-	CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error)
+	CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (models.Order, error)
 	GetOrdersByUserID(ctx context.Context, userID string) ([]*dtos.OrderUserDTOOutput, error)
 	GetOrdersByCourierID(ctx context.Context, courierID string) ([]*dtos.OrderCourierDTOOutput, error)
 	GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error)
@@ -27,53 +27,53 @@ func NewRepository(db *pgxpool.Pool, l logging.Logger) *Repository {
 	return &Repository{db: db, l: &l}
 }
 
-func (r *Repository) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error) {
+func (r *Repository) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (models.Order, error) {
 	tx, err := r.db.Begin(ctx)
 	if err != nil {
-		r.l.Errorf("ERROR while start tx: %v", err)
-		return "", err
+		r.l.Errorf("Error starting transaction: %v", err)
+		return models.Order{}, err
 	}
 
 	var orderID string
-	if err := tx.QueryRow(ctx, createOrder, order.Price, time.Now(), order.ClientID, statusCreated).Scan(&orderID); err != nil {
-		r.l.Errorf("ERROR while inserting order %f %v %s in db: %v",
-			order.Price,
-			time.Now(),
-			order.ClientID,
-			err,
-		)
-
-		if err := tx.Rollback(ctx); err != nil {
-			r.l.Errorf("ERROR while rollback tx: %v", err)
-			return "", err
+	if err = tx.QueryRow(ctx, createOrder, order.Price, time.Now(), order.ClientID, statusCreated).Scan(&orderID); err != nil {
+		r.l.Errorf("Error inserting order into the database: %v", err)
+		rollbackErr := tx.Rollback(ctx)
+		if rollbackErr != nil {
+			r.l.Errorf("Error rolling back transaction: %v", rollbackErr)
 		}
-
-		return "", err
+		return models.Order{}, err
 	}
 
 	for _, product := range order.Products {
-		if _, err := tx.Query(ctx, createOrderProducts, product.Amount, orderID, product.ProductID); err != nil {
-			r.l.Errorf("ERROR while inserting order_products %d %s %s",
-				product.Amount,
-				orderID,
-				product.ProductID,
-			)
-
-			if err := tx.Rollback(ctx); err != nil {
-				r.l.Errorf("ERROR while rollback tx: %v", err)
-				return "", err
+		if _, err = tx.Query(ctx, createOrderProducts, product.Amount, orderID, product.ProductID); err != nil {
+			r.l.Errorf("Error inserting order_products into the database: %v", err)
+			rollbackErr := tx.Rollback(ctx)
+			if rollbackErr != nil {
+				r.l.Errorf("Error rolling back transaction: %v", rollbackErr)
 			}
-
-			return "", err
+			return models.Order{}, err
 		}
 	}
 
-	if err := tx.Commit(ctx); err != nil {
-		r.l.Errorf("ERROR while rollback tx: %v", err)
-		return "", err
+	if err = tx.Commit(ctx); err != nil {
+		r.l.Errorf("Error committing transaction: %v", err)
+		rollbackErr := tx.Rollback(ctx)
+		if rollbackErr != nil {
+			r.l.Errorf("Error rolling back transaction: %v", rollbackErr)
+		}
+		return models.Order{}, err
 	}
 
-	return orderID, nil
+	now := time.Now()
+	res := models.Order{
+		ID:           orderID,
+		Price:        order.Price,
+		Status:       statusCreated,
+		CreationTime: &now,
+		ClientId:     order.ClientID,
+	}
+
+	return res, nil
 }
 
 func (r *Repository) GetOrdersByUserID(ctx context.Context, userID string) ([]*dtos.OrderUserDTOOutput, error) {
@@ -87,7 +87,7 @@ func (r *Repository) GetOrdersByUserID(ctx context.Context, userID string) ([]*d
 	ordersDto := make([]*dtos.OrderUserDTOOutput, 0)
 
 	for rowsOrders.Next() {
-		var order models.Orders
+		var order models.Order
 		err := rowsOrders.Scan(&order)
 		if err != nil {
 			r.l.Errorf("ERROR while get order: %v", err)
@@ -131,7 +131,7 @@ func (r *Repository) GetOrdersByCourierID(ctx context.Context, courierID string)
 	ordersDto := make([]*dtos.OrderCourierDTOOutput, 0)
 
 	for rowsOrders.Next() {
-		var order models.Orders
+		var order models.Order
 		err := rowsOrders.Scan(&order)
 		if err != nil {
 			r.l.Errorf("ERROR while get order: %v", err)

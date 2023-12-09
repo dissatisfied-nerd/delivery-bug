@@ -48,6 +48,7 @@ func main() {
 	if err != nil {
 		logger.Fatal(err)
 	}
+	defer db.Close()
 	logger.Info("successfully connected to db")
 
 	migrations.MigrateDB("up", logger, cfg.Database, "./internal/migrations")

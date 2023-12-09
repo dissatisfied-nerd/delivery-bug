@@ -258,7 +258,7 @@
         }
       }
     },
-    "/api/products" : {
+    "/products" : {
       "get": {
         "summary": "get all products",
         "tags": ["product"],

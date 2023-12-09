@@ -1,16 +1,26 @@
 import { OrderList } from "entities/Order";
 import { getAuthData, getAuthType } from "features/Auth";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Card } from "shared/ui/Card/Card";
 import { Page } from "widgets/Page/Page";
 import cls from "./ProfilePage.module.scss";
 import { ProfileCard } from "../ProfileCard/ProfileCard";
-import { getClientData, getClientOrders } from "entities/Client";
+import { getClientData, getClientId, getClientOrders } from "entities/Client";
 import { getCourierData, getCourierOrders } from "entities/Courier";
+import { getProfileData } from "../../model/sevices/getProfileData/getProfileData";
 
 export const ProfilePage = () => {
+    const dispatch = useDispatch();
     const type = useSelector(getAuthType);
+    const client_id = useSelector(getClientId);
+    const courier_id = useSelector(getCourierData);
+    const id = type === "client" ? client_id : courier_id;
+
+    useEffect(() => {
+        dispatch(getProfileData(id));
+    }, [dispatch, id]);
+
     const client = useSelector(getClientData);
     const courier = useSelector(getCourierData);
     const profile = type === "client" ? client : courier;

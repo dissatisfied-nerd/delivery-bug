@@ -38,6 +38,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 			courier.POST("/login", h.CourierAuthHandler.SignInCourier)
 			courier.POST("/register", h.CourierAuthHandler.SignUpCourier)
 			courier.Use(authMiddleware.Middleware(&logger))
+			api.GET("/orders/free", h.OrderHandler.GetFreeOrders)
 		}
 		products := api.Group("/products")
 		{

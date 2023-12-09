@@ -15,6 +15,7 @@ type OrdersRepository interface {
 	CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (string, error)
 	GetOrdersByUserID(ctx context.Context, userID string) ([]*dtos.OrderUserDTOOutput, error)
 	GetOrdersByCourierID(ctx context.Context, courierID string) ([]*dtos.OrderCourierDTOOutput, error)
+	GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error)
 }
 
 type Repository struct {

@@ -11,6 +11,7 @@ import (
 
 type OrderHandler interface {
 	CreateOrder(ctx *gin.Context)
+	GetFreeOrders(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -42,4 +43,14 @@ func (h *Handler) CreateOrder(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"order_id": id})
+}
+
+func (h *Handler) GetFreeOrders(ctx *gin.Context) {
+	orders, err := h.repo.GetFreeOrders(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"orders": orders})
 }

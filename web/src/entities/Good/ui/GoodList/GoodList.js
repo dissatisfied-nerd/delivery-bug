@@ -8,6 +8,7 @@ export const GoodList = memo((props) => {
 
     return (
         <div className={classNames(cls.GoodList, {}, [className])}>
+            {!goods.length && <span>Товаров нет</span>}
             {goods.map((good) => {
                 return (
                     <GoodListItem

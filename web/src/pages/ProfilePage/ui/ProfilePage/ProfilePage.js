@@ -7,19 +7,23 @@ import { Page } from "widgets/Page/Page";
 import cls from "./ProfilePage.module.scss";
 import { ProfileCard } from "../ProfileCard/ProfileCard";
 import { getClientData, getClientId, getClientOrders } from "entities/Client";
-import { getCourierData, getCourierOrders } from "entities/Courier";
-import { getProfileData } from "../../model/sevices/getProfileData/getProfileData";
+import {
+    getCourierData,
+    getCourierId,
+    getCourierOrders,
+} from "entities/Courier";
+import { getProfileData } from "../../model/sevices/fetchProfileData/fetchProfileData";
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
     const type = useSelector(getAuthType);
     const client_id = useSelector(getClientId);
-    const courier_id = useSelector(getCourierData);
+    const courier_id = useSelector(getCourierId);
     const id = type === "client" ? client_id : courier_id;
 
     useEffect(() => {
         dispatch(getProfileData(id));
-    }, [dispatch, id]);
+    }, []);
 
     const client = useSelector(getClientData);
     const courier = useSelector(getCourierData);

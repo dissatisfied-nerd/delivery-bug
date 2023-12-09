@@ -10,11 +10,11 @@ export const GoodListItem = (props) => {
     return (
         <Card className={classNames(cls.GoodListItem, {}, [className])}>
             <div className={cls.imgWrapper}>
-                <img src={good.img} alt={good.title} className={cls.img} />
+                <img src={good.img} alt={good.name} className={cls.img} />
             </div>
             <div className={cls.textWrapper}>
                 <span className={cls.price}>{good.price} ₽</span>
-                <span className={cls.title}>{good.title}</span>
+                <span className={cls.title}>{good.name}</span>
             </div>
             {!count ? (
                 <Button theme="primary" onClick={() => onAddToCart(good)}>

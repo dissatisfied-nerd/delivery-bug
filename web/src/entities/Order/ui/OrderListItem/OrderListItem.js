@@ -45,7 +45,7 @@ export const OrderListItem = (props) => {
                             return (
                                 <img
                                     className={cls.goodsImgItem}
-                                    src={good.img}
+                                    src={good.image}
                                     alt={good.title}
                                 />
                             );

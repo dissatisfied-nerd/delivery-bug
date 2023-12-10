@@ -8,12 +8,16 @@ import cls from "./Cart.module.scss";
 import {
     getCartCost,
     getCartCount,
+    getCartData,
     getCartWeight,
 } from "../../model/selectors/getCartData";
+import { createOrder } from "../../model/services/createOrder/createOrder";
 
 export const Cart = (props) => {
-    const { className, cart } = props;
+    const { className } = props;
     const dispatch = useDispatch();
+
+    const cart = useSelector(getCartData);
     const weight = useSelector(getCartWeight);
     const count = useSelector(getCartCount);
     const cost = useSelector(getCartCost);
@@ -32,9 +36,9 @@ export const Cart = (props) => {
         [dispatch]
     );
 
-    const createOrder = useCallback(() => {
-        dispatch(createOrder(cart));
-    }, [dispatch, cart]);
+    const onCreateOrder = useCallback(() => {
+        dispatch(createOrder({ cart, price: cost }));
+    }, [dispatch, cart, cost]);
 
     return (
         <div className={classNames(cls.Cart, {}, [className])}>
@@ -48,6 +52,7 @@ export const Cart = (props) => {
                 count={count}
                 cost={cost}
                 weight={weight}
+                onCreateOrder={onCreateOrder}
             />
         </div>
     );

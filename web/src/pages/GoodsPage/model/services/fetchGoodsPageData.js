@@ -7,8 +7,8 @@ export const fetchGoodsPageData = createAsyncThunk(
 
         try {
             const response = await extra.api.get("/products");
-            console.log(response.data);
-            return response.data;
+
+            return response.data.products;
         } catch (e) {
             return rejectWithValue(e);
         }

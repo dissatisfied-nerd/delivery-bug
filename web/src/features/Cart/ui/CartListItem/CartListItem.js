@@ -11,7 +11,7 @@ export const CartListItem = (props) => {
             <Button onClick={() => onRemoveFromCart([good.id, true])}>
                 <TrashBinSVG />
             </Button>
-            <img src={good.img} alt={good.title} className={cls.img} />
+            <img src={good.image} alt={good.title} className={cls.img} />
             <div className={cls.titleWrapper}>{good.title}</div>
             <span className={cls.price}>{good.price} ₽</span>
             <div className={cls.countsControlWrapper}>

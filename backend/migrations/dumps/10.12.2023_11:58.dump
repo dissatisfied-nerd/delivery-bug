@@ -80,6 +80,19 @@ CREATE TABLE public.clients (
 ALTER TABLE public.clients OWNER TO postgres;
 
 --
+-- Name: clients_loginform; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.clients_loginform (
+    login character varying(128) NOT NULL,
+    password character varying(128),
+    client_id uuid
+);
+
+
+ALTER TABLE public.clients_loginform OWNER TO postgres;
+
+--
 -- Name: couriers; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -87,11 +100,25 @@ CREATE TABLE public.couriers (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     first_name character varying(128),
     last_name character varying(128),
-    registration character varying(128) NOT NULL
+    registration boolean NOT NULL,
+    address_id uuid
 );
 
 
 ALTER TABLE public.couriers OWNER TO postgres;
+
+--
+-- Name: couriers_loginform; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.couriers_loginform (
+    login character varying(128) NOT NULL,
+    password character varying(128),
+    courier_id uuid
+);
+
+
+ALTER TABLE public.couriers_loginform OWNER TO postgres;
 
 --
 -- Name: loginform; Type: TABLE; Schema: public; Owner: postgres
@@ -128,6 +155,7 @@ CREATE TABLE public.orders (
     price double precision,
     creation_time timestamp without time zone,
     delivery_time timestamp without time zone,
+    status character varying(255),
     client_id uuid,
     courier_id uuid
 );
@@ -146,7 +174,7 @@ CREATE TABLE public.products (
     weight double precision,
     description character varying(512),
     image bytea,
-    adminstrator_id uuid,
+    administrator_id uuid,
     CONSTRAINT products_price_check CHECK ((price > (0)::double precision))
 );
 
@@ -198,11 +226,16 @@ ALTER TABLE public.stores OWNER TO postgres;
 --
 
 COPY public.addresses (id, city, street, building, entrance, floor, apartment) FROM stdin;
-0ced6ae0-6931-4ad4-8666-f9ed282388b1	City1	Street1	123	1	2	3
-f510d32d-aee2-4249-ad57-f4a8fb1ca0ec	City2	Street2	456	4	5	6
-6d28590b-ecba-48ef-ac94-44b8f33f95d1	City3	Street3	789	7	8	9
-c9384988-0e53-4dd6-b8e1-90c9e0bdb1f2	City4	Street4	101	10	11	12
-7e5bf271-af28-4f26-9c50-8db0ee065cf0	City5	Street5	121	13	14	15
+2448d04f-fbbf-4848-846f-515e9d1671f2	City1	Street1	123	1	2	3
+93284c49-f157-4747-9522-eea0e0a748cc	City2	Street2	456	4	5	6
+35f8534c-2b59-4cc4-8ea4-63149c92bc8d	City3	Street3	789	7	8	9
+2da95019-1858-4fdf-9e70-15d694f33a7b	City4	Street4	101	10	11	12
+ae785d58-af21-4e70-b319-3ca764759bf3	City5	Street5	121	13	14	15
+7992a6c1-7070-4253-b28d-549fd06a8b56	Churlmenia	Street1	123	1	2	3
+322926d9-a4f8-4480-8892-0178b2f77bfe	Churlmenia	Street2	456	4	5	6
+4edb5269-0711-4ddb-96fb-69eacefe127b	Churlmenia	Street3	789	7	8	9
+f1afe515-7ef1-4fdc-a61a-fe0995780745	Churlmenia	Street4	101	10	11	12
+5ce27b54-9e06-4fe2-be44-3d031caa3593	Churlmenia	Street5	121	13	14	15
 \.
 
 
@@ -211,11 +244,11 @@ c9384988-0e53-4dd6-b8e1-90c9e0bdb1f2	City4	Street4	101	10	11	12
 --
 
 COPY public.administrators (id, first_name, last_name) FROM stdin;
-9304456e-0f88-4e51-a671-bb93eafab023	Admin1_First	Admin1_Last
-1a9a6a56-6dc6-4e47-92e3-6164119466de	Admin2_First	Admin2_Last
-ff0e453b-5435-489a-8f0b-12692e58fbd1	Admin3_First	Admin3_Last
-39464c48-6c4c-43f5-962e-6c75d8c23659	Admin4_First	Admin4_Last
-d1fc050e-2b31-4478-86f6-95b25e29b4c7	Admin5_First	Admin5_Last
+eb82d8b6-685b-41c9-a906-5d8bb43e6d22	Admin1_First	Admin1_Last
+b81a36d3-a47a-4cd9-902c-d849492958bc	Admin2_First	Admin2_Last
+a4fecd7d-5062-464f-a250-e0b453496727	Admin3_First	Admin3_Last
+5fa2b752-9c7c-412c-9c98-a0bf8a7b4721	Admin4_First	Admin4_Last
+1ae9a5f7-ae7c-46ad-84ed-a54c38c38de7	Admin5_First	Admin5_Last
 \.
 
 
@@ -224,11 +257,24 @@ d1fc050e-2b31-4478-86f6-95b25e29b4c7	Admin5_First	Admin5_Last
 --
 
 COPY public.clients (id, first_name, last_name, balance, address_id) FROM stdin;
-8f12edc6-d7c1-412d-ad31-4efbc006edd5	Client1_First	Client1_Last	100.5	0ced6ae0-6931-4ad4-8666-f9ed282388b1
-7020b467-2fba-456c-a28e-8b36733be207	Client2_First	Client2_Last	200.75	6d28590b-ecba-48ef-ac94-44b8f33f95d1
-3aa3f485-5676-4c75-9574-4c9b12c056c2	Client3_First	Client3_Last	300.25	6d28590b-ecba-48ef-ac94-44b8f33f95d1
-03771bf4-8a62-4df7-a50d-74bf600b5de2	Client4_First	Client4_Last	400.75	7e5bf271-af28-4f26-9c50-8db0ee065cf0
-33f3bda3-12ec-4c1d-ad9c-1efb3f7f29f5	Client5_First	Client5_Last	500.25	7e5bf271-af28-4f26-9c50-8db0ee065cf0
+0317b98b-e200-42a6-bfbb-bd6a55e30458	Client1_First	Client1_Last	100.5	5ce27b54-9e06-4fe2-be44-3d031caa3593
+2a75f246-185b-4b5d-a63f-407a232c52f9	Client2_First	Client2_Last	200.75	f1afe515-7ef1-4fdc-a61a-fe0995780745
+b81b0870-b526-4735-ad43-6e16ce63b01e	Client3_First	Client3_Last	300.25	35f8534c-2b59-4cc4-8ea4-63149c92bc8d
+90b16816-2fdd-4909-bb24-3eefe719ab1a	Client4_First	Client4_Last	400.75	ae785d58-af21-4e70-b319-3ca764759bf3
+8da0c84c-4d3c-4acd-a631-7e71afaa663c	Client5_First	Client5_Last	500.25	2da95019-1858-4fdf-9e70-15d694f33a7b
+\.
+
+
+--
+-- Data for Name: clients_loginform; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.clients_loginform (login, password, client_id) FROM stdin;
+user1	password1	0317b98b-e200-42a6-bfbb-bd6a55e30458
+user2	password2	2a75f246-185b-4b5d-a63f-407a232c52f9
+user3	password3	b81b0870-b526-4735-ad43-6e16ce63b01e
+user4	password4	90b16816-2fdd-4909-bb24-3eefe719ab1a
+user5	password5	8da0c84c-4d3c-4acd-a631-7e71afaa663c
 \.
 
 
@@ -236,12 +282,25 @@ COPY public.clients (id, first_name, last_name, balance, address_id) FROM stdin;
 -- Data for Name: couriers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.couriers (id, first_name, last_name, registration) FROM stdin;
-24ecfa8a-d61c-44f6-a64e-177802c3ef9e	Courier1_First	Courier1_Last	Country1
-988910a7-da1f-498f-8c41-f2631de9e132	Courier2_First	Courier2_Last	Country2
-8436cc20-74c1-408e-940e-e12b2b99a3dc	Courier3_First	Courier3_Last	Country3
-28bbfe58-4b92-407d-a3d4-62eed02a2ca9	Courier4_First	Courier4_Last	Country4
-44eaecff-bd36-4fac-88cb-6937c48bf1d0	Courier5_First	Courier5_Last	Country5
+COPY public.couriers (id, first_name, last_name, registration, address_id) FROM stdin;
+a096008b-54c8-4e11-b916-114f880a38a3	Courier1_First	Courier1_Last	t	\N
+e44a7331-f09b-42c6-b870-418e6212604f	Courier2_First	Courier2_Last	t	\N
+91f068bb-1275-4c23-bca0-744668bbde0b	Courier3_First	Courier3_Last	t	\N
+2d29f75b-d6ac-46f9-a593-4f06d74c4205	Courier4_First	Courier4_Last	t	\N
+eec4639e-5292-4fb2-9345-0933852664a9	Courier5_First	Courier5_Last	t	\N
+\.
+
+
+--
+-- Data for Name: couriers_loginform; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.couriers_loginform (login, password, courier_id) FROM stdin;
+courier1	courierpass1	\N
+courier2	courierpass2	\N
+courier3	courierpass3	\N
+courier4	courierpass4	\N
+courier5	courierpass5	\N
 \.
 
 
@@ -263,11 +322,11 @@ user5	password5	33f3bda3-12ec-4c1d-ad9c-1efb3f7f29f5
 --
 
 COPY public.order_products (amount, order_id, product_id) FROM stdin;
-2	7794d534-be1b-4e37-8ae6-13889a9ba598	c4ac4bb6-90dd-4e02-a22f-9d2e4fdce307
-1	1328dee8-00f2-402b-9fb1-b83576d70be9	cfde7a68-8aea-4e59-92ac-b5ed6d7057a1
-3	a2ef7f29-3ee0-4dec-8ed8-3995bcc29437	bac8f1c2-fd30-4f9a-913d-37c7138736f1
-4	492d594a-21c0-4e3d-918d-0442e384b880	bac8f1c2-fd30-4f9a-913d-37c7138736f1
-5	5127e1d3-d23f-4949-b932-4bd276f28f21	cfde7a68-8aea-4e59-92ac-b5ed6d7057a1
+2	b22710aa-6d62-4bfd-94b6-20d1af36262d	e4cbe920-770f-478f-9072-eab7d1362401
+1	9b5a945e-5323-4d14-9323-f77d06843cb0	cf8ee651-6950-4be0-abea-425fd2d3bd94
+3	af91ee19-0b69-4d69-9232-5e929f0d8d59	c951b398-1788-49ba-8f42-aea1c416b5d4
+4	ff389583-b191-445a-8bb8-b4dd77b336ec	c951b398-1788-49ba-8f42-aea1c416b5d4
+5	ec13008d-12e8-40ec-af26-b4c737fc6b2a	20391412-669a-4662-a28b-0a6da15eb367
 \.
 
 
@@ -275,12 +334,12 @@ COPY public.order_products (amount, order_id, product_id) FROM stdin;
 -- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.orders (id, price, creation_time, delivery_time, client_id, courier_id) FROM stdin;
-7794d534-be1b-4e37-8ae6-13889a9ba598	49.99	2023-12-06 16:49:40.987727	\N	8f12edc6-d7c1-412d-ad31-4efbc006edd5	44eaecff-bd36-4fac-88cb-6937c48bf1d0
-5127e1d3-d23f-4949-b932-4bd276f28f21	59.99	2023-12-06 16:49:40.987727	\N	7020b467-2fba-456c-a28e-8b36733be207	8436cc20-74c1-408e-940e-e12b2b99a3dc
-a2ef7f29-3ee0-4dec-8ed8-3995bcc29437	69.99	2023-12-06 16:49:40.987727	\N	3aa3f485-5676-4c75-9574-4c9b12c056c2	44eaecff-bd36-4fac-88cb-6937c48bf1d0
-1328dee8-00f2-402b-9fb1-b83576d70be9	79.99	2023-12-06 16:49:40.987727	\N	03771bf4-8a62-4df7-a50d-74bf600b5de2	44eaecff-bd36-4fac-88cb-6937c48bf1d0
-492d594a-21c0-4e3d-918d-0442e384b880	89.99	2023-12-06 16:49:40.987727	\N	33f3bda3-12ec-4c1d-ad9c-1efb3f7f29f5	988910a7-da1f-498f-8c41-f2631de9e132
+COPY public.orders (id, price, creation_time, delivery_time, status, client_id, courier_id) FROM stdin;
+ff389583-b191-445a-8bb8-b4dd77b336ec	49.99	2023-12-09 21:09:02.460452	\N	Поиск курьера	0317b98b-e200-42a6-bfbb-bd6a55e30458	2d29f75b-d6ac-46f9-a593-4f06d74c4205
+b22710aa-6d62-4bfd-94b6-20d1af36262d	59.99	2023-12-09 21:09:02.460452	\N	Поиск курьера	2a75f246-185b-4b5d-a63f-407a232c52f9	2d29f75b-d6ac-46f9-a593-4f06d74c4205
+9b5a945e-5323-4d14-9323-f77d06843cb0	69.99	2023-12-09 21:09:02.460452	\N	У курьера	b81b0870-b526-4735-ad43-6e16ce63b01e	91f068bb-1275-4c23-bca0-744668bbde0b
+af91ee19-0b69-4d69-9232-5e929f0d8d59	79.99	2023-12-09 21:09:02.460452	\N	У курьера	90b16816-2fdd-4909-bb24-3eefe719ab1a	eec4639e-5292-4fb2-9345-0933852664a9
+ec13008d-12e8-40ec-af26-b4c737fc6b2a	89.99	2023-12-09 21:09:02.460452	\N	У курьера	8da0c84c-4d3c-4acd-a631-7e71afaa663c	e44a7331-f09b-42c6-b870-418e6212604f
 \.
 
 
@@ -288,12 +347,12 @@ a2ef7f29-3ee0-4dec-8ed8-3995bcc29437	69.99	2023-12-06 16:49:40.987727	\N	3aa3f48
 -- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.products (id, name, price, weight, description, image, adminstrator_id) FROM stdin;
-933006f8-511f-4c65-be6d-fcd0d4a6ed37	Product1	19.99	0.5	Description1	\N	\N
-c4ac4bb6-90dd-4e02-a22f-9d2e4fdce307	Product2	29.99	1	Description2	\N	\N
-c98e425b-ea7c-40e8-83d5-ce44fd9551e2	Product3	39.99	1.5	Description3	\N	\N
-cfde7a68-8aea-4e59-92ac-b5ed6d7057a1	Product4	49.99	2	Description4	\N	\N
-bac8f1c2-fd30-4f9a-913d-37c7138736f1	Product5	59.99	2.5	Description5	\N	\N
+COPY public.products (id, name, price, weight, description, image, administrator_id) FROM stdin;
+20391412-669a-4662-a28b-0a6da15eb367	Product1	19.99	0.5	Description1	\N	\N
+cf8ee651-6950-4be0-abea-425fd2d3bd94	Product2	29.99	1	Description2	\N	\N
+c951b398-1788-49ba-8f42-aea1c416b5d4	Product3	39.99	1.5	Description3	\N	\N
+e4cbe920-770f-478f-9072-eab7d1362401	Product4	49.99	2	Description4	\N	\N
+4a3a1368-7893-4448-806c-7e64bce2aabe	Product5	59.99	2.5	Description5	\N	\N
 \.
 
 
@@ -310,11 +369,11 @@ COPY public.products_stores (product_id, store_id) FROM stdin;
 --
 
 COPY public.reviews (id, mark, client_id, order_id, product_id) FROM stdin;
-bb36b65f-f426-43e3-9c98-b987df64ebf5	5	8f12edc6-d7c1-412d-ad31-4efbc006edd5	a2ef7f29-3ee0-4dec-8ed8-3995bcc29437	933006f8-511f-4c65-be6d-fcd0d4a6ed37
-40eae728-36a3-4a24-901b-bbd653c92614	4	7020b467-2fba-456c-a28e-8b36733be207	7794d534-be1b-4e37-8ae6-13889a9ba598	bac8f1c2-fd30-4f9a-913d-37c7138736f1
-a7ff5e89-4679-4297-82c5-86376f845980	3	3aa3f485-5676-4c75-9574-4c9b12c056c2	5127e1d3-d23f-4949-b932-4bd276f28f21	c4ac4bb6-90dd-4e02-a22f-9d2e4fdce307
-4945a15a-09aa-4ef3-9d75-603898502973	2	03771bf4-8a62-4df7-a50d-74bf600b5de2	492d594a-21c0-4e3d-918d-0442e384b880	933006f8-511f-4c65-be6d-fcd0d4a6ed37
-0f771275-4e3d-4553-82ad-f577c4c25a86	1	33f3bda3-12ec-4c1d-ad9c-1efb3f7f29f5	1328dee8-00f2-402b-9fb1-b83576d70be9	cfde7a68-8aea-4e59-92ac-b5ed6d7057a1
+14854ffd-8964-421c-8c4c-588ee637738f	5	0317b98b-e200-42a6-bfbb-bd6a55e30458	b22710aa-6d62-4bfd-94b6-20d1af36262d	cf8ee651-6950-4be0-abea-425fd2d3bd94
+d096ebd4-0a07-4936-8a8d-1a834d78ee21	4	2a75f246-185b-4b5d-a63f-407a232c52f9	af91ee19-0b69-4d69-9232-5e929f0d8d59	4a3a1368-7893-4448-806c-7e64bce2aabe
+7f2fc618-e15c-4a89-9228-6ccf4b751276	3	b81b0870-b526-4735-ad43-6e16ce63b01e	af91ee19-0b69-4d69-9232-5e929f0d8d59	c951b398-1788-49ba-8f42-aea1c416b5d4
+adeecd3d-c1f0-4dd3-a080-186cf4eb0187	2	90b16816-2fdd-4909-bb24-3eefe719ab1a	ec13008d-12e8-40ec-af26-b4c737fc6b2a	c951b398-1788-49ba-8f42-aea1c416b5d4
+945e1477-2bc6-4cf7-9a0e-ff92f3e73dd6	1	8da0c84c-4d3c-4acd-a631-7e71afaa663c	af91ee19-0b69-4d69-9232-5e929f0d8d59	20391412-669a-4662-a28b-0a6da15eb367
 \.
 
 
@@ -323,11 +382,11 @@ a7ff5e89-4679-4297-82c5-86376f845980	3	3aa3f485-5676-4c75-9574-4c9b12c056c2	5127
 --
 
 COPY public.stores (id, reputation, name) FROM stdin;
-2f3a3b1f-c62c-4c04-b660-44d57d7ec4df	4	Store1
-de32ee7c-c9e7-42cd-9e81-57bb7232b657	5	Store2
-9bbdfd8a-bfbb-4a2b-b8ef-3d3fbf65ec58	3	Store3
-fd204d03-28c5-4c7a-aeb0-3f9d3cd96b4d	2	Store4
-3c779a28-50a9-41b2-9b91-a0f40f355410	1	Store5
+a6c6f04d-0305-4433-8118-8adc1ef5944b	4	Store1
+4219e1cc-12cb-4c60-935d-41640bd50dc1	5	Store2
+b50b208a-db65-4baa-96f6-d0a30c3c58e6	3	Store3
+7d5d33f8-58ce-49e9-b8b7-11b15d9887cc	2	Store4
+2c1c0034-e239-40aa-8cc9-7be70341bacb	1	Store5
 \.
 
 
@@ -348,11 +407,27 @@ ALTER TABLE ONLY public.administrators
 
 
 --
+-- Name: clients_loginform clients_loginform_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clients_loginform
+    ADD CONSTRAINT clients_loginform_pkey PRIMARY KEY (login);
+
+
+--
 -- Name: clients clients_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.clients
     ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: couriers_loginform couriers_loginform_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.couriers_loginform
+    ADD CONSTRAINT couriers_loginform_pkey PRIMARY KEY (login);
 
 
 --
@@ -428,11 +503,27 @@ ALTER TABLE ONLY public.clients
 
 
 --
--- Name: loginform loginform_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: clients_loginform clients_loginform_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.loginform
-    ADD CONSTRAINT loginform_client_id_fkey FOREIGN KEY (client_id) REFERENCES public.clients(id);
+ALTER TABLE ONLY public.clients_loginform
+    ADD CONSTRAINT clients_loginform_client_id_fkey FOREIGN KEY (client_id) REFERENCES public.clients(id);
+
+
+--
+-- Name: couriers couriers_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.couriers
+    ADD CONSTRAINT couriers_address_id_fkey FOREIGN KEY (address_id) REFERENCES public.addresses(id);
+
+
+--
+-- Name: couriers_loginform couriers_loginform_courier_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.couriers_loginform
+    ADD CONSTRAINT couriers_loginform_courier_id_fkey FOREIGN KEY (courier_id) REFERENCES public.couriers(id);
 
 
 --
@@ -468,11 +559,11 @@ ALTER TABLE ONLY public.orders
 
 
 --
--- Name: products products_adminstrator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: products products_administrator_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.products
-    ADD CONSTRAINT products_adminstrator_id_fkey FOREIGN KEY (adminstrator_id) REFERENCES public.administrators(id);
+    ADD CONSTRAINT products_administrator_id_fkey FOREIGN KEY (administrator_id) REFERENCES public.administrators(id);
 
 
 --

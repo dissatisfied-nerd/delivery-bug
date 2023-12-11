@@ -33,6 +33,9 @@ export const clientSlice = createSlice({
         logout: (state, action) => {
             state.data = {};
         },
+        setClientOrders: (state, action) => {
+            state.orders = action.payload;
+        },
     },
     // extraReducers: (builder) => {
     //     builder

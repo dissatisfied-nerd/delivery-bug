@@ -29,8 +29,11 @@ export const courierSlice = createSlice({
             state.data = data;
             state.courier_id = courier_id;
         },
-        addOrder: (state, action) => {
-            state.orders = [...state.orders, action.payload];
+        // addOrder: (state, action) => {
+        //     state.orders = [...state.orders, action.payload];
+        // },
+        setCouriertOrders: (state, action) => {
+            state.orders = action.payload;
         },
         logout: (state, action) => {
             state.data = {};

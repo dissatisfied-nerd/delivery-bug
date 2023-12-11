@@ -30,7 +30,7 @@ func (r *Repository) SelectProducts(ctx context.Context) ([]models.Product, erro
 	defer rows.Close()
 	for rows.Next() {
 		var product models.Product
-		err = rows.Scan(&product)
+		err = rows.Scan(&product.ID, &product.Name, &product.Price, &product.Weight, &product.Description, &product.Image)
 		if err != nil {
 			r.l.Error(err)
 			return nil, err

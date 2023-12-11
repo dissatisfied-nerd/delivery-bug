@@ -1,5 +1,5 @@
 package product
 
 const (
-	getProductsQuery = `SELECT name, price, weight, description, image FROM products`
+	getProductsQuery = `SELECT id, name, price, weight, description, image FROM products`
 )

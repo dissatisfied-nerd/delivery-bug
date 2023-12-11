@@ -9,7 +9,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font: bold var(--font-l);
+    font: var(--font-l);
+    font-weight: 600;
     background: var(--card-bg);
     padding: 20px;
 }

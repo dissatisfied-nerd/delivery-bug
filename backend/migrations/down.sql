@@ -7,6 +7,6 @@ drop table stores cascade;
 drop table administrators cascade;
 drop table couriers cascade;
 drop table couriers_loginform cascade;
-drop table clients_loginform;
+drop table clients_loginform cascade;
 drop table clients cascade;
 drop table addresses cascade;

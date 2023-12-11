@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CART_LOCALSTORAGE_KEY } from "shared/const/localstorage";
+import { createOrder } from "../services/createOrder/createOrder";
 
 const initialState = {
     cart: {},
     weight: "",
     cost: 0,
     count: 0,
+    isOrderCreated: false,
+    error: "",
 };
 
 export const cartSlice = createSlice({
@@ -88,6 +91,20 @@ export const cartSlice = createSlice({
             state.count = 0;
             localStorage.removeItem(CART_LOCALSTORAGE_KEY);
         },
+        setIsOrderCreated: (state, action) => {
+            state.isOrderCreated = action.payload;
+        },
+    },
+    extraReducers: (build) => {
+        build
+            .addCase(createOrder.fulfilled, (state, action) => {
+                state.isOrderCreated = true;
+                state.error = "";
+            })
+            .addCase(createOrder.rejected, (state, action) => {
+                state.isOrderCreated = false;
+                state.error = action.payload;
+            });
     },
 });
 

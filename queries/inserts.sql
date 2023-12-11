@@ -5,7 +5,12 @@ VALUES
     ('City2', 'Street2', 456, 4, 5, 6),
     ('City3', 'Street3', 789, 7, 8, 9),
     ('City4', 'Street4', 101, 10, 11, 12),
-    ('City5', 'Street5', 121, 13, 14, 15);
+    ('City5', 'Street5', 121, 13, 14, 15),
+    ('Churlmenia', 'Street1', 123, 1, 2, 3),
+    ('Churlmenia', 'Street2', 456, 4, 5, 6),
+    ('Churlmenia', 'Street3', 789, 7, 8, 9),
+    ('Churlmenia', 'Street4', 101, 10, 11, 12),
+    ('Churlmenia', 'Street5', 121, 13, 14, 15);
 
 -- Заполнение таблицы "clients"
 INSERT INTO clients (first_name, last_name, balance, address_id)
@@ -16,9 +21,8 @@ VALUES
     ('Client4_First', 'Client4_Last', 400.75, (SELECT id FROM addresses ORDER BY random() LIMIT 1)),
     ('Client5_First', 'Client5_Last', 500.25, (SELECT id FROM addresses ORDER BY random() LIMIT 1));
 
-
--- Заполнение таблицы "loginForm"
-INSERT INTO login_form (login, password, client_id)
+-- Заполнение таблицы "clients_loginform"
+INSERT INTO clients_loginform (login, password, client_id)
 VALUES
     ('user1', 'password1', (SELECT id FROM clients WHERE first_name = 'Client1_First')),
     ('user2', 'password2', (SELECT id FROM clients WHERE first_name = 'Client2_First')),
@@ -26,14 +30,23 @@ VALUES
     ('user4', 'password4', (SELECT id FROM clients WHERE first_name = 'Client4_First')),
     ('user5', 'password5', (SELECT id FROM clients WHERE first_name = 'Client5_First'));
 
--- Заполнение таблицы "couriers"
-INSERT INTO couriers (first_name, last_name, registration)
+-- Заполнение таблицы "couriers_loginform"
+INSERT INTO couriers_loginform (login, password, courier_id)
 VALUES
-    ('Courier1_First', 'Courier1_Last', 'Country1'),
-    ('Courier2_First', 'Courier2_Last', 'Country2'),
-    ('Courier3_First', 'Courier3_Last', 'Country3'),
-    ('Courier4_First', 'Courier4_Last', 'Country4'),
-    ('Courier5_First', 'Courier5_Last', 'Country5');
+    ('courier1', 'courierpass1', (SELECT id FROM couriers WHERE first_name = 'Courier1_First')),
+    ('courier2', 'courierpass2', (SELECT id FROM couriers WHERE first_name = 'Courier2_First')),
+    ('courier3', 'courierpass3', (SELECT id FROM couriers WHERE first_name = 'Courier3_First')),
+    ('courier4', 'courierpass4', (SELECT id FROM couriers WHERE first_name = 'Courier4_First')),
+    ('courier5', 'courierpass5', (SELECT id FROM couriers WHERE first_name = 'Courier5_First'));
+
+-- Заполнение таблицы "couriers"
+INSERT INTO couriers (first_name, last_name, registration, address_id)
+VALUES
+    ('Courier1_First', 'Courier1_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
+    ('Courier2_First', 'Courier2_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
+    ('Courier3_First', 'Courier3_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
+    ('Courier4_First', 'Courier4_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
+    ('Courier5_First', 'Courier5_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1));
 
 -- Заполнение таблицы "administrators"
 INSERT INTO administrators (first_name, last_name)
@@ -63,13 +76,13 @@ VALUES
     ('Product5', 59.99, 2.5, 'Description5', NULL);
 
 -- Заполнение таблицы "orders"
-INSERT INTO orders (price, creation_time, delivery_time, client_id, courier_id)
+INSERT INTO orders (price, creation_time, delivery_time, status, client_id, courier_id)
 VALUES
-    (49.99, CURRENT_TIMESTAMP, NULL, (SELECT id FROM clients WHERE first_name = 'Client1_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1)),
-    (59.99, CURRENT_TIMESTAMP, NULL, (SELECT id FROM clients WHERE first_name = 'Client2_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1)),
-    (69.99, CURRENT_TIMESTAMP, NULL, (SELECT id FROM clients WHERE first_name = 'Client3_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1)),
-    (79.99, CURRENT_TIMESTAMP, NULL, (SELECT id FROM clients WHERE first_name = 'Client4_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1)),
-    (89.99, CURRENT_TIMESTAMP, NULL, (SELECT id FROM clients WHERE first_name = 'Client5_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1));
+    (49.99, CURRENT_TIMESTAMP, NULL, 'Поиск курьера', (SELECT id FROM clients WHERE first_name = 'Client1_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1)),
+    (59.99, CURRENT_TIMESTAMP, NULL, 'Поиск курьера', (SELECT id FROM clients WHERE first_name = 'Client2_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1)),
+    (69.99, CURRENT_TIMESTAMP, NULL, 'У курьера', (SELECT id FROM clients WHERE first_name = 'Client3_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1)),
+    (79.99, CURRENT_TIMESTAMP, NULL, 'У курьера', (SELECT id FROM clients WHERE first_name = 'Client4_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1)),
+    (89.99, CURRENT_TIMESTAMP, NULL, 'У курьера', (SELECT id FROM clients WHERE first_name = 'Client5_First'), (SELECT id FROM couriers ORDER BY random() LIMIT 1));
 
 -- Заполнение таблицы "order_products"
 INSERT INTO order_products (amount, order_id, product_id)

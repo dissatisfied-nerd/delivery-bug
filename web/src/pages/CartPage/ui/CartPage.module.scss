@@ -4,10 +4,14 @@
     margin-bottom: 20px;
 }
 
-.empty {
+.msg {
     display: block;
     width: 200px;
     margin: 0 auto;
     font: var(--font-xxl);
     color: var(--secondary-color);
+}
+
+.error {
+    color: var(--red-light);
 }

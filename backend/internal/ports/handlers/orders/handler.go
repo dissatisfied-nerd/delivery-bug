@@ -16,6 +16,7 @@ type OrderHandler interface {
 	GetOrdersByCourierID(ctx *gin.Context)
 	GetOrdersByUserID(ctx *gin.Context)
 	TakeOrder(ctx *gin.Context)
+	FinishOrder(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -98,6 +99,28 @@ func (h *Handler) TakeOrder(ctx *gin.Context) {
 	}
 
 	info, err := h.repo.SetOrderTaken(ctx, orderID, courierID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"order": info})
+}
+
+func (h *Handler) FinishOrder(ctx *gin.Context) {
+	orderID, ok := ctx.GetQuery("orderID")
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": errors.New("no orderID")})
+		h.l.Error("no orderID")
+		return
+	}
+	courierID, ok := ctx.GetQuery("courierID")
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": errors.New("no courierID")})
+		h.l.Error("no courierID")
+		return
+	}
+
+	info, err := h.repo.SetOrderFinished(ctx, orderID, courierID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return

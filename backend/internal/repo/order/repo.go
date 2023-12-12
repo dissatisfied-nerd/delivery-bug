@@ -9,7 +9,11 @@ import (
 	"time"
 )
 
-const statusCreated = "created"
+const (
+	statusCreated  = "created"
+	statusFinished = "finished"
+	statusTaken    = "taken"
+)
 
 type OrdersRepository interface {
 	CreateOrder(ctx context.Context, order *dtos.OrderDTOInput) (models.Order, error)
@@ -17,6 +21,7 @@ type OrdersRepository interface {
 	GetOrdersByCourierID(ctx context.Context, courierID string) ([]*dtos.OrderCourierDTOOutput, error)
 	GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error)
 	SetOrderTaken(ctx context.Context, orderID, courierID string) (models.Order, error)
+	SetOrderFinished(ctx context.Context, orderID, courierID string) (models.Order, error)
 }
 
 type Repository struct {
@@ -204,9 +209,25 @@ func (r *Repository) GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error)
 }
 
 func (r *Repository) SetOrderTaken(ctx context.Context, orderID, courierID string) (models.Order, error) {
-	_, err := r.db.Exec(ctx, setOrderTakenQuery, "taken", courierID, orderID)
+	_, err := r.db.Exec(ctx, setOrderTakenQuery, statusTaken, courierID, orderID)
 	if err != nil {
 		r.l.Errorf("error setting status taken in db: %v", err)
+		return models.Order{}, err
+	}
+	var order models.Order
+	err = r.db.QueryRow(ctx, selectOrderById, orderID).Scan(&order.ID, &order.Price, &order.Status, &order.CreationTime,
+		&order.DeliveryTime, &order.ClientId, &order.CourierId)
+	if err != nil {
+		r.l.Errorf("error selecting order by id from db: %v", err)
+		return models.Order{}, err
+	}
+	return order, nil
+}
+
+func (r *Repository) SetOrderFinished(ctx context.Context, orderID, courierID string) (models.Order, error) {
+	_, err := r.db.Exec(ctx, setOrderFinishedQuery, statusFinished, courierID, orderID)
+	if err != nil {
+		r.l.Errorf("error setting status finished in db: %v", err)
 		return models.Order{}, err
 	}
 	var order models.Order

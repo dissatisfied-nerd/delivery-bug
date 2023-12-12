@@ -49,6 +49,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 		{
 			orders.POST("/", h.OrderHandler.CreateOrder)
 			orders.POST("/take", h.OrderHandler.TakeOrder)
+			orders.POST("/finish", h.OrderHandler.FinishOrder)
 		}
 		router.POST("/logout", h.ClientAuthHandler.Logout)
 	}

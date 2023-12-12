@@ -38,12 +38,12 @@ func (h *Handler) GetProductByID(ctx *gin.Context) {
 	productID := ctx.Param("id")
 	h.l.Info(productID)
 
-	product, err := h.repo.SelectProductByID(ctx, productID)
+	info, err := h.repo.SelectProductByID(ctx, productID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	h.l.Info(product)
-	ctx.JSON(http.StatusOK, gin.H{"product": product})
+	h.l.Info(info)
+	ctx.JSON(http.StatusOK, gin.H{"product": info})
 }

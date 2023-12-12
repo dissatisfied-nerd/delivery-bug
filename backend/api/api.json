@@ -276,6 +276,35 @@
         }
       }
     },
+    "/products/:id" : {
+      "get": {
+        "summary": "get all products",
+        "tags": ["product"],
+        "parameters": [
+          {
+            "name":"id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/orders": {
       "post": {
         "tags": ["order"],

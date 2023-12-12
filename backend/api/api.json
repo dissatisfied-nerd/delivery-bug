@@ -5,7 +5,7 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/client/login": {
+    "/client/login": {
       "post": {
         "summary": "sign in user",
         "tags": ["client"],
@@ -53,7 +53,7 @@
         }
       }
     },
-    "/api/courier/login": {
+    "/courier/login": {
       "post": {
         "summary": "sign in courier",
         "tags": ["courier"],
@@ -101,7 +101,7 @@
         }
       }
     },
-    "/api/client/register": {
+    "/client/register": {
       "post": {
         "summary": "sign up client",
         "tags": ["client"],
@@ -149,7 +149,7 @@
         }
       }
     },
-    "/api/courier/register": {
+    "/courier/register": {
       "post": {
         "summary": "sign up courier",
         "tags": ["courier"],
@@ -197,7 +197,7 @@
         }
       }
     },
-    "/api/logout": {
+    "/logout": {
       "post": {
         "summary": "logout",
         "responses": {
@@ -214,7 +214,7 @@
         }
       }
     },
-    "/api/client/:id": {
+    "/client/:id": {
       "get": {
         "summary": "get info by client id",
         "tags": ["client"],
@@ -276,7 +276,7 @@
         }
       }
     },
-    "/api/orders": {
+    "/orders": {
       "post": {
         "tags": ["order"],
         "summary": "create order",
@@ -319,7 +319,7 @@
         }
       }
     },
-    "/api/orders/free": {
+    "/orders/free": {
       "get": {
         "tags": ["order"],
         "summary": "get free orders for couriers",
@@ -355,7 +355,7 @@
         }
       }
     },
-    "/api/orders{userID}": {
+    "/client/orders/:id": {
       "get": {
         "tags": [
           "order"
@@ -418,7 +418,7 @@
         }
       }
     },
-    "/api/orders{courierID}": {
+    "/courier/orders/:id": {
       "get": {
         "tags": [
           "order"

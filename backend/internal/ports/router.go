@@ -23,33 +23,32 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 	})
 
 	router.Use(cors.Middleware())
-	api := router.Group("/api")
 	{
-		client := api.Group("/client")
+		client := router.Group("/client")
 		{
 			client.POST("/login", h.ClientAuthHandler.SignInClient)
 			client.POST("/register", h.ClientAuthHandler.SignUpClient)
 			//client.Use(authMiddleware.Middleware(&logger))
 			client.GET("/:id", h.ClientHandler.GetInfoByID)
+			router.GET("/client/orders/:userID", h.OrderHandler.GetOrdersByUserID)
 		}
-		courier := api.Group("/courier")
+		courier := router.Group("/courier")
 		{
 			courier.POST("/login", h.CourierAuthHandler.SignInCourier)
 			courier.POST("/register", h.CourierAuthHandler.SignUpCourier)
 			//courier.Use(authMiddleware.Middleware(&logger))
-			api.GET("/orders/free", h.OrderHandler.GetFreeOrders)
+			router.GET("/orders/free", h.OrderHandler.GetFreeOrders)
+			router.GET("courier/orders/:courierID", h.OrderHandler.GetOrdersByCourierID)
 		}
-		//products := api.Group("/products")
+		//products := router.Group("/products")
 		{
 			router.GET("/products", h.ProductHandler.GetProducts)
 		}
-		orders := api.Group("/orders")
+		orders := router.Group("/orders")
 		{
 			orders.POST("/", h.OrderHandler.CreateOrder)
-			orders.GET("/:userID", h.OrderHandler.GetOrdersByUserID)
-			orders.GET("/:userID", h.OrderHandler.GetOrdersByCourierID)
 		}
-		api.POST("/logout", h.ClientAuthHandler.Logout)
+		router.POST("/logout", h.ClientAuthHandler.Logout)
 	}
 
 	router.StaticFile("/swagger/api.json", "./api/api.json")

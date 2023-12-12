@@ -319,6 +319,59 @@
         }
       }
     },
+    "/orders/take": {
+      "post": {
+        "tags": ["order"],
+        "summary": "take order by courier",
+        "parameters": [
+          {
+            "name": "orderID",
+            "in": "query",
+            "description": "order id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "courierID",
+            "in": "query",
+            "description": "courier id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/orders/free": {
       "get": {
         "tags": ["order"],
@@ -806,7 +859,8 @@
           "status",
           "creation_time",
           "delivery_time",
-          "client_id"
+          "client_id",
+          "courier_id"
         ],
         "type": "object",
         "properties": {
@@ -828,11 +882,15 @@
           },
           "client_id": {
             "type": "string"
+          },
+          "courier_id": {
+            "type": "string"
           }
         }
       },
       "OrderDTO": {
         "required": [
+          "id",
           "price",
           "status",
           "creation_time",
@@ -841,6 +899,9 @@
         ],
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string"
+          },
           "price": {
             "type": "number",
             "format": "float64"

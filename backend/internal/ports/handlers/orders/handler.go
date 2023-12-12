@@ -63,6 +63,7 @@ func (h *Handler) GetOrdersByCourierID(ctx *gin.Context) {
 	ordersCouriers, err := h.repo.GetOrdersByCourierID(ctx, courierID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
 	}
 
 	ctx.JSON(http.StatusBadRequest, gin.H{"orders": ordersCouriers})
@@ -74,6 +75,7 @@ func (h *Handler) GetOrdersByUserID(ctx *gin.Context) {
 	ordersUsers, err := h.repo.GetOrdersByUserID(ctx, userID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
 	}
 
 	ctx.JSON(http.StatusBadRequest, gin.H{"orders": ordersUsers})

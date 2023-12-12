@@ -46,6 +46,8 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 		orders := api.Group("/orders")
 		{
 			orders.POST("/", h.OrderHandler.CreateOrder)
+			orders.GET("/:userID", h.OrderHandler.GetOrdersByUserID)
+			orders.GET("/:userID", h.OrderHandler.GetOrdersByCourierID)
 		}
 		api.POST("/logout", h.ClientAuthHandler.Logout)
 	}

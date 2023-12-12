@@ -12,6 +12,8 @@ import (
 type OrderHandler interface {
 	CreateOrder(ctx *gin.Context)
 	GetFreeOrders(ctx *gin.Context)
+	GetOrdersByCourierID(ctx *gin.Context)
+	GetOrdersByUserID(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -55,6 +57,24 @@ func (h *Handler) GetFreeOrders(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"orders": orders})
 }
 
-//func (h *Handler) TakeOrder(ctx *gin.Context) {
-//
-//}
+func (h *Handler) GetOrdersByCourierID(ctx *gin.Context) {
+	courierID := ctx.Param("courierID")
+
+	ordersCouriers, err := h.repo.GetOrdersByCourierID(ctx, courierID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+	}
+
+	ctx.JSON(http.StatusBadRequest, gin.H{"orders": ordersCouriers})
+}
+
+func (h *Handler) GetOrdersByUserID(ctx *gin.Context) {
+	userID := ctx.Param("userID")
+
+	ordersUsers, err := h.repo.GetOrdersByUserID(ctx, userID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+	}
+
+	ctx.JSON(http.StatusBadRequest, gin.H{"orders": ordersUsers})
+}

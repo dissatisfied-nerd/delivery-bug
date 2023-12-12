@@ -88,7 +88,14 @@ func (r *Repository) GetOrdersByUserID(ctx context.Context, userID string) ([]*d
 
 	for rowsOrders.Next() {
 		var order models.Order
-		err := rowsOrders.Scan(&order)
+
+		err := rowsOrders.Scan(&order.ID,
+			&order.Price,
+			&order.Status,
+			&order.CreationTime,
+			&order.ClientId,
+			&order.CourierId,
+		)
 		if err != nil {
 			r.l.Errorf("ERROR while get order: %v", err)
 			return nil, err
@@ -132,7 +139,13 @@ func (r *Repository) GetOrdersByCourierID(ctx context.Context, courierID string)
 
 	for rowsOrders.Next() {
 		var order models.Order
-		err := rowsOrders.Scan(&order)
+		err := rowsOrders.Scan(&order.ID,
+			&order.Price,
+			&order.Status,
+			&order.CreationTime,
+			&order.ClientId,
+			&order.CourierId,
+		)
 		if err != nil {
 			r.l.Errorf("ERROR while get order: %v", err)
 			return nil, err

@@ -1,9 +1,9 @@
 import { clientActions } from "entities/Client";
 import { authActions, logout } from "features/Auth";
 import { getAuthIsAuth, getAuthType } from "features/Auth";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useParams, useSearchParams } from "react-router-dom";
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./Navbar.module.scss";
 
@@ -22,40 +22,90 @@ export default function Navbar() {
 
     if (!isAuth) {
         links = (
-            <Link to={"/auth"} className={cls.link}>
+            <NavLink
+                to={"/auth"}
+                className={({ isActive }) =>
+                    classNames(cls.link, { [cls.active]: isActive }, [])
+                }
+            >
                 Авторизация
-            </Link>
+            </NavLink>
         );
     } else {
         if (type === "client") {
             links = (
                 <>
-                    <Link to={"/"} className={cls.link}>
+                    <NavLink
+                        to={"/"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                        // className={classNames(
+                        //     cls.link,
+                        //     {
+                        //         [cls.active]: curLink.current === "goods",
+                        //     },
+                        //     []
+                        // )}
+                        // onClick={() => onSelectLink("goods")}
+                    >
                         Товары
-                    </Link>
-                    <Link to={"/profile"} className={cls.link}>
+                    </NavLink>
+                    <NavLink
+                        to={"/profile"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
                         Профиль
-                    </Link>
-                    <Link to={"/cart"} className={cls.link}>
+                    </NavLink>
+                    <NavLink
+                        to={"/cart"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
                         Корзина
-                    </Link>
-                    <Link onClick={onLogout} to={"/auth"} className={cls.link}>
+                    </NavLink>
+                    <NavLink
+                        onClick={onLogout}
+                        to={"/auth"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
                         Выйти
-                    </Link>
+                    </NavLink>
                 </>
             );
         } else {
             links = (
                 <>
-                    <Link to={"/"} className={cls.link}>
+                    <NavLink
+                        to={"/"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
                         Заказы
-                    </Link>
-                    <Link to={"/profile"} className={cls.link}>
+                    </NavLink>
+                    <NavLink
+                        to={"/profile"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
                         Профиль
-                    </Link>
-                    <Link onClick={onLogout} to={"/auth"} className={cls.link}>
+                    </NavLink>
+                    <NavLink
+                        onClick={onLogout}
+                        to={"/auth"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
                         Выйти
-                    </Link>
+                    </NavLink>
                 </>
             );
         }

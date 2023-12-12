@@ -4,6 +4,7 @@ import { courierReducer } from "entities/Courier";
 import { authReducer } from "features/Auth";
 import { cartReducer } from "features/Cart";
 import { goodsPageReducer } from "pages/GoodsPage";
+import { ordersPageReducer } from "pages/OrdersPage";
 import { $api } from "shared/api/api";
 
 const extraArg = {
@@ -17,6 +18,7 @@ export const store = configureStore({
         auth: authReducer,
         cart: cartReducer,
         goodsPage: goodsPageReducer,
+        ordersPage: ordersPageReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

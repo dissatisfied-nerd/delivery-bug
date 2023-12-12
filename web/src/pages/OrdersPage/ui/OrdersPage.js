@@ -1,12 +1,24 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import cls from "./OrdersPage.module.scss";
 import { Page } from "widgets/Page/Page";
 import { OrderList } from "entities/Order";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { courierActions } from "entities/Courier";
+import {
+    getOrdersPageData,
+    getOrdersPageError,
+} from "../model/selectors/getOrdersPageData";
+import { fetchOrdersPageData } from "../model/services/fetchOrdersPageData";
 
 export const OrdersPage = () => {
     const dispatch = useDispatch();
+    const orders = useSelector(getOrdersPageData);
+    console.log(orders);
+    const error = useSelector(getOrdersPageError);
+
+    useEffect(() => {
+        dispatch(fetchOrdersPageData());
+    }, [dispatch]);
 
     const onTakeOrder = useCallback(
         (order) => {
@@ -16,6 +28,15 @@ export const OrdersPage = () => {
     );
 
     const onCancelOrder = useCallback(() => {}, []);
+
+    if (error) {
+        return (
+            <Page>
+                <span className={cls.title}> Заказы </span>
+                <div className={cls.err}>{error}</div>
+            </Page>
+        );
+    }
 
     return (
         <Page>

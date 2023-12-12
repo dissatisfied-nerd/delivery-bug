@@ -234,6 +234,7 @@ export const AuthForm = () => {
         return (
             <div className={classNames(cls.AuthForm, {}, [])}>
                 <span className={cls.title}>Вход</span>
+                <span style={{ color: "red" }}>{error}</span>
                 <Input
                     className={cls.input}
                     label="Почта"

@@ -13,6 +13,7 @@ import {
     getCourierOrders,
 } from "entities/Courier";
 import { getProfileData } from "../../model/sevices/fetchProfileData/fetchProfileData";
+import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -20,17 +21,17 @@ export const ProfilePage = () => {
     const client_id = useSelector(getClientId);
     const courier_id = useSelector(getCourierId);
     const id = type === "client" ? client_id : courier_id;
-
-    useEffect(() => {
-        dispatch(getProfileData(id));
-    }, []);
-
     const client = useSelector(getClientData);
     const courier = useSelector(getCourierData);
     const profile = type === "client" ? client : courier;
     const clientOrders = useSelector(getClientOrders);
     const courierOrders = useSelector(getCourierOrders);
     const orders = type === "client" ? clientOrders : courierOrders;
+
+    useEffect(() => {
+        dispatch(getProfileData(id));
+        dispatch(fetchProfileOrders(id));
+    }, []);
 
     return (
         <Page>

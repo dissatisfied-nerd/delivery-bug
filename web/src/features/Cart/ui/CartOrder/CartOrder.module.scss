@@ -6,7 +6,8 @@
 }
 
 .title {
-    font: bold var(--font-l);
+    font: var(--font-l);
+    font-weight: 600;
     margin-bottom: 15px;
     border-bottom: 1px solid var(--secondary-color);
     padding: 5px;
@@ -20,7 +21,7 @@
 }
 
 .cost {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .orderBtn {

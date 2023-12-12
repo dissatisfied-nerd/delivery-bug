@@ -4,6 +4,7 @@ import (
 	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/repo/order"
 	"delivery-bug/pkg/logging"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"net/http"
@@ -14,6 +15,7 @@ type OrderHandler interface {
 	GetFreeOrders(ctx *gin.Context)
 	GetOrdersByCourierID(ctx *gin.Context)
 	GetOrdersByUserID(ctx *gin.Context)
+	TakeOrder(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -79,4 +81,26 @@ func (h *Handler) GetOrdersByUserID(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"orders": ordersUsers})
+}
+
+func (h *Handler) TakeOrder(ctx *gin.Context) {
+	orderID, ok := ctx.GetQuery("orderID")
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": errors.New("no orderID")})
+		h.l.Error("no orderID")
+		return
+	}
+	courierID, ok := ctx.GetQuery("courierID")
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": errors.New("no courierID")})
+		h.l.Error("no courierID")
+		return
+	}
+
+	info, err := h.repo.SetOrderTaken(ctx, orderID, courierID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"order": info})
 }

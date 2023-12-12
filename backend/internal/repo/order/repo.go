@@ -16,6 +16,7 @@ type OrdersRepository interface {
 	GetOrdersByUserID(ctx context.Context, userID string) ([]*dtos.OrderUserDTOOutput, error)
 	GetOrdersByCourierID(ctx context.Context, courierID string) ([]*dtos.OrderCourierDTOOutput, error)
 	GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error)
+	SetOrderTaken(ctx context.Context, orderID, courierID string) (models.Order, error)
 }
 
 type Repository struct {
@@ -202,7 +203,7 @@ func (r *Repository) GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error)
 	return orders, nil
 }
 
-func (r *Repository) SetStatusTaken(ctx context.Context, orderID, courierID string) (models.Order, error) {
+func (r *Repository) SetOrderTaken(ctx context.Context, orderID, courierID string) (models.Order, error) {
 	_, err := r.db.Exec(ctx, setOrderTakenQuery, "taken", courierID, orderID)
 	if err != nil {
 		r.l.Errorf("error setting status taken in db: %v", err)

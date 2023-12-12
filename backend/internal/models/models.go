@@ -72,15 +72,15 @@ type ProductsStores struct {
 }
 
 type Order struct {
-	ID string `db:"id"`
+	ID string `db:"id" json:"id"`
 
-	Price        float64    `db:"price"`
-	Status       string     `db:"status"`
-	CreationTime *time.Time `db:"creation_time"`
-	DeliveryTime *time.Time `db:"delivery_time"`
+	Price        float64    `db:"price" json:"price"`
+	Status       string     `db:"status" json:"status"`
+	CreationTime *time.Time `db:"creation_time" json:"creation_time"`
+	DeliveryTime *time.Time `db:"delivery_time" json:"delivery_time"`
 
-	ClientId  string  `db:"client_id"`
-	CourierId *string `db:"courier_id"`
+	ClientId  string  `db:"client_id" json:"client_id"`
+	CourierId *string `db:"courier_id" json:"courier_id"`
 }
 
 type OrderProducts struct {

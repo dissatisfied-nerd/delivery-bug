@@ -355,7 +355,7 @@
         }
       }
     },
-    "/api/orders/user/:id": {
+    "/client/orders/:id": {
       "get": {
         "tags": [
           "order"
@@ -418,7 +418,7 @@
         }
       }
     },
-    "/orders/courier/:id": {
+    "/courier/orders/:id": {
       "get": {
         "tags": [
           "order"

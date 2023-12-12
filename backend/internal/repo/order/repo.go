@@ -89,10 +89,12 @@ func (r *Repository) GetOrdersByUserID(ctx context.Context, userID string) ([]*d
 	for rowsOrders.Next() {
 		var order models.Order
 
-		err := rowsOrders.Scan(&order.ID,
+		err := rowsOrders.Scan(
+			&order.ID,
 			&order.Price,
 			&order.Status,
 			&order.CreationTime,
+			&order.DeliveryTime,
 			&order.ClientId,
 			&order.CourierId,
 		)
@@ -143,6 +145,7 @@ func (r *Repository) GetOrdersByCourierID(ctx context.Context, courierID string)
 			&order.Price,
 			&order.Status,
 			&order.CreationTime,
+			&order.DeliveryTime,
 			&order.ClientId,
 			&order.CourierId,
 		)

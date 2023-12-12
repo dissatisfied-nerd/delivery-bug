@@ -185,3 +185,19 @@ func (r *Repository) GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error)
 	r.l.Info("get free orders from db")
 	return orders, nil
 }
+
+func (r *Repository) SetStatusTaken(ctx context.Context, orderID, courierID string) (models.Order, error) {
+	_, err := r.db.Exec(ctx, setOrderTakenQuery, "taken", courierID, orderID)
+	if err != nil {
+		r.l.Errorf("error setting status taken in db: %v", err)
+		return models.Order{}, err
+	}
+	var order models.Order
+	err = r.db.QueryRow(ctx, selectOrderById, orderID).Scan(&order.ID, &order.Price, &order.Status, &order.CreationTime,
+		&order.DeliveryTime, &order.ClientId, &order.CourierId)
+	if err != nil {
+		r.l.Errorf("error selecting order by id from db: %v", err)
+		return models.Order{}, err
+	}
+	return order, nil
+}

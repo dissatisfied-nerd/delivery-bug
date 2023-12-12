@@ -29,4 +29,9 @@ const (
 
 	selectFreeOrdersQuery = `SELECT id, price, status, creation_time, delivery_time, client_id FROM orders
 		WHERE status=$1`
+
+	setOrderTakenQuery = `UPDATE orders SET status=$1, courier_id=$2 WHERE id=$3`
+
+	selectOrderById = `SELECT id, price, status, creation_time, delivery_time, client_id, courier_id FROM orders 
+		WHERE id=$1`
 )

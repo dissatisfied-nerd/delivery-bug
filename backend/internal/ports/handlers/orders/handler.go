@@ -54,3 +54,7 @@ func (h *Handler) GetFreeOrders(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{"orders": orders})
 }
+
+//func (h *Handler) TakeOrder(ctx *gin.Context) {
+//
+//}

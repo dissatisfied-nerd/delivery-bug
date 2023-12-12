@@ -175,7 +175,7 @@ func (r *Repository) GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error)
 
 	for rows.Next() {
 		var order dtos.OrderDTO
-		err = rows.Scan(&order)
+		err = rows.Scan(&order.ID, &order.Price, &order.Status, &order.CreationTime, &order.DeliveryTime, &order.ClientID)
 		if err != nil {
 			r.l.Errorf("error getting free orders from db: %v", err)
 			return nil, err

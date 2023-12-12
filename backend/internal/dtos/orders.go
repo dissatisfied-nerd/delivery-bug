@@ -2,6 +2,7 @@ package dtos
 
 import (
 	"delivery-bug/internal/models"
+	"time"
 )
 
 type OrderDTOInput struct {
@@ -19,11 +20,12 @@ type OrderUserDTOOutput struct {
 }
 
 type OrderDTO struct {
-	Price        float64 `json:"price"`
-	Status       string  `json:"status"`
-	CreationTime string  `json:"creation_time"`
-	DeliveryTime string  `json:"delivery_time"`
-	ClientID     string  `json:"client_id"`
+	ID           string     `json:"id"`
+	Price        float64    `json:"price"`
+	Status       string     `json:"status"`
+	CreationTime *time.Time `json:"creation_time"`
+	DeliveryTime *time.Time `json:"delivery_time"`
+	ClientID     string     `json:"client_id"`
 }
 
 type OrderCourierDTOOutput struct {

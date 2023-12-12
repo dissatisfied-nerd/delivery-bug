@@ -45,7 +45,7 @@ func (r *Repository) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput)
 	}
 
 	for _, product := range order.Products {
-		if _, err = tx.Query(ctx, createOrderProducts, product.Amount, orderID, product.ProductID); err != nil {
+		if _, err = tx.Exec(ctx, createOrderProducts, product.Amount, orderID, product.ProductID); err != nil {
 			r.l.Errorf("Error inserting order_products into the database: %v", err)
 			rollbackErr := tx.Rollback(ctx)
 			if rollbackErr != nil {

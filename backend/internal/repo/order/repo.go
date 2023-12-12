@@ -112,7 +112,7 @@ func (r *Repository) GetOrdersByUserID(ctx context.Context, userID string) ([]*d
 
 		for rowsOrdersProduct.Next() {
 			var orderProduct models.OrderProducts
-			err := rowsOrdersProduct.Scan(&orderProduct)
+			err := rowsOrdersProduct.Scan(&orderProduct.Amount, &orderProduct.OrderId, &orderProduct.ProductId)
 			if err != nil {
 				r.l.Errorf("ERROR while get orderProduct: %v", err)
 			}
@@ -163,7 +163,7 @@ func (r *Repository) GetOrdersByCourierID(ctx context.Context, courierID string)
 
 		for rowsOrdersProduct.Next() {
 			var orderProduct models.OrderProducts
-			err := rowsOrdersProduct.Scan(&orderProduct)
+			err := rowsOrdersProduct.Scan(&orderProduct.Amount, &orderProduct.OrderId, &orderProduct.ProductId)
 			if err != nil {
 				r.l.Errorf("ERROR while get orderProduct: %v", err)
 			}

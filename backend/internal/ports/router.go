@@ -43,6 +43,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 		//products := router.Group("/products")
 		{
 			router.GET("/products", h.ProductHandler.GetProducts)
+			router.GET("/products/:id", h.ProductHandler.GetProductByID)
 		}
 		orders := router.Group("/orders")
 		{

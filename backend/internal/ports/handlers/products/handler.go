@@ -9,6 +9,7 @@ import (
 
 type ProductHandler interface {
 	GetProducts(ctx *gin.Context)
+	GetProductByID(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -26,9 +27,23 @@ func NewHandler(repo product.ProductsRepository, l logging.Logger) *Handler {
 func (h *Handler) GetProducts(ctx *gin.Context) {
 	products, err := h.repo.SelectProducts(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	h.l.Info(products)
 	ctx.JSON(http.StatusOK, gin.H{"products": products})
+}
+
+func (h *Handler) GetProductByID(ctx *gin.Context) {
+	productID := ctx.Param("id")
+	h.l.Info(productID)
+
+	product, err := h.repo.SelectProductByID(ctx, productID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	h.l.Info(product)
+	ctx.JSON(http.StatusOK, gin.H{"product": product})
 }

@@ -9,6 +9,7 @@ import (
 
 type ProductsRepository interface {
 	SelectProducts(ctx context.Context) ([]models.Product, error)
+	SelectProductByID(ctx context.Context, productID string) (models.Product, error)
 }
 
 type Repository struct {
@@ -39,4 +40,21 @@ func (r *Repository) SelectProducts(ctx context.Context) ([]models.Product, erro
 	}
 
 	return products, nil
+}
+
+func (r *Repository) SelectProductByID(ctx context.Context, productID string) (models.Product, error) {
+	var product models.Product
+	err := r.db.QueryRow(ctx, getProductByID, productID).Scan(&product.ID,
+		&product.Name,
+		&product.Price,
+		&product.Weight,
+		&product.Description,
+		&product.Image,
+	)
+	if err != nil {
+		r.l.Error(err)
+		return models.Product{}, err
+	}
+
+	return product, nil
 }

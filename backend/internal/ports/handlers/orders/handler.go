@@ -66,7 +66,7 @@ func (h *Handler) GetOrdersByCourierID(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusBadRequest, gin.H{"orders": ordersCouriers})
+	ctx.JSON(http.StatusOK, gin.H{"orders": ordersCouriers})
 }
 
 func (h *Handler) GetOrdersByUserID(ctx *gin.Context) {
@@ -78,5 +78,5 @@ func (h *Handler) GetOrdersByUserID(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusBadRequest, gin.H{"orders": ordersUsers})
+	ctx.JSON(http.StatusOK, gin.H{"orders": ordersUsers})
 }

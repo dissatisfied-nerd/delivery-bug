@@ -401,6 +401,59 @@
         }
       }
     },
+    "/orders/finish": {
+      "post": {
+        "tags": ["order"],
+        "summary": "finish order by courier",
+        "parameters": [
+          {
+            "name": "orderID",
+            "in": "query",
+            "description": "order id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "courierID",
+            "in": "query",
+            "description": "courier id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/orders/free": {
       "get": {
         "tags": ["order"],

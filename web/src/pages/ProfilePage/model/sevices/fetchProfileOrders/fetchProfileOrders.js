@@ -12,9 +12,9 @@ export const fetchProfileOrders = createAsyncThunk(
         try {
             let response;
             if (type === "client") {
-                response = await extra.api.get(`api/orders/${id}`);
+                response = await extra.api.get(`/client/orders/${id}`);
             } else {
-                response = await extra.api.get(`api/orders/${id}`);
+                response = await extra.api.get(`/orders/${id}`);
             }
 
             if (!response.data) {
@@ -22,7 +22,7 @@ export const fetchProfileOrders = createAsyncThunk(
             }
 
             if (type === "client") {
-                dispatch(clientActions.setClientOrders(response.data));
+                dispatch(clientActions.setClientOrders(response.data.orders));
             } else {
                 dispatch(courierActions.setCouriertOrders(response.data));
             }

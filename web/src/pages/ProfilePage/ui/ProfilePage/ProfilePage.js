@@ -25,6 +25,7 @@ export const ProfilePage = () => {
     const courier = useSelector(getCourierData);
     const profile = type === "client" ? client : courier;
     const clientOrders = useSelector(getClientOrders);
+    console.log(clientOrders);
     const courierOrders = useSelector(getCourierOrders);
     const orders = type === "client" ? clientOrders : courierOrders;
 

@@ -16,7 +16,7 @@ export const sendRegisterData = createAsyncThunk(
                 return rejectWithValue("Все поля должны быть заполнены");
             }
             const response = await extra.api.post(
-                `api/${type}/register`,
+                `/${type}/register`,
                 registerData
             );
 

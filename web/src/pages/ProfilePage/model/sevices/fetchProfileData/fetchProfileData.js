@@ -10,7 +10,7 @@ export const getProfileData = createAsyncThunk(
         const type = getAuthType(getState());
 
         try {
-            const response = await extra.api.get(`api/${type}/${id}`);
+            const response = await extra.api.get(`/${type}/${id}`);
 
             if (!response.data) {
                 throw new Error();

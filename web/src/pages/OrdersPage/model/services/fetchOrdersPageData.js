@@ -6,12 +6,12 @@ export const fetchOrdersPageData = createAsyncThunk(
         const { extra, rejectWithValue } = thunkAPI;
 
         try {
-            const response = await extra.api.get("/api/orders/free");
+            const response = await extra.api.get("/orders/free");
 
             if (!response.data) {
                 throw new Error();
             }
-
+            console.log(response.data);
             return response.data.orders;
         } catch (e) {
             return rejectWithValue("error");

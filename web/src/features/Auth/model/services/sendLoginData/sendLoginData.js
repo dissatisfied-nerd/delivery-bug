@@ -16,7 +16,7 @@ export const sendLoginData = createAsyncThunk(
                 return rejectWithValue("Все поля должны быть заполнены");
             }
             const response = await extra.api.post(
-                `api/${type}/login`,
+                `/${type}/login`,
                 loginData
             );
 

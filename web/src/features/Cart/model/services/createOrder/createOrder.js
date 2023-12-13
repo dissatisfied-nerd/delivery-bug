@@ -17,7 +17,7 @@ export const createOrder = createAsyncThunk(
         };
         console.log(data);
         try {
-            const response = await extra.api.post(`api/orders`, data);
+            const response = await extra.api.post(`/orders/`, data);
 
             if (!response.data) {
                 throw new Error();

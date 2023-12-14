@@ -15,6 +15,11 @@ const getWeight = (goods) => {
     return (weight / 1000).toFixed(2);
 };
 
+const getFormatedData = (dateString) => {
+    const date = new Date(dateString)
+    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`
+}
+
 export const OrderListItem = (props) => {
     const {
         order,
@@ -24,24 +29,26 @@ export const OrderListItem = (props) => {
         onTakeOrder,
         onCancelOrder,
     } = props;
+    const creationTime = getFormatedData(order.creation_time)
+    const deliveryTime = getFormatedData(order.delivery_time)
 
     const content =
         type === "client" ? (
             <>
                 <div className={cls.header}>
-                    <span>Заказ от {order.created}</span>
-                    <span>{order.cost} ₽</span>
+                    <span>Заказ от {creationTime}</span>
+                    <span>{order.price} ₽</span>
                 </div>
                 <div className={cls.body}>
                     <span>
                         {order.delivered
-                            ? `Дата доставки: ${order.delivered}`
+                            ? `Дата доставки: ${deliveryTime}`
                             : order.courierId
                             ? `Статус: В пути`
                             : "Статус: Создан"}
                     </span>
                     <div className={cls.goodsImgList}>
-                        {order.goods.map((good) => {
+                        {order.products.map((good) => {
                             return (
                                 <img
                                     className={cls.goodsImgItem}
@@ -78,10 +85,10 @@ export const OrderListItem = (props) => {
                 </div>
                 <div className={cls.body}>
                     <div className={cls.goodsTitleList}>
-                        {order.goods.map(([good, count]) => {
+                        {order.products.map(({amount, ...good}) => {
                             return (
                                 <div>
-                                    <span>{count}x: </span>
+                                    <span>{amount}x: </span>
                                     <span>{good.title}</span>
                                 </div>
                             );

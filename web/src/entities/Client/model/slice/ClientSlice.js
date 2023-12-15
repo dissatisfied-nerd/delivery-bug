@@ -34,8 +34,13 @@ export const clientSlice = createSlice({
             state.data = {};
         },
         setProductsDataByOrderId: (state, action) => {
-            const { order_id, products } = action.payload
-            state.orders[order_id].products.map((product, i) => ({amount: product.amount, ...products[i]}))
+            const { order_id, products } = action.payload;
+            state.orders[order_id].products = state.orders[
+                order_id
+            ].products.map((product, i) => ({
+                amount: product.amount,
+                ...products[i],
+            }));
         },
         setClientOrders: (state, action) => {
             state.orders = action.payload;

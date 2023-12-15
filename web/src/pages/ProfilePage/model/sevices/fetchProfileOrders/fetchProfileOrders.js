@@ -1,6 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { clientActions } from "entities/Client";
-import { courierActions } from "entities/Courier";
+import {
+    clientActions,
+    fetchClientData,
+    fetchClientOrders,
+} from "entities/Client";
+import { courierActions, fetchCourierOrders } from "entities/Courier";
 import { fetchGoodData } from "entities/Good";
 import { authActions, getAuthType } from "features/Auth";
 
@@ -13,34 +17,34 @@ export const fetchProfileOrders = createAsyncThunk(
         try {
             let response;
             if (type === "client") {
-                response = await extra.api.get(`/client/orders/${id}`);
+                dispatch(fetchClientOrders(id));
             } else {
-                response = await extra.api.get(`/orders/${id}`);
-            }
-
-            if (!response.data) {
-                throw new Error();
-            }
-            console.log(response.data.orders);
-            if (type === "client") {
-                dispatch(clientActions.setClientOrders(response.data.orders));
-
-                const orders = response.data.orders
+                const { payload: orders } = await dispatch(
+                    fetchCourierOrders(id)
+                );
                 if (orders) {
-                    orders.forEach((order, id) => {
-                        const products = order.products.map(async product => await (await dispatch(fetchGoodData(product.product_id))).payload)
-                        Promise.all(products).then(products => {
-                            dispatch(clientActions.setProductsDataByOrderId({
-                                order_id: id,
-                                products
-                            }))
-                        })
-                    })
+                    const clientsInfo = orders.map(async (order) => {
+                        const { payload } = await dispatch(
+                            fetchClientData({
+                                id: order.client_id,
+                                isAuth: true,
+                            })
+                        );
+                        return payload;
+                    });
+                    Promise.all(clientsInfo).then((clients) =>
+                        clients.forEach((client, i) =>
+                            dispatch(
+                                courierActions.setClientDataInOrder({
+                                    client,
+                                    i,
+                                })
+                            )
+                        )
+                    );
                 }
-                // dispatch(clientActions.setClientOrders(orders));
-            } else {
-                dispatch(courierActions.setCouriertOrders(response.data));
             }
+
             return response.data;
         } catch (e) {
             return rejectWithValue("error");

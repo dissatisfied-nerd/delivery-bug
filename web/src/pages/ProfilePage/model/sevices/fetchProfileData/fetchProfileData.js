@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { clientActions } from "entities/Client";
-import { courierActions } from "entities/Courier";
+import { fetchClientData } from "entities/Client";
+import { fetchCourierData } from "entities/Courier";
 import { authActions, getAuthType } from "features/Auth";
 
 export const getProfileData = createAsyncThunk(
@@ -10,19 +10,13 @@ export const getProfileData = createAsyncThunk(
         const type = getAuthType(getState());
 
         try {
-            const response = await extra.api.get(`/${type}/${id}`);
+            const { payload } =
+                type === "client"
+                    ? await dispatch(fetchClientData({ id, isAuth: false }))
+                    : await dispatch(fetchCourierData(id));
 
-            if (!response.data) {
-                throw new Error();
-            }
-
-            if (type === "client") {
-                dispatch(clientActions.setClientData(response.data.client));
-            } else {
-                dispatch(courierActions.setCourierData(response.data));
-            }
-            dispatch(authActions.saveAuthData(response.data[type]));
-            return response.data;
+            dispatch(authActions.saveAuthData(payload));
+            return payload;
         } catch (e) {
             return rejectWithValue("error");
         }

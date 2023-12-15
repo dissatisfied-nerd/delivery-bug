@@ -4,7 +4,14 @@ import { OrderListItem } from "../OrderListItem/OrderListItem";
 import cls from "./OrderList.module.scss";
 
 export const OrderList = (props) => {
-    const { className, orders, type, page, onTakeOrder, onCancelOrder } = props;
+    const {
+        className,
+        orders,
+        type,
+        page,
+        onTakeOrder = () => {},
+        onCancelOrder = () => {},
+    } = props;
     return (
         <div className={classNames(cls.OrderList, {}, [className])}>
             {orders.length ? (

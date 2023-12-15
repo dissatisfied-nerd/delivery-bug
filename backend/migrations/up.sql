@@ -57,26 +57,57 @@ CREATE TABLE IF NOT EXISTS administrators
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
     first_name varchar(128),
+    surname    varchar(128),
     last_name  varchar(128)
+);
+
+CREATE TABLE IF NOT EXISTS administrators_loginform
+(
+    login    varchar(128) PRIMARY KEY,
+
+    password varchar(128),
+
+    administrator_id UUID REFERENCES administrators (id)
+);
+
+CREATE TABLE IF NOT EXISTS administrators_passphrases
+(
+    id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+
+    passphrase varchar(128) -- Кодовое слово для регистрации администратора
 );
 
 CREATE TABLE IF NOT EXISTS stores
 (
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
-    reputation int, -- Устанавливается администратором
-    name       varchar(128)
+    reputation int,                      -- Считается как-нибудь
+    name       varchar(128),             -- Имя магазина
+    first_name varchar(128),             -- Данные юрлица-представителя
+    surname    varchar(128),
+    last_name  varchar(128),
+
+    address_id UUID REFERENCES addresses (id) -- Юридический адрес
+);
+
+CREATE TABLE IF NOT EXISTS stores_loginform
+(
+    login    varchar(128) PRIMARY KEY,
+
+    password varchar(128),
+
+    stores_id UUID REFERENCES stores (id)
 );
 
 CREATE TABLE IF NOT EXISTS products
 (
-    id              UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    id               UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
-    name            varchar(128),
-    price           float CHECK (price > 0),
-    weight          float,
-    description     varchar(512),
-    image           bytea,
+    name             varchar(128),
+    price            float CHECK (price > 0),
+    weight           float,
+    description      varchar(512),
+    image            bytea,
 
     administrator_id UUID REFERENCES administrators (id)
 );

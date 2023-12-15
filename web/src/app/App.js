@@ -15,7 +15,11 @@ function App() {
             localStorage.getItem(PROFILE_LOCALSTORAGE_KEY)
         );
 
-        if (profile) {
+        if (profile?.type) {
+            dispatch(authActions.setType(profile.type));
+        }
+
+        if (profile?.login) {
             const { type, [`${type}_id`]: id, ...data } = profile;
             dispatch(authActions.initAuthData({ ...data, type }));
             if (profile?.type === "client") {

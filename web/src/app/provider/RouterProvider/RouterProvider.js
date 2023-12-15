@@ -16,7 +16,13 @@ export const RouterProvider = () => {
     let routes = null;
 
     if (!isAuth) {
-        routes = <Route element={<AuthPage />} path="/auth" />;
+        routes = (
+            <>
+                <Route element={<AuthPage />} path="/auth" />
+                <Route element={<AuthPage />} path="/market/auth" />
+                <Route element={<AuthPage />} path="/admin/auth" />
+            </>
+        );
     } else {
         if (type === "client") {
             routes = (

@@ -20,12 +20,13 @@ type OrderUserDTOOutput struct {
 }
 
 type OrderDTO struct {
-	ID           string     `json:"id"`
-	Price        float64    `json:"price"`
-	Status       string     `json:"status"`
-	CreationTime *time.Time `json:"creation_time"`
-	DeliveryTime *time.Time `json:"delivery_time"`
-	ClientID     string     `json:"client_id"`
+	ID           string            `json:"id"`
+	Price        float64           `json:"price"`
+	Status       string            `json:"status"`
+	CreationTime *time.Time        `json:"creation_time"`
+	DeliveryTime *time.Time        `json:"delivery_time"`
+	ClientID     string            `json:"client_id"`
+	Products     []OrderProductDTO `json:"products"`
 }
 
 type OrderCourierDTOOutput struct {

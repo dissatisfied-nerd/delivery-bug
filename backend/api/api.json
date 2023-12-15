@@ -977,7 +977,8 @@
           "status",
           "creation_time",
           "delivery_time",
-          "client_id"
+          "client_id",
+          "products"
         ],
         "type": "object",
         "properties": {
@@ -999,6 +1000,12 @@
           },
           "client_id": {
             "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderProductDTO"
+            }
           }
         }
       }

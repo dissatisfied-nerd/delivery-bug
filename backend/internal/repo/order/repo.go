@@ -202,6 +202,27 @@ func (r *Repository) GetFreeOrders(ctx context.Context) ([]dtos.OrderDTO, error)
 			r.l.Errorf("error getting free orders from db: %v", err)
 			return nil, err
 		}
+
+		rowsProducts, err := r.db.Query(ctx, selectOrderProducts, order.ID)
+		if err != nil {
+			r.l.Errorf("error getting products from db: %v", err)
+			return nil, err
+		}
+
+		var products []dtos.OrderProductDTO
+		for rowsProducts.Next() {
+			var product dtos.OrderProductDTO
+
+			err = rowsProducts.Scan(&product.Amount, &product.ProductID)
+			if err != nil {
+				r.l.Error(err)
+				return nil, err
+			}
+			products = append(products, product)
+		}
+
+		order.Products = products
+
 		orders = append(orders, order)
 	}
 	r.l.Info("get free orders from db")

@@ -36,4 +36,6 @@ const (
 
 	selectOrderById = `SELECT id, price, status, creation_time, delivery_time, client_id, courier_id FROM orders 
 		WHERE id=$1`
+
+	selectOrderProducts = `SELECT amount, product_id FROM order_products WHERE order_id=$1`
 )

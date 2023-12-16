@@ -30,15 +30,6 @@ VALUES
     ('user4', 'password4', (SELECT id FROM clients WHERE first_name = 'Client4_First')),
     ('user5', 'password5', (SELECT id FROM clients WHERE first_name = 'Client5_First'));
 
--- Заполнение таблицы "couriers_loginform"
-INSERT INTO couriers_loginform (login, password, courier_id)
-VALUES
-    ('courier1', 'courierpass1', (SELECT id FROM couriers WHERE first_name = 'Courier1_First')),
-    ('courier2', 'courierpass2', (SELECT id FROM couriers WHERE first_name = 'Courier2_First')),
-    ('courier3', 'courierpass3', (SELECT id FROM couriers WHERE first_name = 'Courier3_First')),
-    ('courier4', 'courierpass4', (SELECT id FROM couriers WHERE first_name = 'Courier4_First')),
-    ('courier5', 'courierpass5', (SELECT id FROM couriers WHERE first_name = 'Courier5_First'));
-
 -- Заполнение таблицы "couriers"
 INSERT INTO couriers (first_name, last_name, registration, address_id)
 VALUES
@@ -48,23 +39,48 @@ VALUES
     ('Courier4_First', 'Courier4_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
     ('Courier5_First', 'Courier5_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1));
 
--- Заполнение таблицы "administrators"
-INSERT INTO administrators (first_name, last_name)
+-- Заполнение таблицы "couriers_loginform"
+INSERT INTO couriers_loginform (login, password, courier_id)
 VALUES
-    ('Admin1_First', 'Admin1_Last'),
-    ('Admin2_First', 'Admin2_Last'),
-    ('Admin3_First', 'Admin3_Last'),
-    ('Admin4_First', 'Admin4_Last'),
-    ('Admin5_First', 'Admin5_Last');
+    ('courier1', 'courierpass1', (SELECT id FROM couriers WHERE first_name = 'Courier1_First')),
+    ('courier2', 'courierpass2', (SELECT id FROM couriers WHERE first_name = 'Courier2_First')),
+    ('courier3', 'courierpass3', (SELECT id FROM couriers WHERE first_name = 'Courier3_First')),
+    ('courier4', 'courierpass4', (SELECT id FROM couriers WHERE first_name = 'Courier4_First')),
+    ('courier5', 'courierpass5', (SELECT id FROM couriers WHERE first_name = 'Courier5_First'));
+
+-- Заполнение таблицы "administrators"
+INSERT INTO administrators (first_name, surname, last_name)
+VALUES
+    ('Admin1_First', 'Admin1_Sur', 'Admin1_Last'),
+    ('Admin2_First', 'Admin2_Sur', 'Admin2_Last'),
+    ('Admin3_First', 'Admin3_Sur', 'Admin3_Last'),
+    ('Admin4_First', 'Admin4_Sur', 'Admin4_Last'),
+    ('Admin5_First', 'Admin5_Sur', 'Admin5_Last');
+
+INSERT INTO administrators_loginform (login, password, administrator_id)
+VALUES
+    ('admin1', 'adminpass1', (SELECT id FROM administrators WHERE first_name = 'Admin1_First')),
+    ('admin2', 'adminpass2', (SELECT id FROM administrators WHERE first_name = 'Admin2_First')),
+    ('admin3', 'adminpass3', (SELECT id FROM administrators WHERE first_name = 'Admin3_First')),
+    ('admin4', 'adminpass4', (SELECT id FROM administrators WHERE first_name = 'Admin4_First')),
+    ('admin5', 'adminpass5', (SELECT id FROM administrators WHERE first_name = 'Admin5_First'));
 
 -- Заполнение таблицы "stores"
-INSERT INTO stores (reputation, name)
+INSERT INTO stores (reputation, name, first_name, surname, last_name, address_id)
 VALUES
-    (4, 'Store1'),
-    (5, 'Store2'),
-    (3, 'Store3'),
-    (2, 'Store4'),
-    (1, 'Store5');
+    (4, 'Store1', 'Store1_First', 'Store1_Sur', 'Store1_Last', (SELECT id FROM addresses ORDER BY random() LIMIT 1)),
+    (5, 'Store2', 'Store2_First', 'Store2_Sur', 'Store2_Last', (SELECT id FROM addresses ORDER BY random() LIMIT 1)),
+    (3, 'Store3', 'Store3_First', 'Store3_Sur', 'Store3_Last', (SELECT id FROM addresses ORDER BY random() LIMIT 1)),
+    (2, 'Store4', 'Store4_First', 'Store4_Sur', 'Store4_Last', (SELECT id FROM addresses ORDER BY random() LIMIT 1)),
+    (1, 'Store5', 'Store5_First', 'Store5_Sur', 'Store5_Last', (SELECT id FROM addresses ORDER BY random() LIMIT 1));
+
+INSERT INTO stores_loginform (login, password, store_id)
+VALUES
+    ('store1', 'storepass1', (SELECT id FROM stores WHERE name = 'Store1')),
+    ('store2', 'storepass2', (SELECT id FROM stores WHERE name = 'Store2')),
+    ('store3', 'storepass3', (SELECT id FROM stores WHERE name = 'Store3')),
+    ('store4', 'storepass4', (SELECT id FROM stores WHERE name = 'Store4')),
+    ('store5', 'storepass5', (SELECT id FROM stores WHERE name = 'Store5'));
 
 -- Заполнение таблицы "products"
 INSERT INTO products (name, price, weight, description, image)

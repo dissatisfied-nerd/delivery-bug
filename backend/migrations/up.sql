@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS stores_loginform
 
     password varchar(128),
 
-    stores_id UUID REFERENCES stores (id)
+    store_id UUID REFERENCES stores (id)
 );
 
 CREATE TABLE IF NOT EXISTS products

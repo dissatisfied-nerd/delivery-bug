@@ -258,6 +258,50 @@
         }
       }
     },
+    "/courier/:id": {
+      "get": {
+        "summary": "get info by courier id",
+        "tags": ["courier"],
+        "parameters": [
+          {
+            "name":"id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourierInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/products" : {
       "get": {
         "summary": "get all products",
@@ -794,6 +838,9 @@
           "client_id": {
             "type": "string"
           },
+          "status": {
+            "type": "string"
+          },
           "creation_time": {
             "type": "string"
           },
@@ -812,6 +859,7 @@
         "required": [
           "price",
           "courier_id",
+          "client_id",
           "status",
           "creation_time",
           "delivery_time",
@@ -823,6 +871,12 @@
             "type": "integer"
           },
           "courier_id": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "status": {
             "type": "string"
           },
           "creation_time": {
@@ -862,6 +916,49 @@
           "balance" : {
             "type": "number",
             "format": "float64"
+          },
+          "city": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "building": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "entrance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "floor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "apartment": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CourierInfo": {
+        "required": [
+          "first_name",
+          "last_name",
+          "city",
+          "street",
+          "building",
+          "entrance",
+          "floor",
+          "apartment"
+        ],
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
           },
           "city": {
             "type": "string"

@@ -7,4 +7,7 @@ const (
 		VALUES($1, $2, $3) RETURNING id`
 	insertLoginFormQuery = `INSERT INTO couriers_loginform(login, password, courier_id) VALUES ($1, $2, $3)`
 	checkLoginQuery      = `SELECT login, password, courier_id FROM couriers_loginform where login=$1`
+	selectCourierQuery   = `SELECT first_name, last_name, address_id FROM couriers WHERE id=$1`
+	selectAddressQuery   = `SELECT city, street, building, entrance, floor, apartment FROM addresses 
+		WHERE id=$1`
 )

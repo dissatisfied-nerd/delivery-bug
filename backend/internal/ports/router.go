@@ -37,6 +37,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 			courier.POST("/login", h.CourierAuthHandler.SignInCourier)
 			courier.POST("/register", h.CourierAuthHandler.SignUpCourier)
 			//courier.Use(authMiddleware.Middleware(&logger))
+			courier.GET("/:id", h.CourierAuthHandler.GetInfoByID)
 			router.GET("/orders/free", h.OrderHandler.GetFreeOrders)
 			router.GET("courier/orders/:courierID", h.OrderHandler.GetOrdersByCourierID)
 		}

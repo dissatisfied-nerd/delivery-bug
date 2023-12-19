@@ -15,6 +15,7 @@ type CouriersRepository interface {
 	InsertLoginForm(ctx context.Context, form models.CouriersLoginForm) error
 	CheckLoginTaken(ctx context.Context, login string) error
 	CheckLogin(ctx context.Context, login string) (models.CouriersLoginForm, error)
+	SelectInfoByID(ctx context.Context, id string) (dtos.CourierInfo, error)
 }
 
 type Repository struct {
@@ -91,4 +92,22 @@ func (r *Repository) InsertLoginForm(ctx context.Context, form models.CouriersLo
 	}
 	r.l.Infof("insert loginform %s in db", form.Login)
 	return nil
+}
+
+func (r *Repository) SelectInfoByID(ctx context.Context, id string) (dtos.CourierInfo, error) {
+	var info dtos.CourierInfo
+	var addressID string
+	err := r.db.QueryRow(ctx, selectCourierQuery, id).Scan(&info.FirstName, &info.LastName, &addressID)
+	if err != nil {
+		r.l.Errorf("error getting courier info %s: %v", id, err)
+		return dtos.CourierInfo{}, err
+	}
+	err = r.db.QueryRow(ctx, selectAddressQuery, addressID).Scan(&info.City, &info.Street, &info.Building,
+		&info.Entrance, &info.Floor, &info.Apartment)
+	if err != nil {
+		r.l.Errorf("error getting address %s: %v", addressID, err)
+		return dtos.CourierInfo{}, err
+	}
+	r.l.Infof("get courier info %s from db", id)
+	return info, nil
 }

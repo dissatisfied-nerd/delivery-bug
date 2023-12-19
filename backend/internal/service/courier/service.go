@@ -14,6 +14,7 @@ import (
 type CouriersService interface {
 	CheckCourier(ctx context.Context, input auth.SignInInput) (string, error)
 	CreateCourier(ctx context.Context, input auth.SignUpInput) (string, error)
+	GetInfoByID(ctx context.Context, id string) (dtos.CourierInfo, error)
 }
 
 type Service struct {
@@ -79,4 +80,8 @@ func (s *Service) CreateCourier(ctx context.Context, input auth.SignUpInput) (st
 	}
 
 	return courierID, nil
+}
+
+func (s *Service) GetInfoByID(ctx context.Context, id string) (dtos.CourierInfo, error) {
+	return s.repo.SelectInfoByID(ctx, id)
 }

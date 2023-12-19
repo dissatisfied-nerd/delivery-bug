@@ -16,6 +16,7 @@ type OrderUserDTOOutput struct {
 	ClientID     string             `json:"client_id"`
 	CreationTime string             `json:"creation_time"`
 	DeliveryTime string             `json:"delivery_time"`
+	Status       string             `json:"status"`
 	Products     []*OrderProductDTO `json:"products"`
 }
 
@@ -31,7 +32,9 @@ type OrderDTO struct {
 
 type OrderCourierDTOOutput struct {
 	Price        float64            `json:"price"`
-	CourierID    string             `json:"client_id"`
+	CourierID    string             `json:"courier_id"`
+	ClientID     string             `json:"client_id"`
+	Status       string             `json:"status"`
 	CreationTime string             `json:"creation_time"`
 	DeliveryTime string             `json:"delivery_time"`
 	Products     []*OrderProductDTO `json:"products"`
@@ -48,6 +51,8 @@ func ToOrderUserDTOOutput(order models.Order, orderProducts []models.OrderProduc
 	orderDTOOutput.Price = order.Price
 
 	orderDTOOutput.ClientID = order.ClientId
+
+	orderDTOOutput.Status = order.Status
 
 	if order.DeliveryTime != nil {
 		orderDTOOutput.DeliveryTime = order.DeliveryTime.String()
@@ -73,6 +78,10 @@ func ToOrderCourierDTOOutput(order models.Order, orderProducts []models.OrderPro
 	orderDTOOutput.Price = order.Price
 
 	orderDTOOutput.CourierID = *order.CourierId
+
+	orderDTOOutput.ClientID = order.ClientId
+
+	orderDTOOutput.Status = order.Status
 
 	if order.DeliveryTime != nil {
 		orderDTOOutput.DeliveryTime = order.DeliveryTime.String()

@@ -17,6 +17,7 @@ const role = "courier"
 type CouriersAuthHandler interface {
 	SignUpCourier(ctx *gin.Context)
 	SignInCourier(ctx *gin.Context)
+	GetInfoByID(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -97,4 +98,16 @@ func (h *Handler) SignInCourier(ctx *gin.Context) {
 		os.Getenv("HOST"), true, true)
 
 	ctx.JSON(http.StatusOK, gin.H{"courier_id": courierID})
+}
+
+func (h *Handler) GetInfoByID(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	info, err := h.service.GetInfoByID(ctx, id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"courier": info})
 }

@@ -40,6 +40,13 @@ export const GoodsPage = () => {
                 onRemoveFromCart={onRemoveFromCart}
                 cart={cart}
                 className={cls.GoodList}
+                goods={goods}
+            />
+            {/* <GoodList
+                onAddToCart={onAddToCart}
+                onRemoveFromCart={onRemoveFromCart}
+                cart={cart}
+                className={cls.GoodList}
                 goods={[
                     {
                         id: 1,
@@ -77,8 +84,7 @@ export const GoodsPage = () => {
                         weight: "2.5",
                     },
                 ]}
-                on
-            />
+            /> */}
         </Page>
     );
 };

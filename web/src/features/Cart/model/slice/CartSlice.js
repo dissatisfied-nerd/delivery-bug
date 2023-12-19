@@ -48,7 +48,7 @@ export const cartSlice = createSlice({
                 cost += good.price * count;
             });
 
-            state.cost = cost;
+            state.cost = Number.parseFloat(cost.toFixed(2))
         },
         addToCart: (state, action) => {
             if (state.cart[action.payload.id] !== undefined) {

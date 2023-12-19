@@ -1,6 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { clientActions } from "entities/Client";
-import { courierActions } from "entities/Courier";
+import {
+    clientActions,
+    fetchClientData,
+    fetchClientOrders,
+} from "entities/Client";
+import { courierActions, fetchCourierOrders } from "entities/Courier";
+import { fetchGoodData } from "entities/Good";
 import { authActions, getAuthType } from "features/Auth";
 
 export const fetchProfileOrders = createAsyncThunk(
@@ -12,20 +17,34 @@ export const fetchProfileOrders = createAsyncThunk(
         try {
             let response;
             if (type === "client") {
-                response = await extra.api.get(`api/orders/${id}`);
+                dispatch(fetchClientOrders(id));
             } else {
-                response = await extra.api.get(`api/orders/${id}`);
+                const { payload: orders } = await dispatch(
+                    fetchCourierOrders(id)
+                );
+                if (orders) {
+                    const clientsInfo = orders.map(async (order) => {
+                        const { payload } = await dispatch(
+                            fetchClientData({
+                                id: order.client_id,
+                                isAuth: true,
+                            })
+                        );
+                        return payload;
+                    });
+                    Promise.all(clientsInfo).then((clients) =>
+                        clients.forEach((client, i) =>
+                            dispatch(
+                                courierActions.setClientDataInOrder({
+                                    client,
+                                    i,
+                                })
+                            )
+                        )
+                    );
+                }
             }
 
-            if (!response.data) {
-                throw new Error();
-            }
-
-            if (type === "client") {
-                dispatch(clientActions.setClientOrders(response.data));
-            } else {
-                dispatch(courierActions.setCouriertOrders(response.data));
-            }
             return response.data;
         } catch (e) {
             return rejectWithValue("error");

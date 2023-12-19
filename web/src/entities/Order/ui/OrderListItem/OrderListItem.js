@@ -2,6 +2,7 @@ import { profileActions } from "entities/Client";
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { classNames } from "shared/lib/classNames/classNames";
+import { getFormatedData } from "shared/lib/getFormattedDate/getFormattedDate";
 import { Button } from "shared/ui/Button/Button";
 import { Card } from "shared/ui/Card/Card";
 import cls from "./OrderListItem.module.scss";
@@ -24,24 +25,26 @@ export const OrderListItem = (props) => {
         onTakeOrder,
         onCancelOrder,
     } = props;
+    const creationTime = getFormatedData(order.creation_time);
+    const deliveryTime = getFormatedData(order.delivery_time);
 
     const content =
         type === "client" ? (
             <>
                 <div className={cls.header}>
-                    <span>Заказ от {order.created}</span>
-                    <span>{order.cost} ₽</span>
+                    <span>Заказ от {creationTime}</span>
+                    <span>{order.price} ₽</span>
                 </div>
                 <div className={cls.body}>
                     <span>
                         {order.delivered
-                            ? `Дата доставки: ${order.delivered}`
+                            ? `Дата доставки: ${deliveryTime}`
                             : order.courierId
                             ? `Статус: В пути`
                             : "Статус: Создан"}
                     </span>
                     <div className={cls.goodsImgList}>
-                        {order.goods.map((good) => {
+                        {order.products.map((good) => {
                             return (
                                 <img
                                     className={cls.goodsImgItem}
@@ -78,10 +81,10 @@ export const OrderListItem = (props) => {
                 </div>
                 <div className={cls.body}>
                     <div className={cls.goodsTitleList}>
-                        {order.goods.map(([good, count]) => {
+                        {order.products.map(({ amount, ...good }) => {
                             return (
                                 <div>
-                                    <span>{count}x: </span>
+                                    <span>{amount}x: </span>
                                     <span>{good.title}</span>
                                 </div>
                             );
@@ -91,14 +94,14 @@ export const OrderListItem = (props) => {
                         {page === "profile" ? (
                             <Button
                                 className={cls.takeOrderBtn}
-                                onClick={onCancelOrder}
+                                onClick={() => onCancelOrder(order.id)}
                             >
                                 Завершить
                             </Button>
                         ) : !taken ? (
                             <Button
                                 className={cls.takeOrderBtn}
-                                onClick={() => onTakeOrder(order)}
+                                onClick={() => onTakeOrder(order.id)}
                             >
                                 Взять заказ
                             </Button>

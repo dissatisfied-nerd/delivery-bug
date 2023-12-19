@@ -5,8 +5,10 @@ import { sendRegisterData } from "../services/sendRegisterData/sendRegisterData"
 
 const initialState = {
     data: {
+        market_name: "",
         first_name: "",
         last_name: "",
+        father_name: "",
         login: "",
         city: "",
         street: "",
@@ -15,6 +17,7 @@ const initialState = {
         floor: "",
         apartment: "",
         password: "",
+        secret_word: "",
     },
     type: "client",
     isAuth: false,
@@ -31,55 +34,32 @@ export const authSlice = createSlice({
             state.data = data;
             state.type = type;
         },
-        setFirstName: (state, action) => {
-            state.data.first_name = action.payload;
-        },
-        setLastName: (state, action) => {
-            state.data.last_name = action.payload;
-        },
-        setLogin: (state, action) => {
-            state.data.login = action.payload;
-        },
-        setCity: (state, action) => {
-            state.data.city = action.payload;
-        },
-        setStreet: (state, action) => {
-            state.data.street = action.payload;
-        },
-        setBuilding: (state, action) => {
-            state.data.building = action.payload;
-        },
-        setEntrance: (state, action) => {
-            state.data.entrance = action.payload;
-        },
-        setFloor: (state, action) => {
-            state.data.floor = action.payload;
-        },
-        setAparts: (state, action) => {
-            state.data.apartment = action.payload;
-        },
-        setPassword: (state, action) => {
-            state.data.password = action.payload;
+        changeData: (state, action) => {
+            state.data = {
+                ...state.data,
+                ...action.payload,
+            };
         },
         setType: (state, action) => {
             state.type = action.payload;
-        },
-        setIsAuth: (state, action) => {
-            state.isAuth = action.payload;
         },
         saveAuthData: (state, action) => {
             const profile =
                 JSON.parse(localStorage.getItem(PROFILE_LOCALSTORAGE_KEY)) ||
                 {};
+            const { password, secret_word, ...data } = state.data;
             localStorage.setItem(
                 PROFILE_LOCALSTORAGE_KEY,
                 JSON.stringify({
-                    ...state.data,
+                    ...data,
                     type: state.type,
                     ...profile,
                     ...action.payload,
                 })
             );
+        },
+        emptyError: (state, action) => {
+            state.error = "";
         },
         logout: (state, action) => {
             state.data = {};

@@ -32,8 +32,24 @@ export const courierSlice = createSlice({
         // addOrder: (state, action) => {
         //     state.orders = [...state.orders, action.payload];
         // },
-        setCouriertOrders: (state, action) => {
+        setCourierOrders: (state, action) => {
             state.orders = action.payload;
+        },
+        setProductsDataByOrderId: (state, action) => {
+            const { order_id, products } = action.payload;
+            state.orders[order_id].products = state.orders[
+                order_id
+            ].products.map((product, i) => ({
+                amount: product.amount,
+                ...products[i],
+            }));
+        },
+        setClientDataInOrder: (state, action) => {
+            const { i, client } = action.payload;
+            state.orders[i] = {
+                ...state.orders[i],
+                client,
+            };
         },
         logout: (state, action) => {
             state.data = {};

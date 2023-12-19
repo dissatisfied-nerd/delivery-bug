@@ -1,6 +1,6 @@
 import { OrderList } from "entities/Order";
 import { getAuthData, getAuthType } from "features/Auth";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "shared/ui/Card/Card";
 import { Page } from "widgets/Page/Page";
@@ -14,17 +14,19 @@ import {
 } from "entities/Courier";
 import { getProfileData } from "../../model/sevices/fetchProfileData/fetchProfileData";
 import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
+import { finishOrder } from "../../model/sevices/finishOrder/finishOrder";
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
     const type = useSelector(getAuthType);
-    const client_id = useSelector(getClientId);
-    const courier_id = useSelector(getCourierId);
-    const id = type === "client" ? client_id : courier_id;
+    const clientID = useSelector(getClientId);
+    const courierID = useSelector(getCourierId);
+    const id = type === "client" ? clientID : courierID;
     const client = useSelector(getClientData);
     const courier = useSelector(getCourierData);
     const profile = type === "client" ? client : courier;
     const clientOrders = useSelector(getClientOrders);
+    console.log(clientOrders);
     const courierOrders = useSelector(getCourierOrders);
     const orders = type === "client" ? clientOrders : courierOrders;
 
@@ -32,6 +34,13 @@ export const ProfilePage = () => {
         dispatch(getProfileData(id));
         dispatch(fetchProfileOrders(id));
     }, []);
+
+    const onCancelOrder = useCallback(
+        (orderID) => {
+            dispatch(finishOrder({ orderID, courierID }));
+        },
+        [dispatch, courierID]
+    );
 
     return (
         <Page>
@@ -42,6 +51,7 @@ export const ProfilePage = () => {
                     page="profile"
                     type={type}
                     orders={orders.filter((order) => !Boolean(order.delivered))}
+                    onCancelOrder={onCancelOrder}
                 />
                 <div className={cls.title}>История заказов</div>
                 <OrderList

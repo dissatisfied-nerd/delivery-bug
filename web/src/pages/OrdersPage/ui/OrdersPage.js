@@ -3,31 +3,38 @@ import cls from "./OrdersPage.module.scss";
 import { Page } from "widgets/Page/Page";
 import { OrderList } from "entities/Order";
 import { useDispatch, useSelector } from "react-redux";
-import { courierActions } from "entities/Courier";
+import { courierActions, getCourierId } from "entities/Courier";
 import {
     getOrdersPageData,
     getOrdersPageError,
+    getOrdersPageIsOrderTaken,
 } from "../model/selectors/getOrdersPageData";
-import { fetchOrdersPageData } from "../model/services/fetchOrdersPageData";
+import { fetchOrdersPageData } from "../model/services/fetchOrdersPageData/fetchOrdersPageData";
+import { takeOrder } from "../model/services/takeOrder/takeOrder";
+import { ordersPageActions } from "../model/slice/ordersPageSlice";
 
 export const OrdersPage = () => {
     const dispatch = useDispatch();
     const orders = useSelector(getOrdersPageData);
     console.log(orders);
     const error = useSelector(getOrdersPageError);
+    const isOrderTaken = useSelector(getOrdersPageIsOrderTaken);
+    const courierID = useSelector(getCourierId);
 
     useEffect(() => {
         dispatch(fetchOrdersPageData());
+
+        return () => {
+            dispatch(ordersPageActions.resetIsOrderTaken());
+        };
     }, [dispatch]);
 
     const onTakeOrder = useCallback(
-        (order) => {
-            dispatch(courierActions.addOrder(order));
+        (orderID) => {
+            dispatch(takeOrder({ orderID, courierID }));
         },
-        [dispatch]
+        [courierID, dispatch]
     );
-
-    const onCancelOrder = useCallback(() => {}, []);
 
     if (error) {
         return (
@@ -41,7 +48,16 @@ export const OrdersPage = () => {
     return (
         <Page>
             <span className={cls.title}> Заказы </span>
+            {isOrderTaken && (
+                <span>Вы успешно взяли заказ, он отобразится в профиле</span>
+            )}
             <OrderList
+                className={cls.orderList}
+                type="courier"
+                onTakeOrder={onTakeOrder}
+                orders={[]}
+            />
+            {/* <OrderList
                 className={cls.orderList}
                 type="courier"
                 onTakeOrder={onTakeOrder}
@@ -376,7 +392,7 @@ export const OrdersPage = () => {
                         delivered: "",
                     },
                 ]}
-            />
+            /> */}
         </Page>
     );
 };

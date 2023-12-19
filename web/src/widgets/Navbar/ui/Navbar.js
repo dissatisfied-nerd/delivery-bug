@@ -1,9 +1,8 @@
-import { clientActions } from "entities/Client";
 import { authActions, logout } from "features/Auth";
 import { getAuthIsAuth, getAuthType } from "features/Auth";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useParams, useSearchParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./Navbar.module.scss";
 
@@ -20,16 +19,45 @@ export default function Navbar() {
         // dispatch(courierActions.logout());
     }, [dispatch]);
 
+    const onClickAuth = useCallback(
+        (type) => {
+            dispatch(authActions.setType(type));
+            dispatch(authActions.saveAuthData({ type }));
+        },
+        [dispatch]
+    );
+
     if (!isAuth) {
         links = (
-            <NavLink
-                to={"/auth"}
-                className={({ isActive }) =>
-                    classNames(cls.link, { [cls.active]: isActive }, [])
-                }
-            >
-                Авторизация
-            </NavLink>
+            <>
+                <NavLink
+                    to={"/auth"}
+                    className={({ isActive }) =>
+                        classNames(cls.link, { [cls.active]: isActive }, [])
+                    }
+                    onClick={() => onClickAuth("client")}
+                >
+                    Авторизация
+                </NavLink>
+                <NavLink
+                    to={"/market/auth"}
+                    className={({ isActive }) =>
+                        classNames(cls.link, { [cls.active]: isActive }, [])
+                    }
+                    onClick={() => onClickAuth("market")}
+                >
+                    Для поставщиков
+                </NavLink>
+                <NavLink
+                    to={"/admin/auth"}
+                    className={({ isActive }) =>
+                        classNames(cls.link, { [cls.active]: isActive }, [])
+                    }
+                    onClick={() => onClickAuth("admin")}
+                >
+                    Для администратора
+                </NavLink>
+            </>
         );
     } else {
         if (type === "client") {
@@ -40,24 +68,8 @@ export default function Navbar() {
                         className={({ isActive }) =>
                             classNames(cls.link, { [cls.active]: isActive }, [])
                         }
-                        // className={classNames(
-                        //     cls.link,
-                        //     {
-                        //         [cls.active]: curLink.current === "goods",
-                        //     },
-                        //     []
-                        // )}
-                        // onClick={() => onSelectLink("goods")}
                     >
                         Товары
-                    </NavLink>
-                    <NavLink
-                        to={"/profile"}
-                        className={({ isActive }) =>
-                            classNames(cls.link, { [cls.active]: isActive }, [])
-                        }
-                    >
-                        Профиль
                     </NavLink>
                     <NavLink
                         to={"/cart"}
@@ -66,6 +78,14 @@ export default function Navbar() {
                         }
                     >
                         Корзина
+                    </NavLink>
+                    <NavLink
+                        to={"/profile"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
+                        Профиль
                     </NavLink>
                     <NavLink
                         onClick={onLogout}

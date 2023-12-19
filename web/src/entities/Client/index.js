@@ -15,6 +15,8 @@ import { clientActions } from "./model/slice/ClientSlice";
 import { clientReducer } from "./model/slice/ClientSlice";
 import { getClientData } from "./model/selectors/getClientData";
 import { getClientId } from "./model/selectors/getClientData";
+import { fetchClientData } from "./model/services/fetchClientData/fetchClientData";
+import { fetchClientOrders } from "./model/services/fetchClientOrders/fetchClientOrders";
 
 // export {
 //     getClientFirstName,
@@ -37,4 +39,6 @@ export {
     getClientData,
     getClientOrders,
     getClientId,
+    fetchClientData,
+    fetchClientOrders,
 };

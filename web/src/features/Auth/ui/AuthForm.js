@@ -22,8 +22,10 @@ export const AuthForm = () => {
     const type = useSelector(getAuthType);
     const error = useSelector(getAuthError);
     const {
+        market_name = "",
         first_name = "",
         last_name = "",
+        father_name = "",
         login = "",
         city = "",
         building = "",
@@ -32,6 +34,7 @@ export const AuthForm = () => {
         entrance = "",
         apartment = "",
         password = "",
+        secret_word = "",
     } = data;
     const navigate = useNavigate();
 
@@ -42,77 +45,104 @@ export const AuthForm = () => {
         firstInput?.focus();
     }, [formType]);
 
-    const onChangeForm = useCallback(
-        () => setFormType(formType === "signUp" ? "logIn" : "signUp"),
-        [formType]
+    const onChangeForm = useCallback(() => {
+        dispatch(authActions.emptyError());
+        setFormType(formType === "signUp" ? "logIn" : "signUp");
+    }, [formType, dispatch]);
+
+    const onChangeMarketName = useCallback(
+        (data) => {
+            dispatch(authActions.changeData({ market_name: data }));
+        },
+        [dispatch]
     );
 
     const onChangeFirstName = useCallback(
         (data) => {
-            dispatch(authActions.setFirstName(data));
+            dispatch(authActions.changeData({ first_name: data }));
         },
         [dispatch]
     );
 
     const onChangeLastName = useCallback(
         (data) => {
-            dispatch(authActions.setLastName(data));
+            dispatch(authActions.changeData({ last_name: data }));
+        },
+        [dispatch]
+    );
+
+    const onChangeFatherName = useCallback(
+        (data) => {
+            dispatch(authActions.changeData({ father_name: data }));
         },
         [dispatch]
     );
 
     const onChangeLogin = useCallback(
         (data) => {
-            dispatch(authActions.setLogin(data));
+            dispatch(authActions.changeData({ login: data }));
         },
         [dispatch]
     );
 
     const onChangeCity = useCallback(
         (data) => {
-            dispatch(authActions.setCity(data));
+            dispatch(authActions.changeData({ city: data }));
         },
         [dispatch]
     );
 
     const onChangeStreet = useCallback(
         (data) => {
-            dispatch(authActions.setStreet(data));
+            dispatch(authActions.changeData({ street: data }));
         },
         [dispatch]
     );
 
     const onChangeBuilding = useCallback(
         (data) => {
-            dispatch(authActions.setBuilding(validateNumber(data)));
+            dispatch(
+                authActions.changeData({ building: validateNumber(data) })
+            );
         },
         [dispatch]
     );
 
     const onChangeEntrance = useCallback(
         (data) => {
-            dispatch(authActions.setEntrance(validateNumber(data)));
+            dispatch(
+                authActions.changeData({ entrance: validateNumber(data) })
+            );
         },
         [dispatch]
     );
 
     const onChangeFloor = useCallback(
         (data) => {
-            dispatch(authActions.setFloor(validateNumber(data)));
+            dispatch(authActions.changeData({ floor: validateNumber(data) }));
         },
         [dispatch]
     );
 
     const onChangeAparts = useCallback(
         (data) => {
-            dispatch(authActions.setAparts(validateNumber(data)));
+            dispatch(
+                authActions.changeData({ apartment: validateNumber(data) })
+            );
         },
         [dispatch]
     );
 
     const onChangePassword = useCallback(
         (data) => {
-            dispatch(authActions.setPassword(data));
+            dispatch(authActions.changeData({ password: data }));
+        },
+        [dispatch]
+    );
+
+    const onChangeSecretWord = useCallback(
+        (data) => {
+            dispatch(authActions.changeData({ secret_word: data }));
         },
         [dispatch]
     );
@@ -130,24 +160,43 @@ export const AuthForm = () => {
     }, [navigate]);
 
     const onSignUp = useCallback(async () => {
-        const result = await dispatch(sendRegisterData(data));
+        let signUpData;
+        if (type === "client" || type === "courier") {
+            const { market_name, father_name, secret_word, ...restData } = data;
+            signUpData = restData;
+        } else if (type === "market") {
+            const { secret_word, ...restData } = data;
+            signUpData = restData;
+        } else {
+            signUpData = {
+                first_name,
+                last_name,
+                father_name,
+                login,
+                password,
+                secret_word,
+            };
+        }
+        const result = await dispatch(sendRegisterData(signUpData));
         if (!result.meta.rejectedWithValue) {
             onSuccess();
         }
     }, [onSuccess, data, dispatch]);
 
     const onLogin = useCallback(async () => {
-        const result = await dispatch(sendLoginData({ login, password }));
+        const loginData =
+            type === "admin"
+                ? { login, password, secret_word }
+                : { login, password };
+        const result = await dispatch(sendLoginData(loginData));
         if (!result.meta.rejectedWithValue) {
             onSuccess();
         }
     }, [onSuccess, login, password, dispatch]);
 
-    if (formType === "signUp") {
-        return (
-            <div className={classNames(cls.AuthForm, {}, [])}>
-                <span className={cls.title}>Регистрация</span>
-                <span style={{ color: "red" }}>{error}</span>
+    const signUpInputs =
+        type === "client" || type === "courier" ? (
+            <>
                 <Input
                     className={cls.input}
                     label="Имя"
@@ -210,18 +259,150 @@ export const AuthForm = () => {
                     label="Пароль"
                     value={password}
                 />
-                <select
+            </>
+        ) : type === "market" ? (
+            <>
+                <Input
                     className={cls.input}
-                    onChange={onChangeType}
-                    value={type}
-                >
-                    <option value="client" key="client">
-                        Пользователь
-                    </option>
-                    <option value="courier" key="courier">
-                        Курьер
-                    </option>
-                </select>
+                    label="Название магазина"
+                    value={market_name}
+                    onChange={onChangeMarketName}
+                    autoFocus
+                />
+                <Input
+                    className={cls.input}
+                    label="Имя"
+                    value={first_name}
+                    onChange={onChangeFirstName}
+                    autoFocus
+                />
+                <Input
+                    className={cls.input}
+                    label="Фамилия"
+                    value={last_name}
+                    onChange={onChangeLastName}
+                    autoFocus
+                />
+                <Input
+                    className={cls.input}
+                    label="Отчество"
+                    value={father_name}
+                    onChange={onChangeFatherName}
+                    autoFocus
+                />
+                <Input
+                    className={cls.input}
+                    label="Почта"
+                    value={login}
+                    onChange={onChangeLogin}
+                />
+                <Input
+                    className={cls.input}
+                    onChange={onChangeCity}
+                    label="Город"
+                    value={city}
+                />
+                <Input
+                    className={cls.input}
+                    onChange={onChangeStreet}
+                    label="Улица"
+                    value={street}
+                />
+                <Input
+                    className={cls.input}
+                    onChange={onChangeBuilding}
+                    label="Дом"
+                    value={building}
+                />
+                <Input
+                    className={cls.input}
+                    onChange={onChangeEntrance}
+                    label="Подъезд"
+                    value={entrance}
+                />
+                <Input
+                    className={cls.input}
+                    onChange={onChangeFloor}
+                    label="Этаж"
+                    value={floor}
+                />
+                <Input
+                    className={cls.input}
+                    onChange={onChangeAparts}
+                    label="Квартира"
+                    value={apartment}
+                />
+                <Input
+                    className={cls.input}
+                    onChange={onChangePassword}
+                    label="Пароль"
+                    value={password}
+                />
+            </>
+        ) : (
+            <>
+                <Input
+                    className={cls.input}
+                    label="Имя"
+                    value={first_name}
+                    onChange={onChangeFirstName}
+                    autoFocus
+                />
+                <Input
+                    className={cls.input}
+                    label="Фамилия"
+                    value={last_name}
+                    onChange={onChangeLastName}
+                    autoFocus
+                />
+                <Input
+                    className={cls.input}
+                    label="Отчество"
+                    value={father_name}
+                    onChange={onChangeFatherName}
+                    autoFocus
+                />
+                <Input
+                    className={cls.input}
+                    label="Почта"
+                    value={login}
+                    onChange={onChangeLogin}
+                />
+                <Input
+                    className={cls.input}
+                    onChange={onChangePassword}
+                    label="Пароль"
+                    value={password}
+                />
+                <Input
+                    className={cls.input}
+                    onChange={onChangeSecretWord}
+                    label="Кодовое слово"
+                    value={secret_word}
+                />
+            </>
+        );
+
+    if (formType === "signUp") {
+        return (
+            <div className={classNames(cls.AuthForm, {}, [])}>
+                <span className={cls.title}>Регистрация</span>
+                <span style={{ color: "red" }}>{error}</span>
+                {signUpInputs}
+                {(type === "client" || type === "courier") && (
+                    <select
+                        className={cls.input}
+                        onChange={onChangeType}
+                        value={type}
+                    >
+                        <option value="client" key="client">
+                            Пользователь
+                        </option>
+                        <option value="courier" key="courier">
+                            Курьер
+                        </option>
+                    </select>
+                )}
                 <Button theme="primary" onClick={onSignUp}>
                     Зарегистрироваться
                 </Button>
@@ -248,18 +429,29 @@ export const AuthForm = () => {
                     label="Пароль"
                     value={password}
                 />
-                <select
-                    className={cls.input}
-                    onChange={onChangeType}
-                    value={type}
-                >
-                    <option value="client" key="client">
-                        Пользователь
-                    </option>
-                    <option value="courier" key="courier">
-                        Курьер
-                    </option>
-                </select>
+                {type === "admin" && (
+                    <Input
+                        className={cls.input}
+                        onChange={onChangeSecretWord}
+                        label="Кодовое слово"
+                        value={secret_word}
+                    />
+                )}
+                {(type === "client" || type === "courier") && (
+                    <select
+                        className={cls.input}
+                        onChange={onChangeType}
+                        value={type}
+                    >
+                        <option value="client" key="client">
+                            Пользователь
+                        </option>
+                        <option value="courier" key="courier">
+                            Курьер
+                        </option>
+                    </select>
+                )}
+
                 <Button theme="primary" onClick={onLogin}>
                     Войти
                 </Button>

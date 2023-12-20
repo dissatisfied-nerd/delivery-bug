@@ -33,14 +33,6 @@ type ClientsLoginForm struct {
 	ClientId string `db:"client_id"`
 }
 
-type CouriersLoginForm struct {
-	Login string `db:"login"`
-
-	Password string `db:"password"`
-
-	CourierId string `db:"courier_id"`
-}
-
 type Couriers struct {
 	ID string `db:"id"`
 
@@ -49,11 +41,43 @@ type Couriers struct {
 	Registration string `db:"registration"`
 }
 
+type CouriersLoginForm struct {
+	Login string `db:"login"`
+
+	Password string `db:"password"`
+
+	CourierId string `db:"courier_id"`
+}
+
+type Administrators struct {
+	ID string `db:"id"`
+
+	FirstName string `db:"first_name"`
+	Surname   string `db:"surname"`
+	LastName  string `db:"last_name"`
+}
+
+type AdministratorsLoginForm struct {
+	Login string `db:"login"`
+
+	Password string `db:"password"`
+
+	AdministratorId string `db:"administrator_id"`
+}
+
 type Stores struct {
 	ID string `db:"id"`
 
 	Reputation float64 `db:"reputation"`
 	Name       string  `db:"name"`
+}
+
+type StoresLoginForm struct {
+	Login string `db:"login"`
+
+	Password string `db:"password"`
+
+	StoreId string `db:"store_id"`
 }
 
 type Product struct {

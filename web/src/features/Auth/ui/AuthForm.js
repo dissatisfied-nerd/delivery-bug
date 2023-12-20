@@ -43,7 +43,7 @@ export const AuthForm = () => {
             ...document.getElementsByClassName(cls.input),
         ].filter((el) => el.lastChild.value === "")[0]?.lastChild;
         firstInput?.focus();
-    }, [formType]);
+    }, [type, formType]);
 
     const onChangeForm = useCallback(() => {
         dispatch(authActions.emptyError());
@@ -387,7 +387,7 @@ export const AuthForm = () => {
         return (
             <div className={classNames(cls.AuthForm, {}, [])}>
                 <span className={cls.title}>Регистрация</span>
-                <span style={{ color: "red" }}>{error}</span>
+                <div className={cls.error}>{error}</div>
                 {signUpInputs}
                 {(type === "client" || type === "courier") && (
                     <select

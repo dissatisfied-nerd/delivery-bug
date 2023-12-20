@@ -1,6 +1,7 @@
 .AuthForm {
     width: 600px;
-    border: 1px solid var(--inverted-bg-color);
+    // border: 1px solid var(--inverted-bg-color);
+    box-shadow: var(--shadow);
     border-radius: 5px;
     padding: 20px;
     display: flex;
@@ -19,4 +20,8 @@
 .changeForm {
     opacity: 0.9;
     color: var(--inverted-bg-color);
+}
+
+.error {
+    color: var(--red-light);
 }

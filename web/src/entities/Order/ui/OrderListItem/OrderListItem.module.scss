@@ -1,6 +1,6 @@
 .OrderListItem {
     width: 1000px;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow);
 }
 
 .header {

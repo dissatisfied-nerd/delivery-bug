@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
+import { fetchClientOrders } from "../services/fetchClientOrders/fetchClientOrders";
 
 const initialState = {
     isLoading: false,
@@ -33,33 +34,26 @@ export const clientSlice = createSlice({
         logout: (state, action) => {
             state.data = {};
         },
-        setProductsDataByOrderId: (state, action) => {
-            const { order_id, products } = action.payload;
-            state.orders[order_id].products = state.orders[
-                order_id
-            ].products.map((product, i) => ({
-                amount: product.amount,
-                ...products[i],
-            }));
-        },
         setClientOrders: (state, action) => {
             state.orders = action.payload;
         },
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(loginByFirstName.pending, (state) => {
-    //             state.data.error = undefined;
-    //             state.data.isLoading = true;
-    //         })
-    //         .addCase(loginByFirstName.fulfilled, (state) => {
-    //             state.data.isLoading = false;
-    //         })
-    //         .addCase(loginByFirstName.rejected, (state, action) => {
-    //             state.data.isLoading = false;
-    //             state.data.error = action.payload;
-    //         });
-    // },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchClientOrders.pending, (state) => {
+                state.isLoading = true;
+                state.error = "";
+            })
+            .addCase(fetchClientOrders.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.orders = action.payload;
+                state.error = "";
+            })
+            .addCase(fetchClientOrders.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            });
+    },
 });
 
 // Action creators are generated for each case reducer function

@@ -9,7 +9,7 @@ import cls from "./OrderListItem.module.scss";
 
 const getWeight = (goods) => {
     let weight = 0;
-    goods.forEach(({amount, ...good}) => {
+    goods.forEach(({ amount, ...good }) => {
         weight += Number(good.weight) * 1000 * amount;
     });
 
@@ -59,16 +59,14 @@ export const OrderListItem = (props) => {
         ) : (
             <>
                 <div className={cls.header}>
-                    <span>Заказ от {order.created}</span>
+                    <span>Заказ от {creationTime}</span>
                     <span>
                         Адрес{" "}
                         <span className={cls.headerText}>
-                            {order.client.city}, ул.{" "}
-                            {order.client.street}, д.{" "}
+                            {order.client.city}, ул. {order.client.street}, д.{" "}
                             {order.client.building}, подъезд{" "}
-                            {order.client.entrance}, этаж{" "}
-                            {order.client.floor}, кв{" "}
-                            {order.client.apartment}
+                            {order.client.entrance}, этаж {order.client.floor},
+                            кв {order.client.apartment}
                         </span>
                     </span>
                     <span>

@@ -7,6 +7,7 @@ import { courierActions, getCourierId } from "entities/Courier";
 import {
     getOrdersPageData,
     getOrdersPageError,
+    getOrdersPageIsLoading,
     getOrdersPageIsOrderTaken,
 } from "../model/selectors/getOrdersPageData";
 import { fetchOrdersPageData } from "../model/services/fetchOrdersPageData/fetchOrdersPageData";
@@ -15,10 +16,13 @@ import { ordersPageActions } from "../model/slice/ordersPageSlice";
 
 export const OrdersPage = () => {
     const dispatch = useDispatch();
+    const isLoading = useSelector(getOrdersPageIsLoading);
     const orders = useSelector(getOrdersPageData);
     console.log(orders);
+    console.log(isLoading);
     const error = useSelector(getOrdersPageError);
     const isOrderTaken = useSelector(getOrdersPageIsOrderTaken);
+    console.log("isOrderTaken", isOrderTaken);
     const courierID = useSelector(getCourierId);
 
     useEffect(() => {
@@ -31,10 +35,15 @@ export const OrdersPage = () => {
 
     const onTakeOrder = useCallback(
         (orderID) => {
+            console.log(orderID);
             dispatch(takeOrder({ orderID, courierID }));
         },
         [courierID, dispatch]
     );
+
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
 
     if (error) {
         return (
@@ -49,13 +58,15 @@ export const OrdersPage = () => {
         <Page>
             <span className={cls.title}> Заказы </span>
             {isOrderTaken && (
-                <span>Вы успешно взяли заказ, он отобразится в профиле</span>
+                <div className={cls.message}>
+                    Вы успешно взяли заказ, он отобразится в профиле
+                </div>
             )}
             <OrderList
                 className={cls.orderList}
                 type="courier"
                 onTakeOrder={onTakeOrder}
-                orders={[]}
+                orders={orders}
             />
             {/* <OrderList
                 className={cls.orderList}

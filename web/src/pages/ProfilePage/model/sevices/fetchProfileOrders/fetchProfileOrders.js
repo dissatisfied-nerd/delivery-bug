@@ -15,37 +15,31 @@ export const fetchProfileOrders = createAsyncThunk(
         const type = getAuthType(getState());
 
         try {
-            let response;
             if (type === "client") {
                 dispatch(fetchClientOrders(id));
             } else {
-                const { payload: orders } = await dispatch(
+                let { payload: orders } = await dispatch(
                     fetchCourierOrders(id)
                 );
                 if (orders) {
-                    const clientsInfo = orders.map(async (order) => {
-                        const { payload } = await dispatch(
+                    const response = await orders.map(async (order) => {
+                        const { payload: client } = await dispatch(
                             fetchClientData({
                                 id: order.client_id,
                                 isAuth: true,
                             })
                         );
-                        return payload;
+
+                        return {
+                            ...order,
+                            ...client,
+                        };
                     });
-                    Promise.all(clientsInfo).then((clients) =>
-                        clients.forEach((client, i) =>
-                            dispatch(
-                                courierActions.setClientDataInOrder({
-                                    client,
-                                    i,
-                                })
-                            )
-                        )
-                    );
+                    orders = await Promise.all(response);
+                    console.log(orders);
+                    dispatch(courierActions.setCourierOrders(orders));
                 }
             }
-
-            return response.data;
         } catch (e) {
             return rejectWithValue("error");
         }

@@ -3,6 +3,7 @@
     flex-direction: column;
     flex-basis: 320px;
     height: 500px;
+    box-shadow: var(--shadow);
 }
 
 @media (max-width: 1471px) {

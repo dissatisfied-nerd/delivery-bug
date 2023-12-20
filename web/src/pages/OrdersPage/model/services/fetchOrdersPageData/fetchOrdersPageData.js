@@ -10,56 +10,31 @@ export const fetchOrdersPageData = createAsyncThunk(
 
         try {
             const response = await extra.api.get("/orders/free");
-
+            console.log(response);
             if (!response.data) {
                 throw new Error();
             }
 
-            dispatch(ordersPageActions.setOrders(response.data.orders));
-
-            const orders = response.data.orders;
+            let orders = response.data.orders;
             if (orders) {
-                orders.forEach((order, id) => {
-                    const products = order.products.map(
-                        async (product) =>
-                            await (
-                                await dispatch(
-                                    fetchGoodData(product.product_id)
-                                )
-                            ).payload
-                    );
-                    Promise.all(products).then((products) => {
-                        dispatch(
-                            ordersPageActions.setProductsDataByOrderId({
-                                order_id: id,
-                                products,
-                            })
-                        );
-                    });
-                });
+                const response = await orders.map(async order => {
+                    const goodsData = await order.products.map(async product => {
+                        const {payload} = await dispatch(fetchGoodData(product.product_id))
+                        return {amount: product.amount, ...payload}
+                    })
+                    const goodsResult = await Promise.all(goodsData)
 
-                const clientsInfo = orders.map(async (order) => {
-                    const { payload } = await dispatch(
-                        fetchClientData({
-                            id: order.client_id,
-                            isAuth: true,
-                        })
-                    );
-                    return payload;
-                });
-                Promise.all(clientsInfo).then((clients) =>
-                    clients.forEach((client, i) =>
-                        dispatch(
-                            ordersPageActions.setClientDataInOrder({
-                                client,
-                                i,
-                            })
-                        )
-                    )
-                );
+                    const {payload: client} = await dispatch(fetchClientData({id: order.client_id, isAuth: true}))
+
+                    return {
+                        ...order,
+                        ...client,
+                        products: goodsResult
+                    }
+                })
+                orders = await Promise.all(response)
             }
-
-            return response.data.orders;
+            return orders;
         } catch (e) {
             return rejectWithValue("error");
         }

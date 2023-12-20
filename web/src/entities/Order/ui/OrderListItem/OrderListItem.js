@@ -9,8 +9,8 @@ import cls from "./OrderListItem.module.scss";
 
 const getWeight = (goods) => {
     let weight = 0;
-    goods.forEach(([good, count]) => {
-        weight += Number(good.weight) * 1000 * count;
+    goods.forEach(({amount, ...good}) => {
+        weight += Number(good.weight) * 1000 * amount;
     });
 
     return (weight / 1000).toFixed(2);
@@ -49,7 +49,7 @@ export const OrderListItem = (props) => {
                                 <img
                                     className={cls.goodsImgItem}
                                     src={good.image}
-                                    alt={good.title}
+                                    alt={good.name}
                                 />
                             );
                         })}
@@ -63,29 +63,29 @@ export const OrderListItem = (props) => {
                     <span>
                         Адрес{" "}
                         <span className={cls.headerText}>
-                            {order.client.adress.city}, ул.{" "}
-                            {order.client.adress.street}, д.{" "}
-                            {order.client.adress.building}, подъезд{" "}
-                            {order.client.adress.entrance}, этаж{" "}
-                            {order.client.adress.floor}, кв{" "}
-                            {order.client.adress.apartment}
+                            {order.client.city}, ул.{" "}
+                            {order.client.street}, д.{" "}
+                            {order.client.building}, подъезд{" "}
+                            {order.client.entrance}, этаж{" "}
+                            {order.client.floor}, кв{" "}
+                            {order.client.apartment}
                         </span>
                     </span>
                     <span>
                         Вес{" "}
                         <span className={cls.headerText}>
-                            {getWeight(order.goods)} кг
+                            {getWeight(order.products)} кг
                         </span>
                     </span>
-                    <span>{order.cost} ₽</span>
+                    <span>{order.price} ₽</span>
                 </div>
                 <div className={cls.body}>
                     <div className={cls.goodsTitleList}>
                         {order.products.map(({ amount, ...good }) => {
                             return (
-                                <div>
+                                <div key={good.id}>
                                     <span>{amount}x: </span>
-                                    <span>{good.title}</span>
+                                    <span>{good.name}</span>
                                 </div>
                             );
                         })}

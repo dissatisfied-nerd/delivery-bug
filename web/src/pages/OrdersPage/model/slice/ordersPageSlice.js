@@ -3,6 +3,7 @@ import { fetchOrdersPageData } from "../services/fetchOrdersPageData/fetchOrders
 import { takeOrder } from "../services/takeOrder/takeOrder";
 
 const initialState = {
+    isLoading: false,
     orders: [],
     error: "",
     isOrderTaken: false,
@@ -16,6 +17,7 @@ export const ordersPageSlice = createSlice({
             state.orders = action.payload;
         },
         setProductsDataByOrderId: (state, action) => {
+            console.log("PRODUCT");
             const { order_id, products } = action.payload;
             state.orders[order_id].products = state.orders[
                 order_id
@@ -37,11 +39,17 @@ export const ordersPageSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchOrdersPageData.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchOrdersPageData.fulfilled, (state, action) => {
+                state.orders = action.payload
                 state.error = "";
+                state.isLoading = false;
             })
             .addCase(fetchOrdersPageData.rejected, (state, action) => {
                 state.error = action.payload;
+                state.isLoading = false;
             })
             .addCase(takeOrder.fulfilled, (state, action) => {
                 state.isOrderTaken = true;

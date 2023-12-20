@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchOrdersPageData } from "../fetchOrdersPageData/fetchOrdersPageData";
 
 export const takeOrder = createAsyncThunk(
     "ordersPage/takeOrder",
     async ({ orderID, courierID }, thunkAPI) => {
-        const { extra, rejectWithValue } = thunkAPI;
+        const { extra, rejectWithValue, dispatch } = thunkAPI;
 
         try {
-            const response = await extra.api.post("/orders/take", {
+            const response = await extra.api.post("/orders/take", null, {
                 params: {
                     orderID,
                     courierID,
@@ -17,6 +18,7 @@ export const takeOrder = createAsyncThunk(
                 throw new Error();
             }
             console.log(response.data);
+            dispatch(fetchOrdersPageData());
             // return response.data.orders;
         } catch (e) {
             return rejectWithValue("error");

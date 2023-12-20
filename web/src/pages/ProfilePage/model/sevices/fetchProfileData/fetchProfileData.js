@@ -15,7 +15,7 @@ export const getProfileData = createAsyncThunk(
                     ? await dispatch(fetchClientData({ id, isAuth: false }))
                     : await dispatch(fetchCourierData(id));
 
-            dispatch(authActions.saveAuthData(payload));
+            dispatch(authActions.saveAuthData(payload[type]));
             return payload;
         } catch (e) {
             return rejectWithValue("error");

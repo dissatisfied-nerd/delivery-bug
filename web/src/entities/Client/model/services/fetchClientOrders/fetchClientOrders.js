@@ -16,32 +16,29 @@ export const fetchClientOrders = createAsyncThunk(
                 throw new Error();
             }
             console.log(response.data.orders);
-            dispatch(clientActions.setClientOrders(response.data.orders));
 
-            const orders = response.data.orders;
+            let orders = response.data.orders;
             if (orders) {
-                orders.forEach((order, id) => {
-                    const products = order.products.map(
-                        async (product) =>
-                            await (
-                                await dispatch(
-                                    fetchGoodData(product.product_id)
-                                )
-                            ).payload
+                const response = await orders.map(async (order) => {
+                    const goodsData = await order.products.map(
+                        async (product) => {
+                            const { payload } = await dispatch(
+                                fetchGoodData(product.product_id)
+                            );
+                            return { amount: product.amount, ...payload };
+                        }
                     );
-                    Promise.all(products).then((products) => {
-                        dispatch(
-                            clientActions.setProductsDataByOrderId({
-                                order_id: id,
-                                products,
-                            })
-                        );
-                    });
-                });
-            }
-            // dispatch(clientActions.setClientOrders(orders));
+                    const goodsResult = await Promise.all(goodsData);
 
-            return response.data;
+                    return {
+                        ...order,
+                        products: goodsResult,
+                    };
+                });
+                orders = await Promise.all(response);
+            }
+
+            return orders;
         } catch (e) {
             return rejectWithValue("error");
         }

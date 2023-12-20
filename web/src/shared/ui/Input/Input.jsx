@@ -11,7 +11,7 @@ export const Input = (props) => {
 
     return (
         <div className={classNames(cls.InputWrapper, {}, [className])}>
-            {label && <span className={cls.label}>{label}:</span>}
+            {label && <span className={cls.label}>{label}</span>}
             <input
                 value={value}
                 type="text"

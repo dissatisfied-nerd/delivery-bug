@@ -26,8 +26,8 @@ export const courierSlice = createSlice({
     reducers: {
         setCourierData: (state, action) => {
             const { courier_id, ...data } = action.payload;
+            state.courier_id = courier_id ? courier_id : state.courier_id;
             state.data = data;
-            state.courier_id = courier_id;
         },
         // addOrder: (state, action) => {
         //     state.orders = [...state.orders, action.payload];

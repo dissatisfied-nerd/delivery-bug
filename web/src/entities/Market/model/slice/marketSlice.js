@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
+import { fetchMarketData } from "../services/fetchMarketData/fetchMarketData";
 
 const initialState = {
     isLoading: false,
@@ -18,7 +19,7 @@ const initialState = {
         password: "",
     },
     market_id: "",
-    orders: [],
+    goods: [],
     error: "",
 };
 
@@ -31,6 +32,22 @@ export const marketSlice = createSlice({
             state.data = data;
             state.market_id = market_id;
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchMarketData.pending, (state) => {
+                state.error = "";
+                state.isLoading = true;
+            })
+            .addCase(fetchMarketData.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.error = "";
+                state.data = action.payload.market;
+            })
+            .addCase(fetchMarketData.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            });
     },
 });
 

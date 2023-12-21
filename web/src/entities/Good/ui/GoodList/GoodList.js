@@ -4,22 +4,56 @@ import { GoodListItem } from "../GoodListItem/GoodListItem";
 import cls from "./GoodList.module.scss";
 
 export const GoodList = memo((props) => {
-    const { className, goods, onAddToCart, onRemoveFromCart, cart } = props;
+    const {
+        className,
+        goods,
+        onAddToCart,
+        onRemoveFromCart,
+        cart,
+        type = "small",
+    } = props;
 
-    return (
-        <div className={classNames(cls.GoodList, {}, [className])}>
-            {!goods.length && <span>Товаров нет</span>}
-            {goods.map((good) => {
-                return (
-                    <GoodListItem
-                        key={good.id}
-                        good={good}
-                        onAddToCart={onAddToCart}
-                        onRemoveFromCart={onRemoveFromCart}
-                        count={cart[good.id]?.[1] || 0}
-                    />
-                );
-            })}
-        </div>
-    );
+    if (type === "small") {
+        return (
+            <div
+                className={classNames(
+                    cls.GoodList,
+                    { [cls.empty]: !goods.length },
+                    [className]
+                )}
+            >
+                {!goods.length && <span>Товаров нет</span>}
+                {goods.map((good) => {
+                    return (
+                        <GoodListItem
+                            key={good.id}
+                            good={good}
+                            onAddToCart={onAddToCart}
+                            onRemoveFromCart={onRemoveFromCart}
+                            count={cart[good.id]?.[1] || 0}
+                        />
+                    );
+                })}
+            </div>
+        );
+    } else {
+        return (
+            <div
+                className={classNames(
+                    cls.GoodList,
+                    { [cls.empty]: !goods.length },
+                    [className, cls.big]
+                )}
+            >
+                {!goods.length && (
+                    <div className={cls.message}>Товаров нет</div>
+                )}
+                {goods.map((good) => {
+                    return (
+                        <GoodListItem key={good.id} good={good} type={type} />
+                    );
+                })}
+            </div>
+        );
+    }
 });

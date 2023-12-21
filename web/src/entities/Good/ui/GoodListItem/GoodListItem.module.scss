@@ -30,6 +30,9 @@
 
 .price {
     font: var(--font-xl);
+}
+
+.bold {
     font-weight: 600;
 }
 
@@ -49,4 +52,26 @@
 .count {
     line-height: 40px;
     margin: 0 10px 0 10px;
+}
+
+.big {
+    flex-direction: row;
+    flex-basis: 200px;
+
+    .imgWrapper {
+        flex-basis: 200px;
+        flex-shrink: 0;
+        height: 200px;
+        margin-bottom: 0;
+    }
+
+    .textWrapper {
+        flex-basis: 80%;
+        padding: 0 15px;
+        font: var(--font-l);
+
+        .description {
+            white-space: pre-wrap;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
+import { fetchCourierData } from "../services/fetchCourierData/fetchCourierData";
 
 const initialState = {
     isLoading: false,
@@ -26,7 +27,7 @@ export const courierSlice = createSlice({
     reducers: {
         setCourierData: (state, action) => {
             const { courier_id, ...data } = action.payload;
-            state.courier_id = courier_id ? courier_id : state.courier_id;
+            state.courier_id = courier_id;
             state.data = data;
         },
         // addOrder: (state, action) => {
@@ -39,20 +40,22 @@ export const courierSlice = createSlice({
             state.data = {};
         },
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(loginByFirstName.pending, (state) => {
-    //             state.data.error = undefined;
-    //             state.data.isLoading = true;
-    //         })
-    //         .addCase(loginByFirstName.fulfilled, (state) => {
-    //             state.data.isLoading = false;
-    //         })
-    //         .addCase(loginByFirstName.rejected, (state, action) => {
-    //             state.data.isLoading = false;
-    //             state.data.error = action.payload;
-    //         });
-    // },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchCourierData.pending, (state) => {
+                state.isLoading = true;
+                state.error = "";
+            })
+            .addCase(fetchCourierData.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(fetchCourierData.fulfilled, (state, action) => {
+                state.error = "";
+                state.isLoading = false;
+                state.data = action.payload.courier;
+            });
+    },
 });
 
 // Action creators are generated for each case reducer function

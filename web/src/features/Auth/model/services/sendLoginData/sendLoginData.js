@@ -5,7 +5,7 @@ import { courierActions } from "entities/Courier";
 import { marketActions } from "entities/Market";
 import { getAuthType } from "../../selectors/getAuthData";
 import { authActions } from "../../slice/AuthSlice";
-import { validateForm } from "../validateForm/validateForm";
+import { validateForm } from "../../../../../shared/lib/validateForm/validateForm";
 
 export const sendLoginData = createAsyncThunk(
     "auth/sendLoginData",

@@ -24,6 +24,10 @@
     margin-right: 10px;
 }
 
+.link:last-child {
+    margin-right: 0;
+}
+
 .active {
     color: var(--inverted-bg-color);
 }

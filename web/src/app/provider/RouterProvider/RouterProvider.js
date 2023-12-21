@@ -49,6 +49,8 @@ export const RouterProvider = () => {
             );
         }
     }
+
+    // TESTING
     routes = (
         <>
             <Route element={<CreateGoodPage />} path="/" />

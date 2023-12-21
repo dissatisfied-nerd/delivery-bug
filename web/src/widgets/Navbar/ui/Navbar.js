@@ -160,6 +160,8 @@ export default function Navbar() {
             );
         }
     }
+
+    // TESTING
     links = (
         <>
             <NavLink

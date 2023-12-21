@@ -19,6 +19,7 @@ export const TextArea = (props) => {
                 className={cls.input}
                 value={value}
                 onChange={onChangeHandler}
+                maxLength="512"
             ></textarea>
         </div>
     );

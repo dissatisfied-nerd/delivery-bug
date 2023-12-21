@@ -6,6 +6,7 @@ import { RouterProvider } from "./provider/RouterProvider/RouterProvider";
 import { clientActions } from "entities/Client";
 import { courierActions } from "entities/Courier";
 import { authActions } from "features/Auth";
+import { marketActions } from "entities/Market";
 
 function App() {
     const dispatch = useDispatch();
@@ -29,6 +30,10 @@ function App() {
             } else if (profile?.type === "courier") {
                 dispatch(
                     courierActions.setCourierData({ courier_id: id, ...data })
+                );
+            } else if (profile?.type === "market") {
+                dispatch(
+                    marketActions.setMarketData({ market_id: id, ...data })
                 );
             }
         }

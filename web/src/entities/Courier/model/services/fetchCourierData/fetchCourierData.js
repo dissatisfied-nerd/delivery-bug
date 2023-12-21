@@ -13,7 +13,6 @@ export const fetchCourierData = createAsyncThunk(
                 throw new Error();
             }
 
-            dispatch(courierActions.setCourierData(response.data.courier));
             return response.data;
         } catch (e) {
             return rejectWithValue("error");

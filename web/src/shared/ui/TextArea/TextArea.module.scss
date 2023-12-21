@@ -1,0 +1,17 @@
+.TextArea {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 200px;
+}
+
+.label {
+    margin-bottom: 10px;
+}
+
+.input {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    resize: none;
+}

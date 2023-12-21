@@ -12,7 +12,7 @@ import {
     getAuthType,
 } from "../model/selectors/getAuthData";
 import { authActions } from "../model/slice/AuthSlice";
-import { validateNumber } from "../model/services/validateForm/validateNumber";
+import { validateNumber } from "../../../shared/lib/validateForm/validateNumber";
 import { sendLoginData } from "../model/services/sendLoginData/sendLoginData";
 
 export const AuthForm = () => {
@@ -415,7 +415,7 @@ export const AuthForm = () => {
         return (
             <div className={classNames(cls.AuthForm, {}, [])}>
                 <span className={cls.title}>Вход</span>
-                <span style={{ color: "red" }}>{error}</span>
+                <div className={cls.error}>{error}</div>
                 <Input
                     className={cls.input}
                     label="Почта"

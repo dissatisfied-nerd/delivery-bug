@@ -86,8 +86,6 @@ CREATE TABLE IF NOT EXISTS stores
     surname    varchar(128),
     last_name  varchar(128),
 
-    status varchar(128),
-
     address_id UUID REFERENCES addresses (id) -- Юридический адрес
 );
 
@@ -109,6 +107,8 @@ CREATE TABLE IF NOT EXISTS products
     weight           float,
     description      varchar(512),
     image            bytea,
+
+    status int, -- 0 - на одобрении, 1 - одобрено, -1 - отклонено
 
     administrator_id UUID REFERENCES administrators (id) -- Одобривший товар администратор
 );

@@ -70,6 +70,11 @@ type Stores struct {
 
 	Reputation float64 `db:"reputation"`
 	Name       string  `db:"name"`
+	FirstName  string  `db:"first_name"`
+	Surname    string  `db:"surname"`
+	LastName   string  `db:"last_name"`
+
+	AddressId string `db:"address_id"`
 }
 
 type StoresLoginForm struct {
@@ -88,6 +93,8 @@ type Product struct {
 	Weight      float32 `db:"weight" json:"weight"`
 	Description string  `db:"description" json:"description"`
 	Image       []byte  `db:"image" json:"image"`
+
+	Status int `db:"status"`
 }
 
 type ProductsStores struct {

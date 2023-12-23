@@ -17,14 +17,7 @@ const getWeight = (goods) => {
 };
 
 export const OrderListItem = (props) => {
-    const {
-        order,
-        type = "client",
-        taken = false,
-        page,
-        onTakeOrder,
-        onCancelOrder,
-    } = props;
+    const { order, type = "client", page, onTakeOrder, onCancelOrder } = props;
     const creationTime = getFormatedData(order.creation_time);
     const deliveryTime = getFormatedData(order.delivery_time);
 
@@ -37,9 +30,9 @@ export const OrderListItem = (props) => {
                 </div>
                 <div className={cls.body}>
                     <span>
-                        {order.delivered
+                        {order.delivery_time
                             ? `Дата доставки: ${deliveryTime}`
-                            : order.courierId
+                            : order.status === "taken"
                             ? `Статус: В пути`
                             : "Статус: Создан"}
                     </span>
@@ -47,6 +40,7 @@ export const OrderListItem = (props) => {
                         {order.products.map((good) => {
                             return (
                                 <img
+                                    key={good.id}
                                     className={cls.goodsImgItem}
                                     src={good.image}
                                     alt={good.name}
@@ -90,21 +84,23 @@ export const OrderListItem = (props) => {
                     </div>
                     <div className={cls.takeOrderWrapper}>
                         {page === "profile" ? (
-                            <Button
-                                className={cls.takeOrderBtn}
-                                onClick={() => onCancelOrder(order.id)}
-                            >
-                                Завершить
-                            </Button>
-                        ) : !taken ? (
+                            order.status !== "finished" && (
+                                <Button
+                                    className={cls.takeOrderBtn}
+                                    onClick={() =>
+                                        onCancelOrder(order.order_id)
+                                    }
+                                >
+                                    Завершить
+                                </Button>
+                            )
+                        ) : (
                             <Button
                                 className={cls.takeOrderBtn}
                                 onClick={() => onTakeOrder(order.id)}
                             >
                                 Взять заказ
                             </Button>
-                        ) : (
-                            <span>Вы взяли заказ</span>
                         )}
                     </div>
                 </div>

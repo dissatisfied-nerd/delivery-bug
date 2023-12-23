@@ -15,7 +15,7 @@ import { finishOrder } from "../../../model/sevices/finishOrder/finishOrder";
 
 export const ProfileCourier = () => {
     const dispatch = useDispatch();
-    const id = useSelector(getCourierId);
+    const courierID = useSelector(getCourierId);
     const profile = useSelector(getCourierData);
     const orders = useSelector(getCourierOrders);
 
@@ -25,9 +25,9 @@ export const ProfileCourier = () => {
 
     const onCancelOrder = useCallback(
         (orderID) => {
-            dispatch(finishOrder({ orderID, id }));
+            dispatch(finishOrder({ orderID, courierID }));
         },
-        [dispatch, id]
+        [dispatch, courierID]
     );
 
     return (
@@ -37,15 +37,19 @@ export const ProfileCourier = () => {
                 <div className={cls.title}>Активные заказы</div>
                 <OrderList
                     page="profile"
-                    type="client"
-                    orders={orders.filter((order) => !Boolean(order.delivered))}
+                    type="courier"
+                    orders={orders.filter(
+                        (order) => order.status !== "finished"
+                    )}
                     onCancelOrder={onCancelOrder}
                 />
                 <div className={cls.title}>История заказов</div>
                 <OrderList
                     page="profile"
-                    type="client"
-                    orders={orders.filter((order) => Boolean(order.delivered))}
+                    type="courier"
+                    orders={orders.filter(
+                        (order) => order.status === "finished"
+                    )}
                 />
             </Card>
         </Page>

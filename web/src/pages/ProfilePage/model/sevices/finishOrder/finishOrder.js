@@ -1,23 +1,33 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchProfileOrders } from "../fetchProfileOrders/fetchProfileOrders";
 
 export const finishOrder = createAsyncThunk(
     "profilePage/finishOrder",
     async ({ orderID, courierID }, thunkAPI) => {
         const { extra, rejectWithValue, dispatch } = thunkAPI;
+        console.log({
+            orderID,
+            courierID,
+        });
 
         try {
-            const response = await extra.api.post("/orders/finish", {
-                params: {
-                    orderID,
-                    courierID,
-                },
-            });
+            const response = await extra.api.post(
+                "/orders/finish",
+                {},
+                {
+                    params: {
+                        orderID,
+                        courierID,
+                    },
+                }
+            );
 
             if (!response.data) {
                 throw new Error();
             }
-            console.log(response.data);
-            // return response.data.orders;
+
+            dispatch(fetchProfileOrders("courier"));
+            return response.data;
         } catch (e) {
             return rejectWithValue("error");
         }

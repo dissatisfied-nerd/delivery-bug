@@ -184,27 +184,27 @@ export default function Navbar() {
     }
 
     // TESTING
-    links = (
-        <>
-            <NavLink
-                to={"/"}
-                className={({ isActive }) =>
-                    classNames(cls.link, { [cls.active]: isActive }, [])
-                }
-            >
-                Товары
-            </NavLink>
-            <NavLink
-                onClick={onLogout}
-                to={"/auth"}
-                className={({ isActive }) =>
-                    classNames(cls.link, { [cls.active]: isActive }, [])
-                }
-            >
-                Выйти
-            </NavLink>
-        </>
-    );
+    // links = (
+    //     <>
+    //         <NavLink
+    //             to={"/"}
+    //             className={({ isActive }) =>
+    //                 classNames(cls.link, { [cls.active]: isActive }, [])
+    //             }
+    //         >
+    //             Товары
+    //         </NavLink>
+    //         <NavLink
+    //             onClick={onLogout}
+    //             to={"/auth"}
+    //             className={({ isActive }) =>
+    //                 classNames(cls.link, { [cls.active]: isActive }, [])
+    //             }
+    //         >
+    //             Выйти
+    //         </NavLink>
+    //     </>
+    // );
 
     return (
         <header className={classNames(cls.Navbar, {}, [])}>

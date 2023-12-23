@@ -1,15 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clientActions } from "entities/Client";
 import { getAuthIsAuth } from "features/Auth";
-import { marketActions } from "../../slice/marketSlice";
+import { storeActions } from "../../slice/storeSlice";
 
-export const fetchMarketData = createAsyncThunk(
-    "market/fetchMarketData",
+export const fetchStoreData = createAsyncThunk(
+    "store/fetchStoreData",
     async ({ id, isAuth }, thunkAPI) => {
         const { extra, rejectWithValue, dispatch } = thunkAPI;
 
         try {
-            const response = await extra.api.get(`/market/${id}`);
+            const response = await extra.api.get(`/store/${id}`);
 
             if (!response.data) {
                 throw new Error();

@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { adminActions } from "entities/Admin";
 import { clientActions } from "entities/Client";
 import { courierActions } from "entities/Courier";
-import { marketActions } from "entities/Market";
+import { storeActions } from "entities/Store";
 import { getAuthType } from "../../selectors/getAuthData";
 import { authActions } from "../../slice/AuthSlice";
 import { validateForm } from "../../../../../shared/lib/validateForm/validateForm";
@@ -28,8 +28,8 @@ export const sendLoginData = createAsyncThunk(
                 dispatch(clientActions.setClientData(data));
             } else if (type === "courier") {
                 dispatch(courierActions.setCourierData(data));
-            } else if (type === "market") {
-                dispatch(marketActions.setMarketData(data));
+            } else if (type === "store") {
+                dispatch(storeActions.setStoreData(data));
             } else if (type === "admin") {
                 dispatch(adminActions.setAdminData(data));
             }

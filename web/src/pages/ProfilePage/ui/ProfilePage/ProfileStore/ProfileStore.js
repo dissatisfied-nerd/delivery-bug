@@ -7,13 +7,13 @@ import cls from "../ProfilePage.module.scss";
 import { ProfileCard } from "../../ProfileCard/ProfileCard";
 import { getClientData, getClientOrders } from "entities/Client";
 import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
-import { getMarketData, getMarketProducts } from "entities/Market";
+import { getStoreData, getStoreProducts } from "entities/Store";
 import { ProductList } from "entities/Product";
 
-export const ProfileMarket = () => {
+export const ProfileStore = () => {
     const dispatch = useDispatch();
-    const profile = useSelector(getMarketData);
-    const products = useSelector(getMarketProducts);
+    const profile = useSelector(getStoreData);
+    const products = useSelector(getStoreProducts);
 
     useEffect(() => {
         // dispatch(fetchProfileOrders("client"));

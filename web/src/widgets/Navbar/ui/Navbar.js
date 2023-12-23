@@ -40,11 +40,11 @@ export default function Navbar() {
                     Авторизация
                 </NavLink>
                 <NavLink
-                    to={"/market/auth"}
+                    to={"/store/auth"}
                     className={({ isActive }) =>
                         classNames(cls.link, { [cls.active]: isActive }, [])
                     }
-                    onClick={() => onClickAuth("market")}
+                    onClick={() => onClickAuth("store")}
                 >
                     Для поставщиков
                 </NavLink>
@@ -128,7 +128,7 @@ export default function Navbar() {
                     </NavLink>
                 </>
             );
-        } else if (type === "market") {
+        } else if (type === "store") {
             links = (
                 <>
                     <NavLink
@@ -208,7 +208,7 @@ export default function Navbar() {
 
     return (
         <header className={classNames(cls.Navbar, {}, [])}>
-            <span className={cls.title}> Slavic Market </span>
+            <span className={cls.title}> Slavic Store </span>
             <div className={cls.linksWrapper}>{links}</div>
         </header>
     );

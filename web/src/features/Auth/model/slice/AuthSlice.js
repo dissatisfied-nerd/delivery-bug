@@ -5,7 +5,7 @@ import { sendRegisterData } from "../services/sendRegisterData/sendRegisterData"
 
 const initialState = {
     data: {
-        market_name: "",
+        store_name: "",
         first_name: "",
         last_name: "",
         father_name: "",

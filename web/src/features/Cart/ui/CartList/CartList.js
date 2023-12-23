@@ -7,12 +7,12 @@ export const CartList = (props) => {
     const { className, cart, onAddToCart, onRemoveFromCart } = props;
     return (
         <div className={classNames(cls.CartList, {}, [className])}>
-            {Object.values(cart).map(([good, count]) => {
+            {Object.values(cart).map(([product, count]) => {
                 return (
                     <CartListItem
-                        key={good.id}
+                        key={product.id}
                         count={count}
-                        good={good}
+                        product={product}
                         onAddToCart={onAddToCart}
                         onRemoveFromCart={onRemoveFromCart}
                     />

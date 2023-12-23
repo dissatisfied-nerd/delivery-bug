@@ -7,13 +7,13 @@ import cls from "../ProfilePage.module.scss";
 import { ProfileCard } from "../../ProfileCard/ProfileCard";
 import { getClientData, getClientOrders } from "entities/Client";
 import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
-import { getMarketData, getMarketGoods } from "entities/Market";
-import { GoodList } from "entities/Good";
+import { getMarketData, getMarketProducts } from "entities/Market";
+import { ProductList } from "entities/Product";
 
 export const ProfileMarket = () => {
     const dispatch = useDispatch();
     const profile = useSelector(getMarketData);
-    const goods = useSelector(getMarketGoods);
+    const products = useSelector(getMarketProducts);
 
     useEffect(() => {
         // dispatch(fetchProfileOrders("client"));
@@ -24,8 +24,8 @@ export const ProfileMarket = () => {
             <Card className={cls.ProfilePageCard}>
                 <ProfileCard profile={{ balance: 0, ...profile }} />
                 <div className={cls.title}>Товары</div>
-                <GoodList
-                    goods={[
+                <ProductList
+                    products={[
                         {
                             id: 0,
                             name: "Гейнер",

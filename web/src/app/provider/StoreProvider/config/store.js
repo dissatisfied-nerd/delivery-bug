@@ -5,8 +5,8 @@ import { courierReducer } from "entities/Courier";
 import { marketReducer } from "entities/Market";
 import { authReducer } from "features/Auth";
 import { cartReducer } from "features/Cart";
-import { createGoodReducer } from "features/CreateGood";
-import { goodsPageReducer } from "pages/GoodsPage";
+import { createProductReducer } from "features/CreateProduct";
+import { productsPageReducer } from "pages/ProductsPage";
 import { ordersPageReducer } from "pages/OrdersPage";
 import { $api } from "shared/api/api";
 
@@ -22,9 +22,9 @@ export const store = configureStore({
         admin: adminReducer,
         auth: authReducer,
         cart: cartReducer,
-        goodsPage: goodsPageReducer,
+        productsPage: productsPageReducer,
         ordersPage: ordersPageReducer,
-        createGood: createGoodReducer,
+        createProduct: createProductReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

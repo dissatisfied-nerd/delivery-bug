@@ -1,0 +1,16 @@
+.ProductList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    width: 100%;
+}
+
+.message {
+    text-align: center;
+    font: var(--font-l);
+}
+
+.big {
+    flex-direction: column;
+    flex-wrap: nowrap;
+}

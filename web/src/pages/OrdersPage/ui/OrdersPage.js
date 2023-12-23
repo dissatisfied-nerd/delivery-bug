@@ -86,7 +86,7 @@ export const OrdersPage = () => {
                                 apartment: "1",
                             },
                         },
-                        goods: [
+                        products: [
                             [
                                 {
                                     title: "Гейнер dr. Hoffman 2.5 кг",
@@ -127,7 +127,7 @@ export const OrdersPage = () => {
                                 apartment: "1",
                             },
                         },
-                        goods: [
+                        products: [
                             [
                                 {
                                     title: "Гейнер dr. Hoffman 2.5 кг",
@@ -168,7 +168,7 @@ export const OrdersPage = () => {
                                 apartment: "1",
                             },
                         },
-                        goods: [
+                        products: [
                             [
                                 {
                                     title: "Гейнер dr. Hoffman 2.5 кг",
@@ -209,7 +209,7 @@ export const OrdersPage = () => {
                                 apartment: "1",
                             },
                         },
-                        goods: [
+                        products: [
                             [
                                 {
                                     title: "Гейнер dr. Hoffman 2.5 кг",
@@ -250,7 +250,7 @@ export const OrdersPage = () => {
                                 apartment: "1",
                             },
                         },
-                        goods: [
+                        products: [
                             [
                                 {
                                     title: "Гейнер dr. Hoffman 2.5 кг",
@@ -291,7 +291,7 @@ export const OrdersPage = () => {
                                 apartment: "1",
                             },
                         },
-                        goods: [
+                        products: [
                             [
                                 {
                                     title: "Гейнер dr. Hoffman 2.5 кг",
@@ -332,7 +332,7 @@ export const OrdersPage = () => {
                                 apartment: "1",
                             },
                         },
-                        goods: [
+                        products: [
                             [
                                 {
                                     title: "Гейнер dr. Hoffman 2.5 кг",
@@ -373,7 +373,7 @@ export const OrdersPage = () => {
                                 apartment: "1",
                             },
                         },
-                        goods: [
+                        products: [
                             [
                                 {
                                     title: "Гейнер dr. Hoffman 2.5 кг",

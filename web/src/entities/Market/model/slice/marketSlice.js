@@ -19,7 +19,7 @@ const initialState = {
         password: "",
     },
     market_id: "",
-    goods: [],
+    products: [],
     error: "",
 };
 

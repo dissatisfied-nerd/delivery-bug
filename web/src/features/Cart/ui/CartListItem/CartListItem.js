@@ -5,21 +5,21 @@ import cls from "./CartListItem.module.scss";
 import { ReactComponent as TrashBinSVG } from "shared/assets/trash-bin.svg";
 
 export const CartListItem = (props) => {
-    const { className, count, good, onAddToCart, onRemoveFromCart } = props;
+    const { className, count, product, onAddToCart, onRemoveFromCart } = props;
     return (
         <div className={classNames(cls.CartListItem, {}, [className])}>
-            <Button onClick={() => onRemoveFromCart([good.id, true])}>
+            <Button onClick={() => onRemoveFromCart([product.id, true])}>
                 <TrashBinSVG />
             </Button>
-            <img src={good.image} alt={good.title} className={cls.img} />
-            <div className={cls.titleWrapper}>{good.title}</div>
-            <span className={cls.price}>{good.price} ₽</span>
+            <img src={product.image} alt={product.title} className={cls.img} />
+            <div className={cls.titleWrapper}>{product.title}</div>
+            <span className={cls.price}>{product.price} ₽</span>
             <div className={cls.countsControlWrapper}>
-                <Button onClick={() => onRemoveFromCart([good.id, false])}>
+                <Button onClick={() => onRemoveFromCart([product.id, false])}>
                     -
                 </Button>
                 <span className={cls.count}>{count}</span>
-                <Button onClick={() => onAddToCart(good)}>+</Button>
+                <Button onClick={() => onAddToCart(product)}>+</Button>
             </div>
         </div>
     );

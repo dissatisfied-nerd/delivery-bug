@@ -10,7 +10,7 @@ import {
     fetchCourierOrders,
     getCourierId,
 } from "entities/Courier";
-import { fetchGoodData } from "entities/Good";
+import { fetchProductData } from "entities/Product";
 import { authActions, getAuthType } from "features/Auth";
 
 export const fetchProfileOrders = createAsyncThunk(

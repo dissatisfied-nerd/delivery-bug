@@ -23,8 +23,8 @@ export const Cart = (props) => {
     const cost = useSelector(getCartCost);
 
     const onAddToCart = useCallback(
-        (good) => {
-            dispatch(cartActions.addToCart(good));
+        (product) => {
+            dispatch(cartActions.addToCart(product));
         },
         [dispatch]
     );

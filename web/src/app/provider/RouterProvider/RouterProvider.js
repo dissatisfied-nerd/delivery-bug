@@ -1,8 +1,8 @@
 import { getAuthIsAuth, getAuthType } from "features/Auth";
 import { AuthPage } from "pages/AuthPage";
 import { CartPage } from "pages/CartPage";
-import { CreateGoodPage } from "pages/CreateGoodPage";
-import { GoodsPage } from "pages/GoodsPage";
+import { CreateProductPage } from "pages/CreateProductPage";
+import { ProductsPage } from "pages/ProductsPage";
 import { NotFoundPage } from "pages/NotFoundPage";
 import { OrdersPage } from "pages/OrdersPage";
 import { ProfilePage } from "pages/ProfilePage";
@@ -28,7 +28,7 @@ export const RouterProvider = () => {
         if (type === "client") {
             routes = (
                 <>
-                    <Route element={<GoodsPage />} path="/" />
+                    <Route element={<ProductsPage />} path="/" />
                     <Route element={<ProfilePage />} path="/profile" />
                     <Route element={<CartPage />} path="/cart" />
                 </>
@@ -43,14 +43,14 @@ export const RouterProvider = () => {
         } else if (type === "market") {
             routes = (
                 <>
-                    <Route element={<CreateGoodPage />} path="/" />
+                    <Route element={<CreateProductPage />} path="/" />
                     <Route element={<ProfilePage />} path="/profile" />
                 </>
             );
         } else if (type === "admin") {
             routes = (
                 <>
-                    <Route element={<GoodsPage />} path="/" />
+                    <Route element={<ProductsPage />} path="/" />
                 </>
             );
         }
@@ -59,7 +59,7 @@ export const RouterProvider = () => {
     // TESTING
     // routes = (
     //     <>
-    //         <Route element={<GoodsPage />} path="/" />
+    //         <Route element={<ProductsPage />} path="/" />
     //     </>
     // );
 

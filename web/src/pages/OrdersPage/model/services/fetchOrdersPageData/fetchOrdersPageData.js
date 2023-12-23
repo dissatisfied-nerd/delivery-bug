@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchClientData } from "entities/Client";
-import { fetchGoodData } from "entities/Good";
+import { fetchProductData } from "entities/Product";
 import { ordersPageActions } from "../../slice/ordersPageSlice";
 
 export const fetchOrdersPageData = createAsyncThunk(
@@ -17,22 +17,28 @@ export const fetchOrdersPageData = createAsyncThunk(
 
             let orders = response.data.orders;
             if (orders) {
-                const response = await orders.map(async order => {
-                    const goodsData = await order.products.map(async product => {
-                        const {payload} = await dispatch(fetchGoodData(product.product_id))
-                        return {amount: product.amount, ...payload}
-                    })
-                    const goodsResult = await Promise.all(goodsData)
+                const response = await orders.map(async (order) => {
+                    const productsData = await order.products.map(
+                        async (product) => {
+                            const { payload } = await dispatch(
+                                fetchProductData(product.product_id)
+                            );
+                            return { amount: product.amount, ...payload };
+                        }
+                    );
+                    const productsResult = await Promise.all(productsData);
 
-                    const {payload: client} = await dispatch(fetchClientData({id: order.client_id, isAuth: true}))
+                    const { payload: client } = await dispatch(
+                        fetchClientData({ id: order.client_id, isAuth: true })
+                    );
 
                     return {
                         ...order,
                         ...client,
-                        products: goodsResult
-                    }
-                })
-                orders = await Promise.all(response)
+                        products: productsResult,
+                    };
+                });
+                orders = await Promise.all(response);
             }
             return orders;
         } catch (e) {

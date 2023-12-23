@@ -29,14 +29,14 @@ export const cartSlice = createSlice({
         },
         setCartWeight: (state, action) => {
             let weight = 0;
-            Object.values(state.cart).forEach(([good, count]) => {
-                weight += Number(good.weight) * 1000 * count;
+            Object.values(state.cart).forEach(([product, count]) => {
+                weight += Number(product.weight) * 1000 * count;
             });
             state.weight = (weight / 1000).toFixed(2);
         },
         setCartCount: (state, action) => {
             let cartCount = 0;
-            Object.values(state.cart).forEach(([good, count]) => {
+            Object.values(state.cart).forEach(([product, count]) => {
                 cartCount += count;
             });
 
@@ -44,11 +44,11 @@ export const cartSlice = createSlice({
         },
         setCartCost: (state, action) => {
             let cost = 0;
-            Object.values(state.cart).forEach(([good, count]) => {
-                cost += good.price * count;
+            Object.values(state.cart).forEach(([product, count]) => {
+                cost += product.price * count;
             });
 
-            state.cost = Number.parseFloat(cost.toFixed(2))
+            state.cost = Number.parseFloat(cost.toFixed(2));
         },
         addToCart: (state, action) => {
             if (state.cart[action.payload.id] !== undefined) {

@@ -7,10 +7,10 @@ import { Button } from "shared/ui/Button/Button";
 import { Card } from "shared/ui/Card/Card";
 import cls from "./OrderListItem.module.scss";
 
-const getWeight = (goods) => {
+const getWeight = (products) => {
     let weight = 0;
-    goods.forEach(({ amount, ...good }) => {
-        weight += Number(good.weight) * 1000 * amount;
+    products.forEach(({ amount, ...product }) => {
+        weight += Number(product.weight) * 1000 * amount;
     });
 
     return (weight / 1000).toFixed(2);
@@ -36,14 +36,14 @@ export const OrderListItem = (props) => {
                             ? `Статус: В пути`
                             : "Статус: Создан"}
                     </span>
-                    <div className={cls.goodsImgList}>
-                        {order.products.map((good) => {
+                    <div className={cls.productsImgList}>
+                        {order.products.map((product) => {
                             return (
                                 <img
-                                    key={good.id}
-                                    className={cls.goodsImgItem}
-                                    src={good.image}
-                                    alt={good.name}
+                                    key={product.id}
+                                    className={cls.productsImgItem}
+                                    src={product.image}
+                                    alt={product.name}
                                 />
                             );
                         })}
@@ -72,12 +72,12 @@ export const OrderListItem = (props) => {
                     <span>{order.price} ₽</span>
                 </div>
                 <div className={cls.body}>
-                    <div className={cls.goodsTitleList}>
-                        {order.products.map(({ amount, ...good }) => {
+                    <div className={cls.productsTitleList}>
+                        {order.products.map(({ amount, ...product }) => {
                             return (
-                                <div key={good.id}>
+                                <div key={product.id}>
                                     <span>{amount}x: </span>
-                                    <span>{good.name}</span>
+                                    <span>{product.name}</span>
                                 </div>
                             );
                         })}

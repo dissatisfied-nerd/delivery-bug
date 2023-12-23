@@ -1,6 +1,6 @@
 import {
     getMarketData,
-    getMarketGoods,
+    getMarketProducts,
     getMarketId,
 } from "./model/selectors/getMarketData";
 import { fetchMarketData } from "./model/services/fetchMarketData/fetchMarketData";
@@ -10,7 +10,7 @@ export {
     marketActions,
     marketReducer,
     getMarketData,
-    getMarketGoods,
+    getMarketProducts,
     getMarketId,
     fetchMarketData,
 };

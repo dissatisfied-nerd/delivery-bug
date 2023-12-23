@@ -1,25 +1,18 @@
-package client
+package store
 
 import (
 	"delivery-bug/internal/auth"
 	"delivery-bug/internal/service/user"
 	"delivery-bug/pkg/logging"
 	"errors"
+	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"net/http"
 	"os"
 	"time"
-
-	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 )
 
-const role = "client"
-
-type ClientsAuthHandler interface {
-	SignUpClient(ctx *gin.Context)
-	SignInClient(ctx *gin.Context)
-	Logout(ctx *gin.Context)
-}
+const role = "store"
 
 type Handler struct {
 	service   user.UsersService
@@ -33,7 +26,7 @@ func NewHandler(service user.UsersService, l logging.Logger,
 	return &Handler{service: service, l: &l, validator: validator, auth: auth}
 }
 
-func (h *Handler) SignUpClient(ctx *gin.Context) {
+func (h *Handler) SignUpStore(ctx *gin.Context) {
 	var payload auth.SignUpInput
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		h.l.Errorf("ERROR can't bind json: %v", err)
@@ -68,7 +61,7 @@ func (h *Handler) SignUpClient(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"client_id": userID})
 }
 
-func (h *Handler) SignInClient(ctx *gin.Context) {
+func (h *Handler) SignInStore(ctx *gin.Context) {
 	var payload auth.SignInInput
 
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
@@ -100,10 +93,4 @@ func (h *Handler) SignInClient(ctx *gin.Context) {
 		os.Getenv("HOST"), true, true)
 
 	ctx.JSON(http.StatusOK, gin.H{"client_id": userID})
-}
-
-func (h *Handler) Logout(ctx *gin.Context) {
-	ctx.SetCookie("jwt", "", 0, "/", h.auth.GetHost(), true, true)
-
-	ctx.Status(http.StatusOK)
 }

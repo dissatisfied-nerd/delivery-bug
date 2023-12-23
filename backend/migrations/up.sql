@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS couriers
 
     first_name   varchar(128),
     last_name    varchar(128),
-    registration bool NOT NULL, -- Страна регистрации
+    
     address_id   UUID REFERENCES addresses (id)
 );
 
@@ -106,9 +106,7 @@ CREATE TABLE IF NOT EXISTS products
     price            float CHECK (price > 0),
     weight           float,
     description      varchar(512),
-    image            bytea,
-
-    status int, -- 0 - на одобрении, 1 - одобрено, -1 - отклонено
+    image            varchar(255),
 
     administrator_id UUID REFERENCES administrators (id) -- Одобривший товар администратор
 );

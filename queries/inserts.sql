@@ -31,13 +31,13 @@ VALUES
     ('user5', 'password5', (SELECT id FROM clients WHERE first_name = 'Client5_First'));
 
 -- Заполнение таблицы "couriers"
-INSERT INTO couriers (first_name, last_name, registration, address_id)
+INSERT INTO couriers (first_name, last_name, address_id)
 VALUES
-    ('Courier1_First', 'Courier1_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
-    ('Courier2_First', 'Courier2_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
-    ('Courier3_First', 'Courier3_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
-    ('Courier4_First', 'Courier4_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
-    ('Courier5_First', 'Courier5_Last', true, (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1));
+    ('Courier1_First', 'Courier1_Last', (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
+    ('Courier2_First', 'Courier2_Last', (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
+    ('Courier3_First', 'Courier3_Last', (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
+    ('Courier4_First', 'Courier4_Last', (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1)),
+    ('Courier5_First', 'Courier5_Last', (SELECT id FROM addresses WHERE city = 'Churkmenia' ORDER BY random() LIMIT 1));
 
 -- Заполнение таблицы "couriers_loginform"
 INSERT INTO couriers_loginform (login, password, courier_id)

@@ -82,7 +82,7 @@ type StoresLoginForm struct {
 
 	Password string `db:"password"`
 
-	StoreId string `db:"store_id"`
+	StoreID string `db:"store_id"`
 }
 
 type StoresLoginForm struct {
@@ -102,7 +102,7 @@ type Product struct {
 	Description string  `db:"description" json:"description"`
 	Image       []byte  `db:"image" json:"image"`
 
-	Status int `db:"status"`
+	Administrator_id string `db:"administrator_id"`
 }
 
 type ProductsStores struct {

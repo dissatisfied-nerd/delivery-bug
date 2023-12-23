@@ -158,6 +158,28 @@ export default function Navbar() {
                     </NavLink>
                 </>
             );
+        } else if (type === "admin") {
+            links = (
+                <>
+                    <NavLink
+                        to={"/"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
+                        Товары
+                    </NavLink>
+                    <NavLink
+                        onClick={onLogout}
+                        to={"/auth"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
+                        Выйти
+                    </NavLink>
+                </>
+            );
         }
     }
 
@@ -170,15 +192,7 @@ export default function Navbar() {
                     classNames(cls.link, { [cls.active]: isActive }, [])
                 }
             >
-                Создать товар
-            </NavLink>
-            <NavLink
-                to={"/profile"}
-                className={({ isActive }) =>
-                    classNames(cls.link, { [cls.active]: isActive }, [])
-                }
-            >
-                Профиль
+                Товары
             </NavLink>
             <NavLink
                 onClick={onLogout}
@@ -191,6 +205,7 @@ export default function Navbar() {
             </NavLink>
         </>
     );
+
     return (
         <header className={classNames(cls.Navbar, {}, [])}>
             <span className={cls.title}> Slavic Market </span>

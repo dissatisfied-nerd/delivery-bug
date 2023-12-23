@@ -47,14 +47,19 @@ export const RouterProvider = () => {
                     <Route element={<ProfilePage />} path="/profile" />
                 </>
             );
+        } else if (type === "admin") {
+            routes = (
+                <>
+                    <Route element={<GoodsPage />} path="/" />
+                </>
+            );
         }
     }
 
     // TESTING
     routes = (
         <>
-            <Route element={<CreateGoodPage />} path="/" />
-            <Route element={<ProfilePage />} path="/profile" />
+            <Route element={<GoodsPage />} path="/" />
         </>
     );
 

@@ -82,7 +82,7 @@ type StoresLoginForm struct {
 
 	Password string `db:"password"`
 
-	StoreID string `db:"store_id"`
+	StoreId string `db:"store_id"`
 }
 
 type StoresLoginForm struct {

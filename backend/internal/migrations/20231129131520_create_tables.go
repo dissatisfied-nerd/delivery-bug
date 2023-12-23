@@ -95,11 +95,20 @@ func upCreateTables(tx *sql.Tx) error {
 	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS stores
 (
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-
-    reputation int, -- Устанавливается администратором
     name       varchar(128),
+    address_id UUID REFERENCES addresses (id)
+);`)
+	if err != nil {
+		return err
+	}
 
-    administrator_id UUID REFERENCES administrators(id)
+	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS stores_loginform
+(
+    login varchar(128) PRIMARY KEY,
+
+    password varchar(128),
+
+    store_id UUID REFERENCES stores (id)
 );`)
 	if err != nil {
 		return err

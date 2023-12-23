@@ -4,6 +4,7 @@ import (
 	"delivery-bug/internal/repo/courier"
 	"delivery-bug/internal/repo/order"
 	"delivery-bug/internal/repo/product"
+	"delivery-bug/internal/repo/store"
 	"delivery-bug/internal/repo/user"
 	"delivery-bug/pkg/logging"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -14,6 +15,7 @@ type Repository struct {
 	CourierRepo courier.CouriersRepository
 	OrderRepo   order.OrdersRepository
 	ProductRepo product.ProductsRepository
+	StoreRepo   store.StoresRepository
 }
 
 func NewRepository(db *pgxpool.Pool, l logging.Logger) Repository {
@@ -22,5 +24,6 @@ func NewRepository(db *pgxpool.Pool, l logging.Logger) Repository {
 		CourierRepo: courier.NewRepository(db, l),
 		OrderRepo:   order.NewRepository(db, l),
 		ProductRepo: product.NewRepository(db, l),
+		StoreRepo:   store.NewRepository(db, l),
 	}
 }

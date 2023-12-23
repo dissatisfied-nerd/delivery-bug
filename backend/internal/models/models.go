@@ -56,6 +56,14 @@ type Stores struct {
 	Name       string  `db:"name"`
 }
 
+type StoresLoginForm struct {
+	Login string `db:"login"`
+
+	Password string `db:"password"`
+
+	StoreID string `db:"store_id"`
+}
+
 type Product struct {
 	ID string `db:"id" json:"id"`
 

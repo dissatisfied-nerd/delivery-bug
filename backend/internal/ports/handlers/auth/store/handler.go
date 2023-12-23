@@ -2,7 +2,7 @@ package store
 
 import (
 	"delivery-bug/internal/auth"
-	"delivery-bug/internal/service/user"
+	"delivery-bug/internal/service/store"
 	"delivery-bug/pkg/logging"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -14,20 +14,25 @@ import (
 
 const role = "store"
 
+type StoresHandler interface {
+	SignUpStore(ctx *gin.Context)
+	SignInStore(ctx *gin.Context)
+}
+
 type Handler struct {
-	service   user.UsersService
+	service   store.StoresService
 	auth      auth.Auth
 	validator *validator.Validate
 	l         *logging.Logger
 }
 
-func NewHandler(service user.UsersService, l logging.Logger,
+func NewHandler(service store.StoresService, l logging.Logger,
 	validator *validator.Validate, auth auth.Auth) *Handler {
 	return &Handler{service: service, l: &l, validator: validator, auth: auth}
 }
 
 func (h *Handler) SignUpStore(ctx *gin.Context) {
-	var payload auth.SignUpInput
+	var payload auth.SignUpStoreInput
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		h.l.Errorf("ERROR can't bind json: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -42,7 +47,7 @@ func (h *Handler) SignUpStore(ctx *gin.Context) {
 		return
 	}
 
-	userID, err := h.service.CreateUser(ctx, payload)
+	userID, err := h.service.CreateStore(ctx, payload)
 	if err != nil && !errors.Is(err, errors.New("no rows in result set")) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -76,7 +81,7 @@ func (h *Handler) SignInStore(ctx *gin.Context) {
 		return
 	}
 
-	userID, err := h.service.CheckUser(ctx, payload)
+	userID, err := h.service.CheckStore(ctx, payload)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

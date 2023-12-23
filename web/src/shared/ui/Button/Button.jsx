@@ -8,11 +8,7 @@ export const Button = (props) => {
     return (
         <button
             onClick={onClick}
-            className={classNames(
-                cls.Button,
-                { [cls.primary]: theme === "primary" },
-                [className]
-            )}
+            className={classNames(cls.Button, {}, [className, cls[theme]])}
         >
             {children}
         </button>

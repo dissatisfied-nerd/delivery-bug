@@ -5,8 +5,16 @@ import { Card } from "shared/ui/Card/Card";
 import cls from "./GoodListItem.module.scss";
 
 export const GoodListItem = (props) => {
-    const { className, good, onAddToCart, onRemoveFromCart, count, type } =
-        props;
+    const {
+        className,
+        good,
+        onAddToCart,
+        onRemoveFromCart,
+        count,
+        type = "small",
+        isAdmin = false,
+        onDeleteGood,
+    } = props;
 
     if (type === "small") {
         return (
@@ -55,6 +63,15 @@ export const GoodListItem = (props) => {
                     <img src={good.image} alt={good.name} className={cls.img} />
                 </div>
                 <div className={cls.textWrapper}>
+                    {isAdmin && (
+                        <Button
+                            onClick={onDeleteGood}
+                            className={cls.onDeleteBtn}
+                            theme="danger"
+                        >
+                            Удалить
+                        </Button>
+                    )}
                     <span>
                         <span className={cls.bold}> Название </span> {good.name}
                     </span>

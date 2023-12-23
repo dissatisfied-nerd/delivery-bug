@@ -98,7 +98,7 @@ export default function Navbar() {
                     </NavLink>
                 </>
             );
-        } else {
+        } else if (type === "courier") {
             links = (
                 <>
                     <NavLink
@@ -128,8 +128,84 @@ export default function Navbar() {
                     </NavLink>
                 </>
             );
+        } else if (type === "market") {
+            links = (
+                <>
+                    <NavLink
+                        to={"/"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
+                        Создать товар
+                    </NavLink>
+                    <NavLink
+                        to={"/profile"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
+                        Профиль
+                    </NavLink>
+                    <NavLink
+                        onClick={onLogout}
+                        to={"/auth"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
+                        Выйти
+                    </NavLink>
+                </>
+            );
+        } else if (type === "admin") {
+            links = (
+                <>
+                    <NavLink
+                        to={"/"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
+                        Товары
+                    </NavLink>
+                    <NavLink
+                        onClick={onLogout}
+                        to={"/auth"}
+                        className={({ isActive }) =>
+                            classNames(cls.link, { [cls.active]: isActive }, [])
+                        }
+                    >
+                        Выйти
+                    </NavLink>
+                </>
+            );
         }
     }
+
+    // TESTING
+    links = (
+        <>
+            <NavLink
+                to={"/"}
+                className={({ isActive }) =>
+                    classNames(cls.link, { [cls.active]: isActive }, [])
+                }
+            >
+                Товары
+            </NavLink>
+            <NavLink
+                onClick={onLogout}
+                to={"/auth"}
+                className={({ isActive }) =>
+                    classNames(cls.link, { [cls.active]: isActive }, [])
+                }
+            >
+                Выйти
+            </NavLink>
+        </>
+    );
+
     return (
         <header className={classNames(cls.Navbar, {}, [])}>
             <span className={cls.title}> Slavic Market </span>

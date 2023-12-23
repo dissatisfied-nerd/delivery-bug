@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
+import { deleteGood } from "../services/deleteGood";
 
 const initialState = {
     isLoading: false,
@@ -12,7 +13,6 @@ const initialState = {
         secret_word: "",
     },
     admin_id: "",
-    orders: [],
     error: "",
 };
 
@@ -25,6 +25,20 @@ export const adminSlice = createSlice({
             state.admin_id = admin_id;
             state.data = data;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(deleteGood.pending, (state) => {
+            state.isLoading = true;
+            state.error = "";
+        });
+        builder.addCase(deleteGood.fulfilled, (state) => {
+            state.isLoading = false;
+            state.error = "";
+        });
+        builder.addCase(deleteGood.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        });
     },
 });
 

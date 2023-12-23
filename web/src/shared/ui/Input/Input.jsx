@@ -3,10 +3,14 @@ import cls from "./Input.module.scss";
 import { classNames } from "shared/lib/classNames/classNames";
 
 export const Input = (props) => {
-    const { className, onChange, label, value, autoFocus } = props;
+    const { className, onChange, label, value, type = "text" } = props;
 
     const onChangeHandler = (e) => {
-        onChange?.(e.target.value);
+        if (type === "file") {
+            onChange?.(e.target.files[0]);
+        } else {
+            onChange?.(e.target.value);
+        }
     };
 
     return (
@@ -14,10 +18,9 @@ export const Input = (props) => {
             {label && <span className={cls.label}>{label}</span>}
             <input
                 value={value}
-                type="text"
+                type={type}
                 onChange={onChangeHandler}
-                className={cls.input}
-                autoFocus={autoFocus}
+                className={classNames(cls.input, {}, [cls[type]])}
             />
         </div>
     );

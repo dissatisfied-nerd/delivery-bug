@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
+import { fetchClientData } from "../services/fetchClientData/fetchClientData";
 import { fetchClientOrders } from "../services/fetchClientOrders/fetchClientOrders";
 
 const initialState = {
@@ -40,6 +41,18 @@ export const clientSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchClientData.pending, (state) => {
+                state.isLoading = true;
+                state.error = "";
+            })
+            .addCase(fetchClientData.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(fetchClientData.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.error = "";
+            })
             .addCase(fetchClientOrders.pending, (state) => {
                 state.isLoading = true;
                 state.error = "";

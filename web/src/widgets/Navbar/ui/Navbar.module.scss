@@ -9,6 +9,7 @@
     align-items: center;
     padding: 20px;
     background-color: var(--bg-color);
+    z-index: var(--navbar-z-index);
 }
 
 .title {
@@ -22,6 +23,10 @@
 
 .link {
     margin-right: 10px;
+}
+
+.link:last-child {
+    margin-right: 0;
 }
 
 .active {

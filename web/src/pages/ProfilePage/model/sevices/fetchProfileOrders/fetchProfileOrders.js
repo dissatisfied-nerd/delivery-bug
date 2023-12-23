@@ -3,21 +3,27 @@ import {
     clientActions,
     fetchClientData,
     fetchClientOrders,
+    getClientId,
 } from "entities/Client";
-import { courierActions, fetchCourierOrders } from "entities/Courier";
+import {
+    courierActions,
+    fetchCourierOrders,
+    getCourierId,
+} from "entities/Courier";
 import { fetchGoodData } from "entities/Good";
 import { authActions, getAuthType } from "features/Auth";
 
 export const fetchProfileOrders = createAsyncThunk(
     "profile/fetchProfileOrders",
-    async (id, thunkAPI) => {
+    async (type, thunkAPI) => {
         const { extra, rejectWithValue, dispatch, getState } = thunkAPI;
-        const type = getAuthType(getState());
 
         try {
             if (type === "client") {
+                const id = getClientId(getState());
                 dispatch(fetchClientOrders(id));
             } else {
+                const id = getCourierId(getState());
                 let { payload: orders } = await dispatch(
                     fetchCourierOrders(id)
                 );
@@ -29,7 +35,6 @@ export const fetchProfileOrders = createAsyncThunk(
                                 isAuth: true,
                             })
                         );
-
                         return {
                             ...order,
                             ...client,

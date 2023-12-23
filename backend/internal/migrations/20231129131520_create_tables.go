@@ -133,7 +133,8 @@ func upCreateTables(tx *sql.Tx) error {
     price            float CHECK (price > 0),
     weight           float,
     description      varchar(512),
-    image            varchar(255)
+    image            varchar(255),
+	store_id  		 UUID REFERENCES stores(id)
 );`)
 	if err != nil {
 		return err

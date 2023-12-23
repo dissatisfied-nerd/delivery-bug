@@ -103,7 +103,7 @@
     },
     "/store/login": {
       "post": {
-        "summary": "sign in user",
+        "summary": "sign in store",
         "tags": ["store"],
         "requestBody": {
           "content": {
@@ -247,7 +247,7 @@
     },
     "/store/register": {
       "post": {
-        "summary": "sign up client",
+        "summary": "sign up store",
         "tags": ["store"],
         "requestBody": {
           "content": {
@@ -438,6 +438,97 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/products/:storeID": {
+      "get": {
+        "summary": "get all products in this store",
+        "tags": ["store"],
+        "parameters": [
+          {
+            "name":"id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "insert product in that store",
+        "tags": ["store"],
+        "parameters": [
+          {
+            "name":"id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "store_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }

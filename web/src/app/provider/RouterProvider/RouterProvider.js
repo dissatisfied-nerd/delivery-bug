@@ -57,11 +57,11 @@ export const RouterProvider = () => {
     }
 
     // TESTING
-    routes = (
-        <>
-            <Route element={<GoodsPage />} path="/" />
-        </>
-    );
+    // routes = (
+    //     <>
+    //         <Route element={<GoodsPage />} path="/" />
+    //     </>
+    // );
 
     return (
         <Routes>

@@ -16,12 +16,12 @@ export const ProfilePage = () => {
         dispatch(getProfileData(type));
     }, []);
 
-    // TESTING
-    return (
-        <Page>
-            <ProfileMarket />
-        </Page>
-    );
+    // // TESTING
+    // return (
+    //     <Page>
+    //         <ProfileMarket />
+    //     </Page>
+    // );
 
     if (type === "client") {
         return (

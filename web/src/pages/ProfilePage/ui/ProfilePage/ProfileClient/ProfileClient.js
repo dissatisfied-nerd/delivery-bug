@@ -25,13 +25,17 @@ export const ProfileClient = () => {
                 <OrderList
                     page="profile"
                     type="client"
-                    orders={orders.filter((order) => !Boolean(order.delivered))}
+                    orders={orders.filter(
+                        (order) => order.status !== "finished"
+                    )}
                 />
                 <div className={cls.title}>История заказов</div>
                 <OrderList
                     page="profile"
                     type="client"
-                    orders={orders.filter((order) => Boolean(order.delivered))}
+                    orders={orders.filter(
+                        (order) => order.status === "finished"
+                    )}
                 />
             </Card>
         </Page>

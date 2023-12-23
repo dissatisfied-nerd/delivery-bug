@@ -13,9 +13,9 @@ import { GoodsPageClient } from "./GoodsPageClient/GoodsPageClient";
 
 export const GoodsPage = () => {
     const dispatch = useDispatch();
-    // const type = useSelector(getAuthType);
+    const type = useSelector(getAuthType);
     // TESTING
-    const type = "admin";
+    // const type = "admin";
     console.log(type);
 
     useEffect(() => {

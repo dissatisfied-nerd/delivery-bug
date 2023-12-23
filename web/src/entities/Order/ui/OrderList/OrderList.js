@@ -23,7 +23,7 @@ export const OrderList = (props) => {
                             type={type}
                             onTakeOrder={onTakeOrder}
                             onCancelOrder={onCancelOrder}
-                            key={order.id}
+                            key={order.order_id || order.id}
                         />
                     );
                 })

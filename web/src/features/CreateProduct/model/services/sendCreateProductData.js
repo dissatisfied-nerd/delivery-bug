@@ -16,7 +16,7 @@ export const sendCreateProductData = createAsyncThunk(
                 formData.append(key, value);
             });
             // const response = await extra.api.post(
-            //     `/market/`,
+            //     `/store/`,
             //     registerData
             // );
 

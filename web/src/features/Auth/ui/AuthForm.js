@@ -22,7 +22,7 @@ export const AuthForm = () => {
     const type = useSelector(getAuthType);
     const error = useSelector(getAuthError);
     const {
-        market_name = "",
+        store_name = "",
         first_name = "",
         last_name = "",
         father_name = "",
@@ -50,9 +50,9 @@ export const AuthForm = () => {
         setFormType(formType === "signUp" ? "logIn" : "signUp");
     }, [formType, dispatch]);
 
-    const onChangeMarketName = useCallback(
+    const onChangeStoreName = useCallback(
         (data) => {
-            dispatch(authActions.changeData({ market_name: data }));
+            dispatch(authActions.changeData({ store_name: data }));
         },
         [dispatch]
     );
@@ -162,9 +162,9 @@ export const AuthForm = () => {
     const onSignUp = useCallback(async () => {
         let signUpData;
         if (type === "client" || type === "courier") {
-            const { market_name, father_name, secret_word, ...restData } = data;
+            const { store_name, father_name, secret_word, ...restData } = data;
             signUpData = restData;
-        } else if (type === "market") {
+        } else if (type === "store") {
             const { secret_word, ...restData } = data;
             signUpData = restData;
         } else {
@@ -260,13 +260,13 @@ export const AuthForm = () => {
                     value={password}
                 />
             </>
-        ) : type === "market" ? (
+        ) : type === "store" ? (
             <>
                 <Input
                     className={cls.input}
                     label="Название магазина"
-                    value={market_name}
-                    onChange={onChangeMarketName}
+                    value={store_name}
+                    onChange={onChangeStoreName}
                     autoFocus
                 />
                 <Input

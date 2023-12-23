@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { adminReducer } from "entities/Admin";
 import { clientReducer } from "entities/Client";
 import { courierReducer } from "entities/Courier";
-import { marketReducer } from "entities/Market";
+import { storeReducer } from "entities/Store";
 import { authReducer } from "features/Auth";
 import { cartReducer } from "features/Cart";
 import { createProductReducer } from "features/CreateProduct";
@@ -18,7 +18,7 @@ export const store = configureStore({
     reducer: {
         client: clientReducer,
         courier: courierReducer,
-        market: marketReducer,
+        store: storeReducer,
         admin: adminReducer,
         auth: authReducer,
         cart: cartReducer,

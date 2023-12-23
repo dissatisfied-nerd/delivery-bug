@@ -6,7 +6,7 @@ import cls from "./ProfilePage.module.scss";
 import { getProfileData } from "../../model/sevices/fetchProfileData/fetchProfileData";
 import { ProfileClient } from "./ProfileClient/ProfileClient";
 import { ProfileCourier } from "./ProfileCourier/ProfileCourier";
-import { ProfileMarket } from "./ProfileMarket/ProfileMarket";
+import { ProfileStore } from "./ProfileStore/ProfileStore";
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export const ProfilePage = () => {
     // // TESTING
     // return (
     //     <Page>
-    //         <ProfileMarket />
+    //         <ProfileStore />
     //     </Page>
     // );
 
@@ -35,10 +35,10 @@ export const ProfilePage = () => {
                 <ProfileCourier />
             </Page>
         );
-    } else if (type === "market") {
+    } else if (type === "store") {
         return (
             <Page>
-                <ProfileMarket />
+                <ProfileStore />
             </Page>
         );
     }

@@ -20,7 +20,7 @@ export const RouterProvider = () => {
         routes = (
             <>
                 <Route element={<AuthPage />} path="/auth" />
-                <Route element={<AuthPage />} path="/market/auth" />
+                <Route element={<AuthPage />} path="/store/auth" />
                 <Route element={<AuthPage />} path="/admin/auth" />
             </>
         );
@@ -40,7 +40,7 @@ export const RouterProvider = () => {
                     <Route element={<ProfilePage />} path="/profile" />
                 </>
             );
-        } else if (type === "market") {
+        } else if (type === "store") {
             routes = (
                 <>
                     <Route element={<CreateProductPage />} path="/" />

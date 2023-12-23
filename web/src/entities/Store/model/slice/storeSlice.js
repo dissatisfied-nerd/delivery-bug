@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
-import { fetchMarketData } from "../services/fetchMarketData/fetchMarketData";
+import { fetchStoreData } from "../services/fetchStoreData/fetchStoreData";
 
 const initialState = {
     isLoading: false,
     data: {
-        market_name: "",
+        store_name: "",
         first_name: "",
         last_name: "",
         father_name: "",
@@ -18,33 +18,33 @@ const initialState = {
         apartment: "",
         password: "",
     },
-    market_id: "",
+    store_id: "",
     products: [],
     error: "",
 };
 
-export const marketSlice = createSlice({
-    name: "market",
+export const storeSlice = createSlice({
+    name: "store",
     initialState,
     reducers: {
-        setMarketData: (state, action) => {
-            const { market_id, ...data } = action.payload;
+        setStoreData: (state, action) => {
+            const { store_id, ...data } = action.payload;
             state.data = data;
-            state.market_id = market_id;
+            state.store_id = store_id;
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchMarketData.pending, (state) => {
+            .addCase(fetchStoreData.pending, (state) => {
                 state.error = "";
                 state.isLoading = true;
             })
-            .addCase(fetchMarketData.fulfilled, (state, action) => {
+            .addCase(fetchStoreData.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.error = "";
-                state.data = action.payload.market;
+                state.data = action.payload.store;
             })
-            .addCase(fetchMarketData.rejected, (state, action) => {
+            .addCase(fetchStoreData.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
@@ -52,5 +52,5 @@ export const marketSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { actions: marketActions } = marketSlice;
-export const { reducer: marketReducer } = marketSlice;
+export const { actions: storeActions } = storeSlice;
+export const { reducer: storeReducer } = storeSlice;

@@ -14,6 +14,7 @@ type OrderDTOInput struct {
 type OrderUserDTOOutput struct {
 	Price        float64            `json:"price"`
 	ClientID     string             `json:"client_id"`
+	OrderID      string             `json:"order_id"`
 	CreationTime string             `json:"creation_time"`
 	DeliveryTime string             `json:"delivery_time"`
 	Status       string             `json:"status"`
@@ -32,6 +33,7 @@ type OrderDTO struct {
 
 type OrderCourierDTOOutput struct {
 	Price        float64            `json:"price"`
+	OrderID      string             `json:"order_id"`
 	CourierID    string             `json:"courier_id"`
 	ClientID     string             `json:"client_id"`
 	Status       string             `json:"status"`
@@ -51,6 +53,8 @@ func ToOrderUserDTOOutput(order models.Order, orderProducts []models.OrderProduc
 	orderDTOOutput.Price = order.Price
 
 	orderDTOOutput.ClientID = order.ClientId
+
+	orderDTOOutput.OrderID = order.ID
 
 	orderDTOOutput.Status = order.Status
 
@@ -80,6 +84,8 @@ func ToOrderCourierDTOOutput(order models.Order, orderProducts []models.OrderPro
 	orderDTOOutput.CourierID = *order.CourierId
 
 	orderDTOOutput.ClientID = order.ClientId
+
+	orderDTOOutput.OrderID = order.ID
 
 	orderDTOOutput.Status = order.Status
 

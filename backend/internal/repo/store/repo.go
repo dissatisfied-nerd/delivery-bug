@@ -6,7 +6,6 @@ import (
 	"delivery-bug/internal/models"
 	"delivery-bug/pkg/logging"
 	"errors"
-<<<<<<< HEAD
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -17,19 +16,6 @@ type StoresRepository interface {
 	InsertStore(ctx context.Context, storeDTO dtos.StoreDTO, addressID string) (string, error)
 	InsertLoginForm(ctx context.Context, form models.StoresLoginForm) error
 	SelectInfoByID(ctx context.Context, id string) (dtos.StoreInfo, error)
-=======
-
-	"github.com/jackc/pgx/v5/pgxpool"
-)
-
-type StoreRepository interface {
-	CheckLogin(ctx context.Context, login string) (models.StoresLoginForm, error)
-	CheckLoginTaken(ctx context.Context, login string) error
-	InsertAddress(ctx context.Context, addressDto dtos.AddressDTO) (string, error)
-	InserStore(ctx context.Context, storeDto dtos.StoreDTO, addressID string) (string, error)
-	InsertLoginForm(ctx context.Context, form models.StoresLoginForm) error
-	SelectInfoById(ctx context.Context, id string) (dtos.ClientInfo, error)
->>>>>>> f87e315 (stores repo done)
 }
 
 type Repository struct {
@@ -43,19 +29,11 @@ func NewRepository(db *pgxpool.Pool, l logging.Logger) *Repository {
 
 func (r *Repository) CheckLogin(ctx context.Context, login string) (models.StoresLoginForm, error) {
 	var result models.StoresLoginForm
-<<<<<<< HEAD
 	err := r.db.QueryRow(ctx, checkLoginQuery, login).Scan(&result.Login, &result.Password, &result.StoreID)
 	if err != nil {
 		return models.StoresLoginForm{}, err
 	} else if errors.Is(err, errors.New("no rows in result set")) {
 		return models.StoresLoginForm{}, errors.New("there's no store with such login")
-=======
-	err := r.db.QueryRow(ctx, checkLoginQuery, login).Scan(&result.Login, &result.Password, &result.StoreId)
-	if err != nil {
-		return models.StoresLoginForm{}, err
-	} else if errors.Is(err, errors.New("no rows in result set")) {
-		return models.StoresLoginForm{}, errors.New("there's no user with such login")
->>>>>>> f87e315 (stores repo done)
 	}
 	return result, nil
 }
@@ -90,7 +68,6 @@ func (r *Repository) InsertAddress(ctx context.Context, addressDto dtos.AddressD
 	return insertedAddressId, nil
 }
 
-<<<<<<< HEAD
 func (r *Repository) InsertStore(ctx context.Context, storeDTO dtos.StoreDTO, addressID string) (string, error) {
 	var insertedStoreID string
 	err := r.db.QueryRow(ctx, insertStoreQuery, storeDTO.Name, addressID).Scan(&insertedStoreID)
@@ -99,17 +76,6 @@ func (r *Repository) InsertStore(ctx context.Context, storeDTO dtos.StoreDTO, ad
 		return "", err
 	}
 	r.l.Infof("insert store %s to db", storeDTO.Name)
-=======
-func (r *Repository) InsertStore(ctx context.Context, storeDto dtos.StoreDTO, addressID string) (string, error) {
-	var insertedStoreID string
-	err := r.db.QueryRow(ctx, insertStoreQuery, storeDto.Reputation, storeDto.Name, storeDto.FirstName, storeDto.Surname, storeDto.LastName,
-		addressID).Scan(&insertedStoreID)
-	if err != nil {
-		r.l.Errorf("ERROR while inserting store %s in db: %v", storeDto.Name, err)
-		return "", err
-	}
-	r.l.Infof("insert store %s in db", storeDto.Name)
->>>>>>> f87e315 (stores repo done)
 	return insertedStoreID, nil
 }
 
@@ -117,7 +83,6 @@ func (r *Repository) InsertLoginForm(ctx context.Context, form models.StoresLogi
 	_, err := r.db.Exec(ctx, insertLoginFormQuery,
 		form.Login,
 		form.Password,
-<<<<<<< HEAD
 		form.StoreID,
 	)
 	if err != nil {
@@ -140,31 +105,6 @@ func (r *Repository) SelectInfoByID(ctx context.Context, id string) (dtos.StoreI
 		&info.Entrance, &info.Floor, &info.Apartment)
 	if err != nil {
 		r.l.Errorf("error getting address %s: %v", addressID, err)
-=======
-		form.StoreId,
-	)
-	if err != nil {
-		r.l.Errorf("ERROR while inserting store loginform %s in db: %v", form.Login, err)
-		return err
-	}
-	r.l.Infof("insert store loginform %s in db", form.Login)
-	return nil
-}
-
-func (r *Repository) SelectInfoById(ctx context.Context, id string) (dtos.StoreInfo, error) {
-	var info dtos.StoreInfo
-	var addressID string
-	err := r.db.QueryRow(ctx, getStoreQuery, id).Scan(&info.Reputation, &info.Name, &info.FirstName, &info.Surname, &info.LastName,
-		&addressID)
-	if err != nil {
-		r.l.Errorf("error getting store info %s : %v", id, err)
-		return dtos.StoreInfo{}, err
-	}
-	err = r.db.QueryRow(ctx, getAddressQuery, addressID).Scan(&info.City, &info.Street, &info.Building, &info.Entrance,
-		&info.Floor, &info.Apartment)
-	if err != nil {
-		r.l.Errorf("error getting store info %s : %v", id, err)
->>>>>>> f87e315 (stores repo done)
 		return dtos.StoreInfo{}, err
 	}
 	r.l.Infof("get store info %s from db", id)

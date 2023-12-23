@@ -44,7 +44,7 @@ func (s *Service) CheckUser(ctx context.Context, input auth.SignInInput) (string
 
 func (s *Service) CreateUser(ctx context.Context, input auth.SignUpInput) (string, error) {
 	err := s.repo.CheckLoginTaken(ctx, input.Login)
-	if err != nil && err != errors.New("no rows in result set") {
+	if err != nil && !errors.Is(err, errors.New("no rows in result set")) {
 		s.l.Error(err)
 		return "", err
 	}

@@ -4,6 +4,7 @@ import (
 	"delivery-bug/internal/auth"
 	"delivery-bug/internal/ports/handlers/auth/client"
 	"delivery-bug/internal/ports/handlers/auth/courier"
+	"delivery-bug/internal/ports/handlers/auth/store"
 	"delivery-bug/internal/ports/handlers/clients"
 	"delivery-bug/internal/ports/handlers/orders"
 	"delivery-bug/internal/ports/handlers/products"
@@ -19,6 +20,7 @@ type Handler struct {
 	OrderHandler       orders.OrderHandler
 	ClientHandler      clients.ClientHandler
 	ProductHandler     products.ProductHandler
+	StoreHandler       store.StoresHandler
 }
 
 func NewHandler(service service.Service, repo repo.Repository, auth auth.Auth, validator *validator.Validate, l logging.Logger) Handler {
@@ -28,5 +30,6 @@ func NewHandler(service service.Service, repo repo.Repository, auth auth.Auth, v
 		ClientHandler:      clients.NewHandler(service.UserService, l),
 		OrderHandler:       orders.NewHandler(repo.OrderRepo, validator, l),
 		ProductHandler:     products.NewHandler(repo.ProductRepo, l),
+		StoreHandler:       store.NewHandler(service.StoreService, l, validator, auth),
 	}
 }

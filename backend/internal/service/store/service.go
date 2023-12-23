@@ -1,38 +1,37 @@
-package courier
+package store
 
 import (
 	"context"
 	"delivery-bug/internal/auth"
 	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/models"
-	courierRepo "delivery-bug/internal/repo/courier"
+	storeRepo "delivery-bug/internal/repo/store"
 	"delivery-bug/pkg/logging"
 	"errors"
 	"golang.org/x/crypto/bcrypt"
 )
 
-type CouriersService interface {
-	CheckCourier(ctx context.Context, input auth.SignInInput) (string, error)
-	CreateCourier(ctx context.Context, input auth.SignUpInput) (string, error)
-	GetInfoByID(ctx context.Context, id string) (dtos.CourierInfo, error)
+type StoresService interface {
+	CheckStore(ctx context.Context, input auth.SignInInput) (string, error)
+	CreateStore(ctx context.Context, input auth.SignUpStoreInput) (string, error)
 }
 
 type Service struct {
-	repo courierRepo.CouriersRepository
+	repo storeRepo.StoresRepository
 	l    *logging.Logger
 }
 
-func NewService(repo courierRepo.CouriersRepository, l logging.Logger) *Service {
+func NewService(repo storeRepo.StoresRepository, l logging.Logger) *Service {
 	return &Service{
 		repo: repo,
 		l:    &l,
 	}
 }
 
-func (s *Service) CheckCourier(ctx context.Context, input auth.SignInInput) (string, error) {
+func (s *Service) CheckStore(ctx context.Context, input auth.SignInInput) (string, error) {
 	form, err := s.repo.CheckLogin(ctx, input.Login)
 	if err != nil {
-		s.l.Error("there is no user with such login")
+		s.l.Error("there is no store with such login")
 		return "", errors.New("there is no user with such login")
 	}
 
@@ -42,10 +41,10 @@ func (s *Service) CheckCourier(ctx context.Context, input auth.SignInInput) (str
 		return "", errors.New("invalid password")
 	}
 
-	return form.CourierId, nil
+	return form.StoreID, nil
 }
 
-func (s *Service) CreateCourier(ctx context.Context, input auth.SignUpInput) (string, error) {
+func (s *Service) CreateStore(ctx context.Context, input auth.SignUpStoreInput) (string, error) {
 	err := s.repo.CheckLoginTaken(ctx, input.Login)
 	if err != nil && !errors.Is(err, errors.New("no rows in result set")) {
 		s.l.Error(err)
@@ -60,8 +59,8 @@ func (s *Service) CreateCourier(ctx context.Context, input auth.SignUpInput) (st
 		return "", err
 	}
 
-	courier := dtos.CourierDTO{FirstName: input.FirstName, LastName: input.LastName}
-	courierID, err := s.repo.InsertCourier(ctx, courier, addressID)
+	store := dtos.StoreDTO{Name: input.Name}
+	storeID, err := s.repo.InsertStore(ctx, store, addressID)
 	if err != nil {
 		return "", err
 	}
@@ -73,15 +72,11 @@ func (s *Service) CreateCourier(ctx context.Context, input auth.SignUpInput) (st
 		return "", err
 	}
 
-	form := models.CouriersLoginForm{Login: input.Login, Password: string(hashedPassword), CourierId: courierID}
+	form := models.StoresLoginForm{Login: input.Login, Password: string(hashedPassword), StoreID: storeID}
 	err = s.repo.InsertLoginForm(ctx, form)
 	if err != nil {
 		return "", err
 	}
 
-	return courierID, nil
-}
-
-func (s *Service) GetInfoByID(ctx context.Context, id string) (dtos.CourierInfo, error) {
-	return s.repo.SelectInfoByID(ctx, id)
+	return storeID, nil
 }

@@ -41,6 +41,11 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 			router.GET("/orders/free", h.OrderHandler.GetFreeOrders)
 			router.GET("courier/orders/:courierID", h.OrderHandler.GetOrdersByCourierID)
 		}
+		store := router.Group("/store")
+		{
+			store.POST("/login", h.StoreHandler.SignInStore)
+			store.POST("/register", h.StoreHandler.SignUpStore)
+		}
 		//products := router.Group("/products")
 		{
 			router.GET("/products", h.ProductHandler.GetProducts)

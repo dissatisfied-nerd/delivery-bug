@@ -5,7 +5,7 @@ import { storeActions } from "../../slice/storeSlice";
 
 export const fetchStoreData = createAsyncThunk(
     "store/fetchStoreData",
-    async ({ id, isAuth }, thunkAPI) => {
+    async (id, thunkAPI) => {
         const { extra, rejectWithValue, dispatch } = thunkAPI;
 
         try {

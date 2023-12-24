@@ -7,7 +7,6 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 
     try {
         await extra.api.post(`/logout`);
-
         dispatch(authActions.logout());
         dispatch(cartActions.emptyCart());
         // return response.data;

@@ -12,16 +12,12 @@ export const fetchProductData = createAsyncThunk(
                 throw new Error();
             }
 
-            // const data = { ...loginData, ...response.data };
-            // if (type === "client") {
-            //     dispatch(clientActions.setClientData(data));
-            // } else {
-            //     dispatch(courierActions.setCourierData(data));
-            // }
-            // dispatch(authActions.saveAuthData(response.data));
             return response.data.product;
         } catch (e) {
-            return rejectWithValue("error");
+            return rejectWithValue(
+                e?.response?.data?.error ||
+                    "Что-то пошло не так. Попробуйте еще раз"
+            );
         }
     }
 );

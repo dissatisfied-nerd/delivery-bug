@@ -45,11 +45,11 @@ export const OrdersPage = () => {
         return <p>Loading...</p>;
     }
 
-    if (error) {
+    if (error && !orders.length) {
         return (
             <Page>
                 <span className={cls.title}> Заказы </span>
-                <div className={cls.err}>{error}</div>
+                {error && <div className={cls.err}>{error}</div>}
             </Page>
         );
     }
@@ -57,6 +57,7 @@ export const OrdersPage = () => {
     return (
         <Page>
             <span className={cls.title}> Заказы </span>
+            {error && <div className={cls.err}>{error}</div>}
             {isOrderTaken && (
                 <div className={cls.message}>
                     Вы успешно взяли заказ, он отобразится в профиле

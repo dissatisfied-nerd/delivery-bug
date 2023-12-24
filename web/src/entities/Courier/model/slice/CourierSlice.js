@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 import { fetchCourierData } from "../services/fetchCourierData/fetchCourierData";
+import { fetchCourierOrders } from "../services/fetchCourierOrders/fetchCourierOrders";
 
 const initialState = {
     isLoading: false,
@@ -54,6 +55,14 @@ export const courierSlice = createSlice({
                 state.error = "";
                 state.isLoading = false;
                 state.data = action.payload.courier;
+            })
+            .addCase(fetchCourierOrders.pending, (state) => {
+                state.isLoading = true;
+                state.error = "";
+            })
+            .addCase(fetchCourierOrders.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
             });
     },
 });

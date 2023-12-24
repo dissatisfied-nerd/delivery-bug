@@ -9,7 +9,10 @@
 // import { getClientAparts } from "./model/selectors/getProfleData";
 // import { getClientPassword } from "./model/selectors/getProfleData";
 // import { getClientType } from "./model/selectors/getProfleData";
-import { getClientOrders } from "./model/selectors/getClientData";
+import {
+    getClientError,
+    getClientOrders,
+} from "./model/selectors/getClientData";
 
 import { clientActions } from "./model/slice/ClientSlice";
 import { clientReducer } from "./model/slice/ClientSlice";
@@ -41,4 +44,5 @@ export {
     getClientId,
     fetchClientData,
     fetchClientOrders,
+    getClientError,
 };

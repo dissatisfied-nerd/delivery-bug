@@ -387,7 +387,7 @@ export const AuthForm = () => {
         return (
             <div className={classNames(cls.AuthForm, {}, [])}>
                 <span className={cls.title}>Регистрация</span>
-                <div className={cls.error}>{error}</div>
+
                 {signUpInputs}
                 {(type === "client" || type === "courier") && (
                     <select
@@ -406,6 +406,7 @@ export const AuthForm = () => {
                 <Button theme="primary" onClick={onSignUp}>
                     Зарегистрироваться
                 </Button>
+                <div className={cls.error}>{error}</div>
                 <Button className={cls.changeForm} onClick={onChangeForm}>
                     Я уже смешарик
                 </Button>
@@ -415,7 +416,6 @@ export const AuthForm = () => {
         return (
             <div className={classNames(cls.AuthForm, {}, [])}>
                 <span className={cls.title}>Вход</span>
-                <div className={cls.error}>{error}</div>
                 <Input
                     className={cls.input}
                     label="Почта"
@@ -455,6 +455,7 @@ export const AuthForm = () => {
                 <Button theme="primary" onClick={onLogin}>
                     Войти
                 </Button>
+                <div className={cls.error}>{error}</div>
                 <Button className={cls.changeForm} onClick={onChangeForm}>
                     ЭЭЭ бля я не смешарик еще
                 </Button>

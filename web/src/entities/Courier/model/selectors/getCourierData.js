@@ -12,4 +12,5 @@
 // export const getProfileType = (state) => state.profile.data.type || "client";
 export const getCourierOrders = (state) => state.courier.orders;
 export const getCourierData = (state) => state.courier.data;
-export const getCourierId = (state) => state.courier.courier_id;
+export const getCourierId = (state) => state.courier.courier_id || "";
+export const getCourierError = (state) => state.courier.error || "";

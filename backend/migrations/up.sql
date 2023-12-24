@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS products
     description      varchar(512),
     image            bytea,
 
-    administrator_id UUID REFERENCES administrators (id)
+    store_id UUID REFERENCES stores (id)
 );
 
 CREATE TABLE IF NOT EXISTS products_stores

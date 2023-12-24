@@ -32,11 +32,12 @@ type SignUpStoreInput struct {
 }
 
 type SignUpAdministratorInput struct {
-	Login     string `json:"login" validate:"required"`
-	Password  string `json:"password" validate:"required"`
-	FirstName string `json:"first_name" validate:"required"`
-	Surname   string `json:"surname" validate:"required"`
-	LastName  string `json:"last_name" validate:"required"`
+	Login      string `json:"login" validate:"required"`
+	Password   string `json:"password" validate:"required"`
+	FirstName  string `json:"first_name" validate:"required"`
+	Surname    string `json:"surname" validate:"required"`
+	LastName   string `json:"last_name" validate:"required"`
+	Passphrase string `json:"passphrase"`
 }
 
 type SignInInput struct {

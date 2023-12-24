@@ -6,14 +6,20 @@ import cls from "./ProfileCard.module.scss";
 
 export const ProfileCard = (props) => {
     const { className, profile, error, type } = props;
-    console.log(error);
+    console.log(profile);
     return (
         <div className={cls.ProfileCard}>
             <span className={cls.pageTitle}> Профиль </span>
             <div className={cls.error}>{error}</div>
             <div className={cls.header}>
-                <span className={cls.name}>{profile.last_name}</span>
-                <span className={cls.name}>{profile.first_name}</span>
+                {type === "store" ? (
+                    <span className={cls.name}>{profile.name}</span>
+                ) : (
+                    <>
+                        <span className={cls.name}>{profile.last_name}</span>
+                        <span className={cls.name}>{profile.first_name}</span>
+                    </>
+                )}
                 {type === "client" && <span>Баланс: {profile.balance} ₽</span>}
             </div>
             <div className={cls.line}></div>

@@ -21,6 +21,7 @@ export const ProfileStore = () => {
     const id = useSelector(getStoreId);
     const profile = useSelector(getStoreData);
     const products = useSelector(getStoreProducts);
+    console.log(products);
     const error = useSelector(getStoreError);
 
     useEffect(() => {
@@ -30,7 +31,7 @@ export const ProfileStore = () => {
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
-                <ProfileCard profile={profile} error={error} />
+                <ProfileCard profile={profile} error={error} type={"store"} />
                 <div className={cls.title}>Товары</div>
                 <ProductList
                     products={[

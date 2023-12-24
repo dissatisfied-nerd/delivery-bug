@@ -22,7 +22,7 @@ export const AuthForm = () => {
     const type = useSelector(getAuthType);
     const error = useSelector(getAuthError);
     const {
-        store_name = "",
+        name = "",
         first_name = "",
         last_name = "",
         father_name = "",
@@ -52,7 +52,7 @@ export const AuthForm = () => {
 
     const onChangeStoreName = useCallback(
         (data) => {
-            dispatch(authActions.changeData({ store_name: data }));
+            dispatch(authActions.changeData({ name: data }));
         },
         [dispatch]
     );
@@ -162,12 +162,12 @@ export const AuthForm = () => {
     const onSignUp = useCallback(async () => {
         let signUpData;
         if (type === "client" || type === "courier") {
-            const { store_name, father_name, secret_word, ...restData } = data;
+            const { name, father_name, secret_word, ...restData } = data;
             signUpData = restData;
         } else if (type === "store") {
             const { secret_word, ...restData } = data;
             signUpData = {
-                name: store_name,
+                name: name,
                 password,
                 login,
                 city,
@@ -275,11 +275,11 @@ export const AuthForm = () => {
                 <Input
                     className={cls.input}
                     label="Название магазина"
-                    value={store_name}
+                    value={name}
                     onChange={onChangeStoreName}
                     autoFocus
                 />
-                <Input
+                {/* <Input
                     className={cls.input}
                     label="Имя"
                     value={first_name}
@@ -299,7 +299,7 @@ export const AuthForm = () => {
                     value={father_name}
                     onChange={onChangeFatherName}
                     autoFocus
-                />
+                /> */}
                 <Input
                     className={cls.input}
                     label="Почта"

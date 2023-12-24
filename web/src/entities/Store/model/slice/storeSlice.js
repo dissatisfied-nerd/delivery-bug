@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 import { fetchStoreData } from "../services/fetchStoreData/fetchStoreData";
+import { fetchStoreProducts } from "../services/fetchStoreProducts/fetchStoreProducts";
 
 const initialState = {
     isLoading: false,
     data: {
-        store_name: "",
+        name: "",
         first_name: "",
         last_name: "",
         father_name: "",
@@ -45,6 +46,19 @@ export const storeSlice = createSlice({
                 state.data = action.payload.store;
             })
             .addCase(fetchStoreData.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(fetchStoreProducts.pending, (state) => {
+                state.error = "";
+                state.isLoading = true;
+            })
+            .addCase(fetchStoreProducts.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.error = "";
+                state.products = action.payload.products || [];
+            })
+            .addCase(fetchStoreProducts.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

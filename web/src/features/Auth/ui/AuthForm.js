@@ -166,7 +166,17 @@ export const AuthForm = () => {
             signUpData = restData;
         } else if (type === "store") {
             const { secret_word, ...restData } = data;
-            signUpData = restData;
+            signUpData = {
+                name: store_name,
+                password,
+                login,
+                city,
+                street,
+                building,
+                entrance,
+                floor,
+                apartment,
+            };
         } else {
             signUpData = {
                 first_name,

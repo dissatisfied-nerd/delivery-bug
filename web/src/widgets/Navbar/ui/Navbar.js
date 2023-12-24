@@ -192,7 +192,15 @@ export default function Navbar() {
     //                 classNames(cls.link, { [cls.active]: isActive }, [])
     //             }
     //         >
-    //             Товары
+    //             Создать товар
+    //         </NavLink>
+    //         <NavLink
+    //             to={"/profile"}
+    //             className={({ isActive }) =>
+    //                 classNames(cls.link, { [cls.active]: isActive }, [])
+    //             }
+    //         >
+    //             Профиль
     //         </NavLink>
     //         <NavLink
     //             onClick={onLogout}

@@ -59,7 +59,8 @@ export const RouterProvider = () => {
     // TESTING
     // routes = (
     //     <>
-    //         <Route element={<ProductsPage />} path="/" />
+    //         <Route element={<CreateProductPage />} path="/" />
+    //         <Route element={<ProfilePage />} path="/profile" />
     //     </>
     // );
 

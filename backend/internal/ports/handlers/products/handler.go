@@ -14,6 +14,7 @@ type ProductHandler interface {
 	GetProductByID(ctx *gin.Context)
 	CreateProduct(ctx *gin.Context)
 	GetProductsByStore(ctx *gin.Context)
+	DeleteProductById(ctx *gin.Context)
 }
 
 type Handler struct {

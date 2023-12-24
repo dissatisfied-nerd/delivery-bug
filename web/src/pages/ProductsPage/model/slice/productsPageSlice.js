@@ -3,6 +3,8 @@ import { fetchProductsPageData } from "../services/fetchProductsPageData";
 
 const initialState = {
     products: [],
+    isLoading: false,
+    error: "",
 };
 
 export const productsPageSlice = createSlice({
@@ -10,8 +12,18 @@ export const productsPageSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+        builder.addCase(fetchProductsPageData.pending, (state, action) => {
+            state.isLoading = true;
+            state.error = "";
+        });
         builder.addCase(fetchProductsPageData.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.error = "";
             state.products = action.payload ?? [];
+        });
+        builder.addCase(fetchProductsPageData.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
         });
     },
 });

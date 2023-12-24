@@ -41,7 +41,10 @@ export const fetchCourierOrders = createAsyncThunk(
 
             return orders;
         } catch (e) {
-            return rejectWithValue("error");
+            return rejectWithValue(
+                e?.response?.data?.error ||
+                    "Что-то пошло не так. Попробуйте еще раз"
+            );
         }
     }
 );

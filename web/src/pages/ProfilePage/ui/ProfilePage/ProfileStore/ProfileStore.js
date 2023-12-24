@@ -7,13 +7,14 @@ import cls from "../ProfilePage.module.scss";
 import { ProfileCard } from "../../ProfileCard/ProfileCard";
 import { getClientData, getClientOrders } from "entities/Client";
 import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
-import { getStoreData, getStoreProducts } from "entities/Store";
+import { getStoreData, getStoreError, getStoreProducts } from "entities/Store";
 import { ProductList } from "entities/Product";
 
 export const ProfileStore = () => {
     const dispatch = useDispatch();
     const profile = useSelector(getStoreData);
     const products = useSelector(getStoreProducts);
+    const error = useSelector(getStoreError);
 
     useEffect(() => {
         // dispatch(fetchProfileOrders("client"));
@@ -22,7 +23,7 @@ export const ProfileStore = () => {
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
-                <ProfileCard profile={{ balance: 0, ...profile }} />
+                <ProfileCard profile={profile} error={error} />
                 <div className={cls.title}>Товары</div>
                 <ProductList
                     products={[

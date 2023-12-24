@@ -10,7 +10,10 @@ export const fetchProductsPageData = createAsyncThunk(
             console.log(response.data);
             return response.data.products;
         } catch (e) {
-            return rejectWithValue(e);
+            return rejectWithValue(
+                e?.response?.data?.error ||
+                    "Что-то пошло не так. Попробуйте еще раз"
+            );
         }
     }
 );

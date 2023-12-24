@@ -5,13 +5,18 @@ import { Card } from "shared/ui/Card/Card";
 import { Page } from "widgets/Page/Page";
 import cls from "../ProfilePage.module.scss";
 import { ProfileCard } from "../../ProfileCard/ProfileCard";
-import { getClientData, getClientOrders } from "entities/Client";
+import {
+    getClientData,
+    getClientError,
+    getClientOrders,
+} from "entities/Client";
 import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
 
 export const ProfileClient = () => {
     const dispatch = useDispatch();
     const profile = useSelector(getClientData);
     const orders = useSelector(getClientOrders);
+    const error = useSelector(getClientError);
 
     useEffect(() => {
         dispatch(fetchProfileOrders("client"));
@@ -20,7 +25,7 @@ export const ProfileClient = () => {
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
-                <ProfileCard profile={{ balance: 0, ...profile }} />
+                <ProfileCard profile={profile} error={error} />
                 <div className={cls.title}>Активные заказы</div>
                 <OrderList
                     page="profile"

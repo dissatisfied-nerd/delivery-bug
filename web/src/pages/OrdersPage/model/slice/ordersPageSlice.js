@@ -41,9 +41,10 @@ export const ordersPageSlice = createSlice({
         builder
             .addCase(fetchOrdersPageData.pending, (state, action) => {
                 state.isLoading = true;
+                state.error = "";
             })
             .addCase(fetchOrdersPageData.fulfilled, (state, action) => {
-                state.orders = action.payload
+                state.orders = action.payload;
                 state.error = "";
                 state.isLoading = false;
             })
@@ -51,10 +52,17 @@ export const ordersPageSlice = createSlice({
                 state.error = action.payload;
                 state.isLoading = false;
             })
+            .addCase(takeOrder.pending, (state, action) => {
+                state.isLoading = true;
+                state.error = "";
+            })
             .addCase(takeOrder.fulfilled, (state, action) => {
                 state.isOrderTaken = true;
+                state.isLoading = false;
+                state.error = "";
             })
             .addCase(takeOrder.rejected, (state, action) => {
+                state.isLoading = false;
                 state.error = action.payload;
             });
     },

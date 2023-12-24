@@ -32,13 +32,14 @@ CREATE TABLE IF NOT EXISTS clients_loginform
     client_id UUID REFERENCES clients (id)
 );
 
+
 CREATE TABLE IF NOT EXISTS couriers
 (
     id           UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
     first_name   varchar(128),
     last_name    varchar(128),
-    
+    registration bool NOT NULL, -- Страна регистрации
     address_id   UUID REFERENCES addresses (id)
 );
 
@@ -95,7 +96,7 @@ CREATE TABLE IF NOT EXISTS stores_loginform
 
     password varchar(128),
 
-    store_id UUID REFERENCES stores (id)
+    stores_id UUID REFERENCES stores (id)
 );
 
 CREATE TABLE IF NOT EXISTS products
@@ -106,10 +107,8 @@ CREATE TABLE IF NOT EXISTS products
     price            float CHECK (price > 0),
     weight           float,
     description      varchar(512),
-    image            varchar(255),
+    image            bytea,
 
-    store_id UUID REFERENCES stores (id)
-=======
     store_id UUID REFERENCES stores (id)
 );
 
@@ -118,7 +117,6 @@ CREATE TABLE IF NOT EXISTS products_stores
     product_id UUID REFERENCES products (id),
     store_id   UUID REFERENCES stores (id),
     PRIMARY KEY (product_id, store_id)
->>>>>>> beea169 (fix)
 );
 
 CREATE TABLE IF NOT EXISTS products_stores

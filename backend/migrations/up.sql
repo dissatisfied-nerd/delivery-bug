@@ -108,10 +108,6 @@ CREATE TABLE IF NOT EXISTS products
     description      varchar(512),
     image            varchar(255),
 
-<<<<<<< HEAD
-    administrator_id UUID REFERENCES administrators (id), -- Одобривший товар администратор
-    store_id UUID REFERENCES stores (id)
-=======
     store_id UUID REFERENCES stores (id)
 );
 

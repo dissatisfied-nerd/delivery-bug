@@ -6,6 +6,7 @@ import (
 	"delivery-bug/internal/models"
 	"delivery-bug/pkg/logging"
 	"errors"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 

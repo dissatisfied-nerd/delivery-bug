@@ -49,6 +49,7 @@ export const ProfileCourier = () => {
                 <ProfileCard
                     profile={profile}
                     error={errorCourier || errorClient}
+                    type={"courier"}
                 />
                 <div className={cls.title}>Активные заказы</div>
                 <div className={cls.error} ref={error}></div>

@@ -7,23 +7,31 @@ import cls from "../ProfilePage.module.scss";
 import { ProfileCard } from "../../ProfileCard/ProfileCard";
 import { getClientData, getClientOrders } from "entities/Client";
 import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
-import { getStoreData, getStoreError, getStoreProducts } from "entities/Store";
+import {
+    fetchStoreProducts,
+    getStoreData,
+    getStoreError,
+    getStoreId,
+    getStoreProducts,
+} from "entities/Store";
 import { ProductList } from "entities/Product";
 
 export const ProfileStore = () => {
     const dispatch = useDispatch();
+    const id = useSelector(getStoreId);
     const profile = useSelector(getStoreData);
     const products = useSelector(getStoreProducts);
+    console.log(products);
     const error = useSelector(getStoreError);
 
     useEffect(() => {
-        // dispatch(fetchProfileOrders("client"));
+        dispatch(fetchStoreProducts(id));
     }, []);
 
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
-                <ProfileCard profile={profile} error={error} />
+                <ProfileCard profile={profile} error={error} type={"store"} />
                 <div className={cls.title}>Товары</div>
                 <ProductList
                     products={[
@@ -36,7 +44,7 @@ export const ProfileStore = () => {
                             image: "https://ir.ozone.ru/s3/multimedia-d/wc1000/6667260673.jpg",
                         },
                         {
-                            id: 0,
+                            id: 1,
                             name: "Гейнер",
                             price: 1200,
                             weight: 1,
@@ -45,7 +53,7 @@ export const ProfileStore = () => {
                             image: "https://ir.ozone.ru/s3/multimedia-d/wc1000/6667260673.jpg",
                         },
                         {
-                            id: 0,
+                            id: 2,
                             name: "Гейнер",
                             price: 1200,
                             weight: 1,
@@ -54,7 +62,7 @@ export const ProfileStore = () => {
                             image: "https://ir.ozone.ru/s3/multimedia-d/wc1000/6667260673.jpg",
                         },
                         {
-                            id: 0,
+                            id: 3,
                             name: "Гейнер",
                             price: 1200,
                             weight: 1,

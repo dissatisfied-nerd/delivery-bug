@@ -101,7 +101,7 @@ func (h *Handler) SignInCourier(ctx *gin.Context) {
 }
 
 func (h *Handler) GetInfoByID(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id := ctx.Param("courierID")
 
 	info, err := h.service.GetInfoByID(ctx, id)
 	if err != nil {

@@ -102,7 +102,7 @@ func (h *Handler) SignInStore(ctx *gin.Context) {
 }
 
 func (h *Handler) GetInfoByID(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id := ctx.Param("storeID")
 
 	info, err := h.service.GetInfoByID(ctx, id)
 	if err != nil {

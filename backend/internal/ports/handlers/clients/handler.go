@@ -24,7 +24,7 @@ func NewHandler(service user.UsersService, l logging.Logger) *Handler {
 }
 
 func (h *Handler) GetInfoByID(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id := ctx.Param("clientID")
 
 	info, err := h.service.GetInfoById(ctx, id)
 	if err != nil {

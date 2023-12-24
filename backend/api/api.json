@@ -322,7 +322,7 @@
         }
       }
     },
-    "/client/:id": {
+    "/client/:clientID": {
       "get": {
         "summary": "get info by client id",
         "tags": [
@@ -330,7 +330,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "clientID",
             "in": "path",
             "description": "id",
             "required": true,
@@ -368,7 +368,7 @@
         }
       }
     },
-    "/courier/:id": {
+    "/courier/:courierID": {
       "get": {
         "summary": "get info by courier id",
         "tags": [
@@ -376,7 +376,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "courierID",
             "in": "path",
             "description": "id",
             "required": true,
@@ -434,7 +434,7 @@
         }
       }
     },
-    "/products/:id": {
+    "/products/:productID": {
       "get": {
         "summary": "get all products",
         "tags": [
@@ -442,7 +442,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "productID",
             "in": "path",
             "description": "id",
             "required": true,
@@ -465,7 +465,7 @@
         }
       }
     },
-    "/store/:id": {
+    "/store/:storeID": {
       "get": {
         "summary": "get info by id",
         "tags": [
@@ -473,7 +473,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "storeID",
             "in": "path",
             "description": "id",
             "required": true,
@@ -519,7 +519,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "storeID",
             "in": "path",
             "description": "id",
             "required": true,
@@ -808,7 +808,7 @@
         }
       }
     },
-    "/client/orders/:id": {
+    "/client/orders/:userID": {
       "get": {
         "tags": [
           "order"
@@ -871,7 +871,7 @@
         }
       }
     },
-    "/courier/orders/:id": {
+    "/courier/orders/:courierID": {
       "get": {
         "tags": [
           "order"

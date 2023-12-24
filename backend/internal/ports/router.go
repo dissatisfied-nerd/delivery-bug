@@ -29,7 +29,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 			client.POST("/login", h.ClientAuthHandler.SignInClient)
 			client.POST("/register", h.ClientAuthHandler.SignUpClient)
 			//client.Use(authMiddleware.Middleware(&logger))
-			client.GET("/:id", h.ClientHandler.GetInfoByID)
+			client.GET("/:clientID", h.ClientHandler.GetInfoByID)
 			router.GET("/client/orders/:userID", h.OrderHandler.GetOrdersByUserID)
 		}
 		courier := router.Group("/courier")
@@ -37,7 +37,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 			courier.POST("/login", h.CourierAuthHandler.SignInCourier)
 			courier.POST("/register", h.CourierAuthHandler.SignUpCourier)
 			//courier.Use(authMiddleware.Middleware(&logger))
-			courier.GET("/:id", h.CourierAuthHandler.GetInfoByID)
+			courier.GET("/:courierID", h.CourierAuthHandler.GetInfoByID)
 			router.GET("/orders/free", h.OrderHandler.GetFreeOrders)
 			router.GET("courier/orders/:courierID", h.OrderHandler.GetOrdersByCourierID)
 		}
@@ -45,14 +45,14 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 		{
 			store.POST("/login", h.StoreHandler.SignInStore)
 			store.POST("/register", h.StoreHandler.SignUpStore)
-			store.GET("/:id", h.StoreHandler.GetInfoByID)
+			store.GET("/:storeID", h.StoreHandler.GetInfoByID)
 			store.POST("/products/:storeID", h.ProductHandler.CreateProduct)
 			store.GET("/products/:storeID", h.ProductHandler.GetProductsByStore)
 		}
 		//products := router.Group("/products")
 		{
 			router.GET("/products", h.ProductHandler.GetProducts)
-			router.GET("/products/:id", h.ProductHandler.GetProductByID)
+			router.GET("/products/:productID", h.ProductHandler.GetProductByID)
 		}
 		orders := router.Group("/orders")
 		{

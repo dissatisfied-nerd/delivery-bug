@@ -42,11 +42,11 @@ VALUES
 -- Заполнение таблицы "couriers_loginform"
 INSERT INTO couriers_loginform (login, password, courier_id)
 VALUES
-    ('courier1', 'courierpass1', (SELECT id FROM couriers WHERE first_name = 'Courier1_First')),
-    ('courier2', 'courierpass2', (SELECT id FROM couriers WHERE first_name = 'Courier2_First')),
-    ('courier3', 'courierpass3', (SELECT id FROM couriers WHERE first_name = 'Courier3_First')),
-    ('courier4', 'courierpass4', (SELECT id FROM couriers WHERE first_name = 'Courier4_First')),
-    ('courier5', 'courierpass5', (SELECT id FROM couriers WHERE first_name = 'Courier5_First'));
+    ('courier1', 'courierpass1', (SELECT id FROM couriers WHERE first_name = 'Courier1_First' LIMIT 1)),
+    ('courier2', 'courierpass2', (SELECT id FROM couriers WHERE first_name = 'Courier2_First' LIMIT 1)),
+    ('courier3', 'courierpass3', (SELECT id FROM couriers WHERE first_name = 'Courier3_First' LIMIT 1)),
+    ('courier4', 'courierpass4', (SELECT id FROM couriers WHERE first_name = 'Courier4_First' LIMIT 1)),
+    ('courier5', 'courierpass5', (SELECT id FROM couriers WHERE first_name = 'Courier5_First' LIMIT 1));
 
 -- Заполнение таблицы "administrators"
 INSERT INTO administrators (first_name, surname, last_name)
@@ -59,11 +59,11 @@ VALUES
 
 INSERT INTO administrators_loginform (login, password, administrator_id)
 VALUES
-    ('admin1', 'adminpass1', (SELECT id FROM administrators WHERE first_name = 'Admin1_First')),
-    ('admin2', 'adminpass2', (SELECT id FROM administrators WHERE first_name = 'Admin2_First')),
-    ('admin3', 'adminpass3', (SELECT id FROM administrators WHERE first_name = 'Admin3_First')),
-    ('admin4', 'adminpass4', (SELECT id FROM administrators WHERE first_name = 'Admin4_First')),
-    ('admin5', 'adminpass5', (SELECT id FROM administrators WHERE first_name = 'Admin5_First'));
+    ('admin1', 'adminpass1', (SELECT id FROM administrators WHERE first_name = 'Admin1_First' LIMIT 1)),
+    ('admin2', 'adminpass2', (SELECT id FROM administrators WHERE first_name = 'Admin2_First' LIMIT 1)),
+    ('admin3', 'adminpass3', (SELECT id FROM administrators WHERE first_name = 'Admin3_First' LIMIT 1)),
+    ('admin4', 'adminpass4', (SELECT id FROM administrators WHERE first_name = 'Admin4_First' LIMIT 1)),
+    ('admin5', 'adminpass5', (SELECT id FROM administrators WHERE first_name = 'Admin5_First' LIMIT 1));
 
 -- Заполнение таблицы "stores"
 INSERT INTO stores (reputation, name, first_name, surname, last_name, address_id)
@@ -76,11 +76,11 @@ VALUES
 
 INSERT INTO stores_loginform (login, password, store_id)
 VALUES
-    ('store1', 'storepass1', (SELECT id FROM stores WHERE name = 'Store1')),
-    ('store2', 'storepass2', (SELECT id FROM stores WHERE name = 'Store2')),
-    ('store3', 'storepass3', (SELECT id FROM stores WHERE name = 'Store3')),
-    ('store4', 'storepass4', (SELECT id FROM stores WHERE name = 'Store4')),
-    ('store5', 'storepass5', (SELECT id FROM stores WHERE name = 'Store5'));
+    ('store1', 'storepass1', (SELECT id FROM stores WHERE name = 'Store1' LIMIT 1)),
+    ('store2', 'storepass2', (SELECT id FROM stores WHERE name = 'Store2' LIMIT 1)),
+    ('store3', 'storepass3', (SELECT id FROM stores WHERE name = 'Store3' LIMIT 1)),
+    ('store4', 'storepass4', (SELECT id FROM stores WHERE name = 'Store4' LIMIT 1)),
+    ('store5', 'storepass5', (SELECT id FROM stores WHERE name = 'Store5' LIMIT 1));
 
 -- Заполнение таблицы "products"
 INSERT INTO products (name, price, weight, description, image)

@@ -82,14 +82,6 @@ type StoresLoginForm struct {
 
 	Password string `db:"password"`
 
-	StoreId string `db:"store_id"`
-}
-
-type StoresLoginForm struct {
-	Login string `db:"login"`
-
-	Password string `db:"password"`
-
 	StoreID string `db:"store_id"`
 }
 
@@ -103,11 +95,7 @@ type Product struct {
 	Image       []byte  `db:"image" json:"image"`
 
 	Administrator_id string `db:"administrator_id"`
-}
-
-type ProductsStores struct {
-	ProductId string `db:"product_id"`
-	StoreId   string `db:"store_id"`
+	StoreId          string `db:"store_id"`
 }
 
 type Order struct {

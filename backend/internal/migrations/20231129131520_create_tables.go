@@ -87,7 +87,8 @@ func upCreateTables(tx *sql.Tx) error {
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
     first_name varchar(128),
-    last_name varchar(128)
+    surname    varchar(128),
+	last_name  varchar(128)
 );`)
 	if err != nil {
 		return err
@@ -95,29 +96,11 @@ func upCreateTables(tx *sql.Tx) error {
 
 	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS administrators_loginform
 (
-<<<<<<< HEAD
-    id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    name       varchar(128),
-    address_id UUID REFERENCES addresses (id)
-);`)
-	if err != nil {
-		return err
-	}
-
-	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS stores_loginform
-(
-    login varchar(128) PRIMARY KEY,
-
-    password varchar(128),
-
-    store_id UUID REFERENCES stores (id)
-=======
-	login    varchar(128) PRIMARY KEY,
-
-	password varchar(128),
-
-	administrator_id UUID REFERENCES administrator (id)
->>>>>>> f8100a2 (migrations fixed for admins and stores)
+		login    varchar(128) PRIMARY KEY,
+	
+		password varchar(128),
+	
+		administrator_id UUID REFERENCES administrators (id)
 );`)
 	if err != nil {
 		return err
@@ -137,13 +120,13 @@ func upCreateTables(tx *sql.Tx) error {
 (
 		id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 	
-		reputation int,                      -- Считается как-нибудь
-		name       varchar(128),             -- Имя магазина
-		first_name varchar(128),             -- Данные юрлица-представителя
+		reputation int,                      
+		name       varchar(128),             
+		first_name varchar(128),             
 		surname    varchar(128),
 		last_name  varchar(128),
 	
-		address_id UUID REFERENCES addresses (id) -- Юридический адрес
+		address_id UUID REFERENCES addresses (id)
 );`)
 	if err != nil {
 		return err
@@ -171,17 +154,8 @@ func upCreateTables(tx *sql.Tx) error {
     description      varchar(512),
     image            varchar(255),
 
-	administrator_id UUID REFERENCES administrators (id)
-);`)
-	if err != nil {
-		return err
-	}
-
-	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS products_stores
-(
-    product_id UUID REFERENCES products (id),
-    store_id UUID REFERENCES stores (id),
-    PRIMARY KEY (product_id, store_id)
+	administrator_id UUID REFERENCES administrators (id),
+	store_id UUID REFERENCES stores (id)
 );`)
 	if err != nil {
 		return err
@@ -241,10 +215,6 @@ func downCreateTables(tx *sql.Tx) error {
 		return err
 	}
 	_, err = tx.Exec(`drop table orders cascade;`)
-	if err != nil {
-		return err
-	}
-	_, err = tx.Exec(`drop table products_stores;`)
 	if err != nil {
 		return err
 	}

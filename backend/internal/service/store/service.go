@@ -8,6 +8,7 @@ import (
 	storeRepo "delivery-bug/internal/repo/store"
 	"delivery-bug/pkg/logging"
 	"errors"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -59,7 +60,8 @@ func (s *Service) CreateStore(ctx context.Context, input auth.SignUpStoreInput) 
 		return "", err
 	}
 
-	store := dtos.StoreDTO{Name: input.Name}
+	store := dtos.StoreDTO{Reputation: input.Reputation, Name: input.Name, FirstName: input.FirstName,
+		Surname: input.Surname, LastName: input.LastName}
 	storeID, err := s.repo.InsertStore(ctx, store, addressID)
 	if err != nil {
 		return "", err

@@ -7,5 +7,14 @@ type ProductDTO struct {
 	Price       float32 `json:"price"`
 	Weight      float32 `json:"weight"`
 	Description string  `json:"description"`
-	Image       []byte  `json:"image"`
+	Image       string  `json:"image"`
+}
+
+type ProductDTOInput struct {
+	Name        string  `json:"name"`
+	Price       float32 `json:"price"`
+	Weight      float32 `json:"weight"`
+	Description string  `json:"description"`
+	Image       string  `json:"image"`
+	StoreId     string  `json:"store_id"`
 }

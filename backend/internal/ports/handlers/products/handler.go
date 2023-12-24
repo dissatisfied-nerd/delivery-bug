@@ -1,15 +1,18 @@
 package products
 
 import (
+	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/repo/product"
 	"delivery-bug/pkg/logging"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ProductHandler interface {
 	GetProducts(ctx *gin.Context)
 	GetProductByID(ctx *gin.Context)
+	CreateProduct(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -46,4 +49,21 @@ func (h *Handler) GetProductByID(ctx *gin.Context) {
 
 	h.l.Info(info)
 	ctx.JSON(http.StatusOK, gin.H{"product": info})
+}
+
+func (h *Handler) CreateProduct(ctx *gin.Context) {
+	var input dtos.ProductDTOInput
+	err := ctx.ShouldBindJSON(&input)
+	if err != nil {
+		h.l.Error(err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+	res, err := h.repo.InsertProduct(ctx, &input)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"order": res})
 }

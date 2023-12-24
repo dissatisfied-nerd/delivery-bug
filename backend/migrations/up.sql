@@ -108,14 +108,8 @@ CREATE TABLE IF NOT EXISTS products
     description      varchar(512),
     image            varchar(255),
 
-    administrator_id UUID REFERENCES administrators (id) -- Одобривший товар администратор
-);
-
-CREATE TABLE IF NOT EXISTS products_stores
-(
-    product_id UUID REFERENCES products (id),
-    store_id   UUID REFERENCES stores (id),
-    PRIMARY KEY (product_id, store_id)
+    administrator_id UUID REFERENCES administrators (id), -- Одобривший товар администратор
+    store_id UUID REFERENCES stores (id)
 );
 
 CREATE TABLE IF NOT EXISTS orders

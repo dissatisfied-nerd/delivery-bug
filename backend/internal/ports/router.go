@@ -7,8 +7,9 @@ import (
 	"delivery-bug/internal/repo"
 	"delivery-bug/internal/service"
 	"delivery-bug/pkg/logging"
-	"github.com/go-playground/validator/v10"
 	"net/http"
+
+	"github.com/go-playground/validator/v10"
 
 	"github.com/gin-gonic/gin"
 )
@@ -50,6 +51,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 		{
 			router.GET("/products", h.ProductHandler.GetProducts)
 			router.GET("/products/:id", h.ProductHandler.GetProductByID)
+			router.POST("/products/create", h.ProductHandler.CreateProduct)
 		}
 		orders := router.Group("/orders")
 		{

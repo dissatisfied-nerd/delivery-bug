@@ -6,6 +6,7 @@ import (
 	"delivery-bug/internal/models"
 	"delivery-bug/pkg/logging"
 	"errors"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -70,7 +71,9 @@ func (r *Repository) InsertAddress(ctx context.Context, addressDto dtos.AddressD
 
 func (r *Repository) InsertStore(ctx context.Context, storeDTO dtos.StoreDTO, addressID string) (string, error) {
 	var insertedStoreID string
-	err := r.db.QueryRow(ctx, insertStoreQuery, storeDTO.Name, addressID).Scan(&insertedStoreID)
+	err := r.db.QueryRow(ctx, insertStoreQuery,
+		storeDTO.Reputation, storeDTO.Name, storeDTO.FirstName, storeDTO.Surname, storeDTO.LastName,
+		addressID).Scan(&insertedStoreID)
 	if err != nil {
 		r.l.Errorf("error inserting store %s to db: %v", storeDTO.Name, err)
 		return "", err
@@ -96,7 +99,8 @@ func (r *Repository) InsertLoginForm(ctx context.Context, form models.StoresLogi
 func (r *Repository) SelectInfoByID(ctx context.Context, id string) (dtos.StoreInfo, error) {
 	var info dtos.StoreInfo
 	var addressID string
-	err := r.db.QueryRow(ctx, selectStoreQuery, id).Scan(&info.Name, &addressID)
+	err := r.db.QueryRow(ctx, selectStoreQuery, id).Scan(&info.Reputation, &info.Name, &info.FirstName,
+		&info.Surname, &info.LastName, &addressID)
 	if err != nil {
 		r.l.Errorf("error getting store info %s: %v", id, err)
 		return dtos.StoreInfo{}, err

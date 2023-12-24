@@ -10,8 +10,7 @@ import { ProfileStore } from "./ProfileStore/ProfileStore";
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
-    // const type = useSelector(getAuthType);
-    const type = "store";
+    const type = useSelector(getAuthType);
 
     useEffect(() => {
         dispatch(getProfileData(type));

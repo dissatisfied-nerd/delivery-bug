@@ -13,3 +13,8 @@
     font: var(--font-xl);
     margin-bottom: 10px;
 }
+
+.error {
+    color: var(--red-light);
+    display: none;
+}

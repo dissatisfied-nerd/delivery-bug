@@ -12,4 +12,5 @@
 // export const getProfileType = (state) => state.profile.data.type || "client";
 export const getClientOrders = (state) => state.client.orders;
 export const getClientData = (state) => state.client.data;
-export const getClientId = (state) => state.client.client_id;
+export const getClientId = (state) => state.client.client_id || "";
+export const getClientError = (state) => state.client.error || "";

@@ -10,7 +10,7 @@ import {
     fetchCourierOrders,
     getCourierId,
 } from "entities/Courier";
-import { fetchGoodData } from "entities/Good";
+import { fetchProductData } from "entities/Product";
 import { authActions, getAuthType } from "features/Auth";
 
 export const fetchProfileOrders = createAsyncThunk(
@@ -46,7 +46,10 @@ export const fetchProfileOrders = createAsyncThunk(
                 }
             }
         } catch (e) {
-            return rejectWithValue("error");
+            return rejectWithValue(
+                e?.response?.data?.error ||
+                    "Что-то пошло не так. Попробуйте еще раз"
+            );
         }
     }
 );

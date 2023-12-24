@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchClientData, getClientId } from "entities/Client";
 import { fetchCourierData, getCourierId } from "entities/Courier";
-import { fetchMarketData, getMarketId } from "entities/Market";
+import { fetchStoreData, getStoreId } from "entities/Store";
 import { authActions, getAuthType } from "features/Auth";
 
 export const getProfileData = createAsyncThunk(
@@ -21,9 +21,9 @@ export const getProfileData = createAsyncThunk(
                 const id = getCourierId(getState());
                 const { payload } = await dispatch(fetchCourierData(id));
                 data = payload;
-            } else if (type === "market") {
-                const id = getMarketId(getState());
-                const { payload } = await dispatch(fetchMarketData(id));
+            } else if (type === "store") {
+                const id = getStoreId(getState());
+                const { payload } = await dispatch(fetchStoreData(id));
                 data = payload;
             }
 

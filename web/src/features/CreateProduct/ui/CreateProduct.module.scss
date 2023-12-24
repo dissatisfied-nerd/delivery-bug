@@ -1,0 +1,26 @@
+.CreateProduct {
+    width: 800px;
+    // border: 1px solid var(--inverted-bg-color);
+    box-shadow: var(--shadow);
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font: var(--font-xl);
+    margin-bottom: 20px;
+}
+
+.input {
+    margin-bottom: 10px;
+}
+
+.error {
+    color: var(--red-light);
+}
+
+.createBtn {
+    margin-top: 20px;
+}

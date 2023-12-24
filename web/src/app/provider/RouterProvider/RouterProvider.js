@@ -1,8 +1,8 @@
 import { getAuthIsAuth, getAuthType } from "features/Auth";
 import { AuthPage } from "pages/AuthPage";
 import { CartPage } from "pages/CartPage";
-import { CreateGoodPage } from "pages/CreateGoodPage";
-import { GoodsPage } from "pages/GoodsPage";
+import { CreateProductPage } from "pages/CreateProductPage";
+import { ProductsPage } from "pages/ProductsPage";
 import { NotFoundPage } from "pages/NotFoundPage";
 import { OrdersPage } from "pages/OrdersPage";
 import { ProfilePage } from "pages/ProfilePage";
@@ -20,7 +20,7 @@ export const RouterProvider = () => {
         routes = (
             <>
                 <Route element={<AuthPage />} path="/auth" />
-                <Route element={<AuthPage />} path="/market/auth" />
+                <Route element={<AuthPage />} path="/store/auth" />
                 <Route element={<AuthPage />} path="/admin/auth" />
             </>
         );
@@ -28,7 +28,7 @@ export const RouterProvider = () => {
         if (type === "client") {
             routes = (
                 <>
-                    <Route element={<GoodsPage />} path="/" />
+                    <Route element={<ProductsPage />} path="/" />
                     <Route element={<ProfilePage />} path="/profile" />
                     <Route element={<CartPage />} path="/cart" />
                 </>
@@ -40,28 +40,28 @@ export const RouterProvider = () => {
                     <Route element={<ProfilePage />} path="/profile" />
                 </>
             );
-        } else if (type === "market") {
+        } else if (type === "store") {
             routes = (
                 <>
-                    <Route element={<CreateGoodPage />} path="/" />
+                    <Route element={<CreateProductPage />} path="/" />
                     <Route element={<ProfilePage />} path="/profile" />
                 </>
             );
         } else if (type === "admin") {
             routes = (
                 <>
-                    <Route element={<GoodsPage />} path="/" />
+                    <Route element={<ProductsPage />} path="/" />
                 </>
             );
         }
     }
 
     // TESTING
-    routes = (
-        <>
-            <Route element={<GoodsPage />} path="/" />
-        </>
-    );
+    // routes = (
+    //     <>
+    //         <Route element={<ProductsPage />} path="/" />
+    //     </>
+    // );
 
     return (
         <Routes>

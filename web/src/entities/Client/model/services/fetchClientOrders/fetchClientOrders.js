@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clientActions } from "entities/Client";
 import { courierActions } from "entities/Courier";
-import { fetchGoodData } from "entities/Good";
+import { fetchProductData } from "entities/Product";
 import { authActions, getAuthType } from "features/Auth";
 
 export const fetchClientOrders = createAsyncThunk(
@@ -20,19 +20,19 @@ export const fetchClientOrders = createAsyncThunk(
             let orders = response.data.orders;
             if (orders) {
                 const response = await orders.map(async (order) => {
-                    const goodsData = await order.products.map(
+                    const productsData = await order.products.map(
                         async (product) => {
                             const { payload } = await dispatch(
-                                fetchGoodData(product.product_id)
+                                fetchProductData(product.product_id)
                             );
                             return { amount: product.amount, ...payload };
                         }
                     );
-                    const goodsResult = await Promise.all(goodsData);
+                    const productsResult = await Promise.all(productsData);
 
                     return {
                         ...order,
-                        products: goodsResult,
+                        products: productsResult,
                     };
                 });
                 orders = await Promise.all(response);
@@ -40,7 +40,10 @@ export const fetchClientOrders = createAsyncThunk(
 
             return orders;
         } catch (e) {
-            return rejectWithValue("error");
+            return rejectWithValue(
+                e?.response?.data?.error ||
+                    "Что-то пошло не так. Попробуйте еще раз"
+            );
         }
     }
 );

@@ -2,11 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { adminReducer } from "entities/Admin";
 import { clientReducer } from "entities/Client";
 import { courierReducer } from "entities/Courier";
-import { marketReducer } from "entities/Market";
+import { storeReducer } from "entities/Store";
 import { authReducer } from "features/Auth";
 import { cartReducer } from "features/Cart";
-import { createGoodReducer } from "features/CreateGood";
-import { goodsPageReducer } from "pages/GoodsPage";
+import { createProductReducer } from "features/CreateProduct";
+import { productsPageReducer } from "pages/ProductsPage";
 import { ordersPageReducer } from "pages/OrdersPage";
 import { $api } from "shared/api/api";
 
@@ -18,13 +18,13 @@ export const store = configureStore({
     reducer: {
         client: clientReducer,
         courier: courierReducer,
-        market: marketReducer,
+        store: storeReducer,
         admin: adminReducer,
         auth: authReducer,
         cart: cartReducer,
-        goodsPage: goodsPageReducer,
+        productsPage: productsPageReducer,
         ordersPage: ordersPageReducer,
-        createGood: createGoodReducer,
+        createProduct: createProductReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

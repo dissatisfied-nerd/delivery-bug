@@ -7,24 +7,17 @@ import { Button } from "shared/ui/Button/Button";
 import { Card } from "shared/ui/Card/Card";
 import cls from "./OrderListItem.module.scss";
 
-const getWeight = (goods) => {
+const getWeight = (products) => {
     let weight = 0;
-    goods.forEach(({ amount, ...good }) => {
-        weight += Number(good.weight) * 1000 * amount;
+    products.forEach(({ amount, ...product }) => {
+        weight += Number(product.weight) * 1000 * amount;
     });
 
     return (weight / 1000).toFixed(2);
 };
 
 export const OrderListItem = (props) => {
-    const {
-        order,
-        type = "client",
-        taken = false,
-        page,
-        onTakeOrder,
-        onCancelOrder,
-    } = props;
+    const { order, type = "client", page, onTakeOrder, onCancelOrder } = props;
     const creationTime = getFormatedData(order.creation_time);
     const deliveryTime = getFormatedData(order.delivery_time);
 
@@ -37,19 +30,20 @@ export const OrderListItem = (props) => {
                 </div>
                 <div className={cls.body}>
                     <span>
-                        {order.delivered
+                        {order.delivery_time
                             ? `Дата доставки: ${deliveryTime}`
-                            : order.courierId
+                            : order.status === "taken"
                             ? `Статус: В пути`
                             : "Статус: Создан"}
                     </span>
-                    <div className={cls.goodsImgList}>
-                        {order.products.map((good) => {
+                    <div className={cls.productsImgList}>
+                        {order.products.map((product) => {
                             return (
                                 <img
-                                    className={cls.goodsImgItem}
-                                    src={good.image}
-                                    alt={good.name}
+                                    key={product.id}
+                                    className={cls.productsImgItem}
+                                    src={product.image}
+                                    alt={product.name}
                                 />
                             );
                         })}
@@ -78,33 +72,35 @@ export const OrderListItem = (props) => {
                     <span>{order.price} ₽</span>
                 </div>
                 <div className={cls.body}>
-                    <div className={cls.goodsTitleList}>
-                        {order.products.map(({ amount, ...good }) => {
+                    <div className={cls.productsTitleList}>
+                        {order.products.map(({ amount, ...product }) => {
                             return (
-                                <div key={good.id}>
+                                <div key={product.id}>
                                     <span>{amount}x: </span>
-                                    <span>{good.name}</span>
+                                    <span>{product.name}</span>
                                 </div>
                             );
                         })}
                     </div>
                     <div className={cls.takeOrderWrapper}>
                         {page === "profile" ? (
-                            <Button
-                                className={cls.takeOrderBtn}
-                                onClick={() => onCancelOrder(order.id)}
-                            >
-                                Завершить
-                            </Button>
-                        ) : !taken ? (
+                            order.status !== "finished" && (
+                                <Button
+                                    className={cls.takeOrderBtn}
+                                    onClick={() =>
+                                        onCancelOrder(order.order_id)
+                                    }
+                                >
+                                    Завершить
+                                </Button>
+                            )
+                        ) : (
                             <Button
                                 className={cls.takeOrderBtn}
                                 onClick={() => onTakeOrder(order.id)}
                             >
                                 Взять заказ
                             </Button>
-                        ) : (
-                            <span>Вы взяли заказ</span>
                         )}
                     </div>
                 </div>

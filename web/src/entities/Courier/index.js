@@ -9,7 +9,10 @@
 // import { getCourierAparts } from "./model/selectors/getProfleData";
 // import { getCourierPassword } from "./model/selectors/getProfleData";
 // import { getCourierType } from "./model/selectors/getProfleData";
-import { getCourierOrders } from "./model/selectors/getCourierData";
+import {
+    getCourierError,
+    getCourierOrders,
+} from "./model/selectors/getCourierData";
 
 import { courierActions } from "./model/slice/CourierSlice";
 import { courierReducer } from "./model/slice/CourierSlice";
@@ -41,4 +44,5 @@ export {
     getCourierId,
     fetchCourierData,
     fetchCourierOrders,
+    getCourierError,
 };

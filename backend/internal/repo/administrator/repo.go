@@ -75,3 +75,13 @@ func (r *Repository) InsertLoginForm(ctx context.Context, form models.Administra
 	r.l.Infof("insert loginform %s in db", form.Login)
 	return nil
 }
+
+func (r *Repository) CheckPassPhrase(ctx context.Context, passphrase string) error {
+	rows, _ := r.db.Query(ctx, selectPassPhraseQuery, passphrase)
+	defer rows.Close()
+	if rows.Next() {
+		return errors.New("login has already been taken")
+	} else {
+		return nil
+	}
+}

@@ -11,4 +11,5 @@ const (
 	selectAdministratorQuery = `SELECT first_name, surname, last_name 
 		FROM administrators 
 		WHERE id=$1`
+	selectPassPhraseQuery = `SELECT passphrase FROM administrators_passphrases`
 )

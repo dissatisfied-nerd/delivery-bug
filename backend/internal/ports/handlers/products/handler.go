@@ -4,8 +4,9 @@ import (
 	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/repo/product"
 	"delivery-bug/pkg/logging"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ProductHandler interface {
@@ -13,6 +14,7 @@ type ProductHandler interface {
 	GetProductByID(ctx *gin.Context)
 	CreateProduct(ctx *gin.Context)
 	GetProductsByStore(ctx *gin.Context)
+	DeleteProductById(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -80,4 +82,15 @@ func (h *Handler) GetProductsByStore(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"products": res})
+}
+
+func (h *Handler) DeleteProductById(ctx *gin.Context) {
+	productID := ctx.Param("productID")
+	err := h.repo.DeleteProductById(ctx, productID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"product_id": productID})
 }

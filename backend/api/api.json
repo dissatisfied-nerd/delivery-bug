@@ -305,6 +305,56 @@
         }
       }
     },
+    "/administrator/register": {
+      "post": {
+        "summary": "sign up administrator",
+        "tags": [
+          "administrator"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpAdministratorInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "client_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/logout": {
       "post": {
         "summary": "logout",
@@ -1102,6 +1152,33 @@
           },
           "registration": {
             "type": "boolean"
+          }
+        }
+      },
+      "SignUpAdministratorInput": {
+        "required": [
+          "login",
+          "password",
+          "first_name",
+          "surname",
+          "last_name"
+        ],
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
           }
         }
       },

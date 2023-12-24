@@ -2,6 +2,7 @@ package migrations
 
 import (
 	"database/sql"
+
 	"github.com/pressly/goose"
 )
 
@@ -86,7 +87,30 @@ func upCreateTables(tx *sql.Tx) error {
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
     first_name varchar(128),
-    last_name varchar(128)
+    surname    varchar(128),
+	last_name  varchar(128)
+);`)
+	if err != nil {
+		return err
+	}
+
+	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS administrators_loginform
+(
+		login    varchar(128) PRIMARY KEY,
+	
+		password varchar(128),
+	
+		administrator_id UUID REFERENCES administrators (id)
+);`)
+	if err != nil {
+		return err
+	}
+
+	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS administrators_passphrases
+(
+	id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+	
+	passphrase varchar(128)
 );`)
 	if err != nil {
 		return err
@@ -94,9 +118,15 @@ func upCreateTables(tx *sql.Tx) error {
 
 	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS stores
 (
-    id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    name       varchar(128),
-    address_id UUID REFERENCES addresses (id)
+		id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+	
+		reputation int,                      
+		name       varchar(128),             
+		first_name varchar(128),             
+		surname    varchar(128),
+		last_name  varchar(128),
+	
+		address_id UUID REFERENCES addresses (id)
 );`)
 	if err != nil {
 		return err
@@ -104,23 +134,12 @@ func upCreateTables(tx *sql.Tx) error {
 
 	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS stores_loginform
 (
-    login varchar(128) PRIMARY KEY,
-
-    password varchar(128),
-
-    store_id UUID REFERENCES stores (id)
+		login    varchar(128) PRIMARY KEY,
+	
+		password varchar(128),
+	
+		store_id UUID REFERENCES stores (id)
 );`)
-	if err != nil {
-		return err
-	}
-
-	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS tags
-(
-    id       UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-
-    tag varchar(128)
-);
-`)
 	if err != nil {
 		return err
 	}
@@ -134,27 +153,9 @@ func upCreateTables(tx *sql.Tx) error {
     weight           float,
     description      varchar(512),
     image            varchar(255),
-	store_id  		 UUID REFERENCES stores(id)
-);`)
-	if err != nil {
-		return err
-	}
 
-	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS products_stores
-(
-    product_id UUID REFERENCES products (id),
-    store_id UUID REFERENCES stores (id),
-    PRIMARY KEY (product_id, store_id)
-);`)
-	if err != nil {
-		return err
-	}
-
-	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS products_tags
-(
-    product_id  UUID REFERENCES products (id),
-    tag_id UUID REFERENCES tags (id),
-    PRIMARY KEY (product_id, tag_id)
+	administrator_id UUID REFERENCES administrators (id),
+	store_id UUID REFERENCES stores (id)
 );`)
 	if err != nil {
 		return err
@@ -217,19 +218,11 @@ func downCreateTables(tx *sql.Tx) error {
 	if err != nil {
 		return err
 	}
-	_, err = tx.Exec(`drop table products_stores;`)
-	if err != nil {
-		return err
-	}
-	_, err = tx.Exec(`drop table products_tags cascade;`)
-	if err != nil {
-		return err
-	}
 	_, err = tx.Exec(`drop table products cascade;`)
 	if err != nil {
 		return err
 	}
-	_, err = tx.Exec(`drop table tags cascade;`)
+	_, err = tx.Exec(`drop table stores_loginform cascade;`)
 	if err != nil {
 		return err
 	}
@@ -237,15 +230,19 @@ func downCreateTables(tx *sql.Tx) error {
 	if err != nil {
 		return err
 	}
+	_, err = tx.Exec(`drop table administrators_loginform cascade;`)
+	if err != nil {
+		return err
+	}
 	_, err = tx.Exec(`drop table administrators cascade;`)
 	if err != nil {
 		return err
 	}
-	_, err = tx.Exec(`drop table couriers cascade;`)
+	_, err = tx.Exec(`drop table clients_loginform cascade;`)
 	if err != nil {
 		return err
 	}
-	_, err = tx.Exec(`drop table clients_loginform cascade;`)
+	_, err = tx.Exec(`drop table couriers cascade;`)
 	if err != nil {
 		return err
 	}

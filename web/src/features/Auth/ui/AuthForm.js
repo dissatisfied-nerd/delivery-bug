@@ -181,10 +181,10 @@ export const AuthForm = () => {
             signUpData = {
                 first_name,
                 last_name,
-                father_name,
+                surname: father_name,
                 login,
                 password,
-                secret_word,
+                // secret_word,
             };
         }
         const result = await dispatch(sendRegisterData(signUpData));
@@ -195,9 +195,7 @@ export const AuthForm = () => {
 
     const onLogin = useCallback(async () => {
         const loginData =
-            type === "admin"
-                ? { login, password, secret_word }
-                : { login, password };
+            type === "admin" ? { login, password } : { login, password };
         const result = await dispatch(sendLoginData(loginData));
         if (!result.meta.rejectedWithValue) {
             onSuccess();
@@ -384,12 +382,12 @@ export const AuthForm = () => {
                     label="Пароль"
                     value={password}
                 />
-                <Input
+                {/* <Input
                     className={cls.input}
                     onChange={onChangeSecretWord}
                     label="Кодовое слово"
                     value={secret_word}
-                />
+                /> */}
             </>
         );
 
@@ -439,14 +437,14 @@ export const AuthForm = () => {
                     label="Пароль"
                     value={password}
                 />
-                {type === "admin" && (
+                {/* {type === "admin" && (
                     <Input
                         className={cls.input}
                         onChange={onChangeSecretWord}
                         label="Кодовое слово"
                         value={secret_word}
                     />
-                )}
+                )} */}
                 {(type === "client" || type === "courier") && (
                     <select
                         className={cls.input}

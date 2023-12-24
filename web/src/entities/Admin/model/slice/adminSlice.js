@@ -20,7 +20,7 @@ export const adminSlice = createSlice({
     name: "admin",
     initialState,
     reducers: {
-        setClientData: (state, action) => {
+        setAdminData: (state, action) => {
             const { admin_id, ...data } = action.payload;
             state.admin_id = admin_id;
             state.data = data;

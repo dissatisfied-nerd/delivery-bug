@@ -15,6 +15,7 @@ type AdministratorsRepository interface {
 	CheckLoginTaken(ctx context.Context, login string) error
 	InsertAdministratorQuery(ctx context.Context, administratorDto dtos.AdministratorDTO) (string, error)
 	InsertLoginForm(ctx context.Context, form models.AdministratorsLoginForm) error
+	CheckPassPhrase(ctx context.Context, passphrase string) error
 }
 
 type Repository struct {
@@ -77,11 +78,16 @@ func (r *Repository) InsertLoginForm(ctx context.Context, form models.Administra
 }
 
 func (r *Repository) CheckPassPhrase(ctx context.Context, passphrase string) error {
-	rows, _ := r.db.Query(ctx, selectPassPhraseQuery, passphrase)
-	defer rows.Close()
-	if rows.Next() {
-		return errors.New("login has already been taken")
-	} else {
-		return nil
+	var passphraseId string
+	err := r.db.QueryRow(ctx, selectPassPhraseQuery, passphrase).Scan(&passphraseId)
+
+	if errors.Is(err, errors.New("no rows in result set")) {
+		r.l.Infof("No such passphrase %s", passphrase)
+		return err
+	} else if err != nil {
+		r.l.Infof("ERROR while checking passphrase %s %v", passphrase, err)
+		return err
 	}
+
+	return nil
 }

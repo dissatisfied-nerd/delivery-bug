@@ -49,6 +49,12 @@ func (s *Service) CreateAdministrator(ctx context.Context, input auth.SignUpAdmi
 		return "", err
 	}
 
+	err = s.repo.CheckPassPhrase(ctx, input.Passphrase)
+	if err != nil {
+		s.l.Error(err)
+		return "", errors.New("no such passphrase")
+	}
+
 	admin := dtos.AdministratorDTO{FirstName: input.FirstName, Surname: input.Surname, LastName: input.LastName}
 	adminID, err := s.repo.InsertAdministratorQuery(ctx, admin)
 	if err != nil {

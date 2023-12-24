@@ -13,7 +13,7 @@ import (
 )
 
 type AdministratorService interface {
-	CreateAdministrator(ctx context.Context, input auth.SignUpAdministrator) (string, error)
+	CreateAdministrator(ctx context.Context, input auth.SignUpAdministratorInput) (string, error)
 	CheckAdministrator(ctx context.Context, input auth.SignInInput) (string, error)
 }
 
@@ -29,8 +29,8 @@ func NewService(repo administrator.AdministratorsRepository, l logging.Logger) *
 func (s *Service) CheckAdministrator(ctx context.Context, input auth.SignInInput) (string, error) {
 	form, err := s.repo.CheckLogin(ctx, input.Login)
 	if err != nil {
-		s.l.Error("there is no user with such login")
-		return "", errors.New("there is no user with such login")
+		s.l.Error("there is no admin with such login")
+		return "", errors.New("there is no admin with such login")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(form.Password), []byte(input.Password))
@@ -42,7 +42,7 @@ func (s *Service) CheckAdministrator(ctx context.Context, input auth.SignInInput
 	return form.AdministratorId, nil
 }
 
-func (s *Service) CreateAdministrator(ctx context.Context, input auth.SignUpAdministrator) (string, error) {
+func (s *Service) CreateAdministrator(ctx context.Context, input auth.SignUpAdministratorInput) (string, error) {
 	err := s.repo.CheckLoginTaken(ctx, input.Login)
 	if err != nil && !errors.Is(err, errors.New("no rows in result set")) {
 		s.l.Error(err)

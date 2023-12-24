@@ -50,16 +50,16 @@ func (r *Repository) CheckLoginTaken(ctx context.Context, login string) error {
 }
 
 func (r *Repository) InsertAdministratorQuery(ctx context.Context, administratorDto dtos.AdministratorDTO) (string, error) {
-	var insertedUserID string
+	var insertedAdminID string
 	err := r.db.QueryRow(ctx, insertAdministratorQuery, administratorDto.FirstName, administratorDto.Surname,
-		administratorDto.LastName).Scan(&insertedUserID)
+		administratorDto.LastName).Scan(&insertedAdminID)
 	if err != nil {
 		r.l.Errorf("ERROR while inserting administrator %s %s %s in db: %v",
 			administratorDto.FirstName, administratorDto.Surname, administratorDto.LastName, err)
 		return "", err
 	}
 	r.l.Infof("insert user %s %s %s in db", administratorDto.FirstName, administratorDto.Surname, administratorDto.LastName)
-	return insertedUserID, nil
+	return insertedAdminID, nil
 }
 
 func (r *Repository) InsertLoginForm(ctx context.Context, form models.AdministratorsLoginForm) error {

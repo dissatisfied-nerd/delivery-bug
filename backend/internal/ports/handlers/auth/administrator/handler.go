@@ -34,7 +34,7 @@ func NewHandler(service administrator.AdministratorService, l logging.Logger,
 }
 
 func (h *Handler) SignUpAdministrator(ctx *gin.Context) {
-	var payload auth.SignUpAdministrator
+	var payload auth.SignUpAdministratorInput
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		h.l.Errorf("ERROR can't bind json: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -65,7 +65,7 @@ func (h *Handler) SignUpAdministrator(ctx *gin.Context) {
 	ctx.SetCookie("jwt", tokenString, int(time.Now().Add(time.Hour*24*3).Unix()), "/",
 		os.Getenv("HOST"), true, true)
 
-	ctx.JSON(http.StatusOK, gin.H{"client_id": adminID})
+	ctx.JSON(http.StatusOK, gin.H{"administrator_id": adminID})
 }
 
 func (h *Handler) SignInAdministrator(ctx *gin.Context) {
@@ -85,6 +85,7 @@ func (h *Handler) SignInAdministrator(ctx *gin.Context) {
 
 	adminID, err := h.service.CheckAdministrator(ctx, payload)
 	if err != nil {
+		h.l.Error(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -99,7 +100,7 @@ func (h *Handler) SignInAdministrator(ctx *gin.Context) {
 	ctx.SetCookie("jwt", tokenString, int(time.Now().Add(time.Hour*24*3).Unix()), "/",
 		os.Getenv("HOST"), true, true)
 
-	ctx.JSON(http.StatusOK, gin.H{"client_id": adminID})
+	ctx.JSON(http.StatusOK, gin.H{"administrator_id": adminID})
 }
 
 func (h *Handler) Logout(ctx *gin.Context) {

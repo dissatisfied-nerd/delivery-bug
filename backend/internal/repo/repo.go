@@ -23,10 +23,11 @@ type Repository struct {
 
 func NewRepository(db *pgxpool.Pool, l logging.Logger) Repository {
 	return Repository{
-		UserRepo:    user.NewRepository(db, l),
-		CourierRepo: courier.NewRepository(db, l),
-		OrderRepo:   order.NewRepository(db, l),
-		ProductRepo: product.NewRepository(db, l),
-		StoreRepo:   store.NewRepository(db, l),
+		UserRepo:          user.NewRepository(db, l),
+		CourierRepo:       courier.NewRepository(db, l),
+		OrderRepo:         order.NewRepository(db, l),
+		ProductRepo:       product.NewRepository(db, l),
+		StoreRepo:         store.NewRepository(db, l),
+		AdministratorRepo: administrator.NewRepository(db, l),
 	}
 }

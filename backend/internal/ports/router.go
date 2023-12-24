@@ -7,8 +7,9 @@ import (
 	"delivery-bug/internal/repo"
 	"delivery-bug/internal/service"
 	"delivery-bug/pkg/logging"
-	"github.com/go-playground/validator/v10"
 	"net/http"
+
+	"github.com/go-playground/validator/v10"
 
 	"github.com/gin-gonic/gin"
 )
@@ -58,6 +59,11 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 			orders.POST("/", h.OrderHandler.CreateOrder)
 			orders.POST("/take", h.OrderHandler.TakeOrder)
 			orders.POST("/finish", h.OrderHandler.FinishOrder)
+		}
+		administrator := router.Group("/administrator")
+		{
+			administrator.POST("/login", h.AdministratorAuthHandler.SignInAdministrator)
+			administrator.POST("/register", h.AdministratorAuthHandler.SignUpAdministrator)
 		}
 		router.POST("/logout", h.ClientAuthHandler.Logout)
 	}

@@ -5,6 +5,7 @@ import (
 	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/models"
 	"delivery-bug/pkg/logging"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -13,6 +14,7 @@ type ProductsRepository interface {
 	SelectProductByID(ctx context.Context, productID string) (models.Product, error)
 	InsertProductByStore(ctx context.Context, product dtos.ProductDTO, storeID string) (string, error)
 	SelectProductsByStore(ctx context.Context, storeID string) ([]models.Product, error)
+	DeleteProductById(ctx context.Context, productID string) error
 }
 
 type Repository struct {
@@ -93,4 +95,13 @@ func (r *Repository) SelectProductsByStore(ctx context.Context, storeID string) 
 
 	r.l.Info("getting products from db")
 	return products, nil
+}
+
+func (r *Repository) DeleteProductById(ctx context.Context, productID string) error {
+	err := r.db.QueryRow(ctx, deleteProductById, productID).Scan()
+	if err != nil {
+		r.l.Errorf("error deleting product %s: %v", productID, err)
+		return err
+	}
+	return nil
 }

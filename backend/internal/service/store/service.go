@@ -14,6 +14,7 @@ import (
 type StoresService interface {
 	CheckStore(ctx context.Context, input auth.SignInInput) (string, error)
 	CreateStore(ctx context.Context, input auth.SignUpStoreInput) (string, error)
+	GetInfoByID(ctx context.Context, id string) (dtos.StoreInfo, error)
 }
 
 type Service struct {
@@ -79,4 +80,8 @@ func (s *Service) CreateStore(ctx context.Context, input auth.SignUpStoreInput) 
 	}
 
 	return storeID, nil
+}
+
+func (s *Service) GetInfoByID(ctx context.Context, id string) (dtos.StoreInfo, error) {
+	return s.repo.SelectInfoByID(ctx, id)
 }

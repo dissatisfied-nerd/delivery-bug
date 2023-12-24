@@ -46,6 +46,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 		{
 			store.POST("/login", h.StoreHandler.SignInStore)
 			store.POST("/register", h.StoreHandler.SignUpStore)
+			store.GET("/:id", h.StoreHandler.GetInfoByID)
 			store.POST("/products/:storeID", h.ProductHandler.CreateProduct)
 			store.GET("/products/:storeID", h.ProductHandler.GetProductsByStore)
 		}

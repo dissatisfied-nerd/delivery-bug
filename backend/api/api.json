@@ -8,7 +8,9 @@
     "/client/login": {
       "post": {
         "summary": "sign in user",
-        "tags": ["client"],
+        "tags": [
+          "client"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -56,7 +58,9 @@
     "/courier/login": {
       "post": {
         "summary": "sign in courier",
-        "tags": ["courier"],
+        "tags": [
+          "courier"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -104,7 +108,9 @@
     "/store/login": {
       "post": {
         "summary": "sign in store",
-        "tags": ["store"],
+        "tags": [
+          "store"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -152,7 +158,9 @@
     "/client/register": {
       "post": {
         "summary": "sign up client",
-        "tags": ["client"],
+        "tags": [
+          "client"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -200,7 +208,9 @@
     "/courier/register": {
       "post": {
         "summary": "sign up courier",
-        "tags": ["courier"],
+        "tags": [
+          "courier"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -248,7 +258,9 @@
     "/store/register": {
       "post": {
         "summary": "sign up store",
-        "tags": ["store"],
+        "tags": [
+          "store"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -313,10 +325,12 @@
     "/client/:id": {
       "get": {
         "summary": "get info by client id",
-        "tags": ["client"],
+        "tags": [
+          "client"
+        ],
         "parameters": [
           {
-            "name":"id",
+            "name": "id",
             "in": "path",
             "description": "id",
             "required": true,
@@ -357,10 +371,12 @@
     "/courier/:id": {
       "get": {
         "summary": "get info by courier id",
-        "tags": ["courier"],
+        "tags": [
+          "courier"
+        ],
         "parameters": [
           {
-            "name":"id",
+            "name": "id",
             "in": "path",
             "description": "id",
             "required": true,
@@ -398,10 +414,12 @@
         }
       }
     },
-    "/products" : {
+    "/products": {
       "get": {
         "summary": "get all products",
-        "tags": ["product"],
+        "tags": [
+          "product"
+        ],
         "responses": {
           "200": {
             "description": "ok",
@@ -416,13 +434,15 @@
         }
       }
     },
-    "/products/:id" : {
+    "/products/:id": {
       "get": {
         "summary": "get all products",
-        "tags": ["product"],
+        "tags": [
+          "product"
+        ],
         "parameters": [
           {
-            "name":"id",
+            "name": "id",
             "in": "path",
             "description": "id",
             "required": true,
@@ -445,13 +465,61 @@
         }
       }
     },
+    "/store/:id": {
+      "get": {
+        "summary": "get info by id",
+        "tags": [
+          "store"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoreInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/store/products/:storeID": {
       "get": {
         "summary": "get all products in this store",
-        "tags": ["store"],
+        "tags": [
+          "store"
+        ],
         "parameters": [
           {
-            "name":"id",
+            "name": "id",
             "in": "path",
             "description": "id",
             "required": true,
@@ -490,10 +558,12 @@
       },
       "post": {
         "summary": "insert product in that store",
-        "tags": ["store"],
+        "tags": [
+          "store"
+        ],
         "parameters": [
           {
-            "name":"id",
+            "name": "id",
             "in": "path",
             "description": "id",
             "required": true,
@@ -547,7 +617,9 @@
     },
     "/orders": {
       "post": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "create order",
         "requestBody": {
           "content": {
@@ -590,7 +662,9 @@
     },
     "/orders/take": {
       "post": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "take order by courier",
         "parameters": [
           {
@@ -643,7 +717,9 @@
     },
     "/orders/finish": {
       "post": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "finish order by courier",
         "parameters": [
           {
@@ -696,7 +772,9 @@
     },
     "/orders/free": {
       "get": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "get free orders for couriers",
         "responses": {
           "200": {
@@ -1164,7 +1242,7 @@
           "last_name": {
             "type": "string"
           },
-          "balance" : {
+          "balance": {
             "type": "number",
             "format": "float64"
           },
@@ -1209,6 +1287,45 @@
             "type": "string"
           },
           "last_name": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "building": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "entrance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "floor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "apartment": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "StoreInfo": {
+        "required": [
+          "name",
+          "city",
+          "street",
+          "building",
+          "entrance",
+          "floor",
+          "apartment"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
             "type": "string"
           },
           "city": {
@@ -1303,9 +1420,9 @@
         ],
         "type": "object",
         "properties": {
-          "products" : {
+          "products": {
             "type": "array",
-            "items":{
+            "items": {
               "$ref": "#/components/schemas/Product"
             }
           }

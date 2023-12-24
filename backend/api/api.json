@@ -502,6 +502,15 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductDTO"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "ok",
@@ -1240,6 +1249,35 @@
           "id": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "float64"
+          },
+          "weight": {
+            "type": "number",
+            "format": "float64"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      },
+      "ProductDTO": {
+        "required": [
+          "name",
+          "price",
+          "weight",
+          "description",
+          "image"
+        ],
+        "type": "object",
+        "properties": {
           "name": {
             "type": "string"
           },

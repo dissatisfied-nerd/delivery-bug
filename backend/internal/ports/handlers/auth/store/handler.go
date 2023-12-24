@@ -47,13 +47,13 @@ func (h *Handler) SignUpStore(ctx *gin.Context) {
 		return
 	}
 
-	userID, err := h.service.CreateStore(ctx, payload)
+	ID, err := h.service.CreateStore(ctx, payload)
 	if err != nil && !errors.Is(err, errors.New("no rows in result set")) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	tokenString, err := h.auth.GenerateJWT(userID, role)
+	tokenString, err := h.auth.GenerateJWT(ID, role)
 	if err != nil {
 		h.l.Errorf("ERROR while generating jwt: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -63,7 +63,7 @@ func (h *Handler) SignUpStore(ctx *gin.Context) {
 	ctx.SetCookie("jwt", tokenString, int(time.Now().Add(time.Hour*24*3).Unix()), "/",
 		os.Getenv("HOST"), true, true)
 
-	ctx.JSON(http.StatusOK, gin.H{"client_id": userID})
+	ctx.JSON(http.StatusOK, gin.H{"store_id": ID})
 }
 
 func (h *Handler) SignInStore(ctx *gin.Context) {
@@ -81,13 +81,13 @@ func (h *Handler) SignInStore(ctx *gin.Context) {
 		return
 	}
 
-	userID, err := h.service.CheckStore(ctx, payload)
+	ID, err := h.service.CheckStore(ctx, payload)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	tokenString, err := h.auth.GenerateJWT(userID, role)
+	tokenString, err := h.auth.GenerateJWT(ID, role)
 	if err != nil {
 		h.l.Errorf("ERROR while generating jwt: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -97,5 +97,5 @@ func (h *Handler) SignInStore(ctx *gin.Context) {
 	ctx.SetCookie("jwt", tokenString, int(time.Now().Add(time.Hour*24*3).Unix()), "/",
 		os.Getenv("HOST"), true, true)
 
-	ctx.JSON(http.StatusOK, gin.H{"client_id": userID})
+	ctx.JSON(http.StatusOK, gin.H{"store_id": ID})
 }

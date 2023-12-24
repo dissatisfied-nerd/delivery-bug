@@ -2,6 +2,7 @@ package product
 
 import (
 	"context"
+	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/models"
 	"delivery-bug/pkg/logging"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -10,6 +11,8 @@ import (
 type ProductsRepository interface {
 	SelectProducts(ctx context.Context) ([]models.Product, error)
 	SelectProductByID(ctx context.Context, productID string) (models.Product, error)
+	InsertProductByStore(ctx context.Context, product dtos.ProductDTO, storeID string) (string, error)
+	SelectProductsByStore(ctx context.Context, storeID string) ([]models.Product, error)
 }
 
 type Repository struct {
@@ -57,4 +60,37 @@ func (r *Repository) SelectProductByID(ctx context.Context, productID string) (m
 	}
 
 	return product, nil
+}
+
+func (r *Repository) InsertProductByStore(ctx context.Context, product dtos.ProductDTO, storeID string) (string, error) {
+	var productID string
+	err := r.db.QueryRow(ctx, insertProductQuery, product.Name, product.Price, product.Weight, product.Description,
+		product.Image, storeID).Scan(&productID)
+	if err != nil {
+		r.l.Errorf("error inserting product %s: %v", product.Name, err)
+		return "", err
+	}
+	return productID, nil
+}
+
+func (r *Repository) SelectProductsByStore(ctx context.Context, storeID string) ([]models.Product, error) {
+	var products []models.Product
+	rows, err := r.db.Query(ctx, selectProductsByStore, storeID)
+	if err != nil {
+		r.l.Errorf("error getting products from db: %v", err)
+		return nil, err
+	}
+	for rows.Next() {
+		var product models.Product
+		err = rows.Scan(&product.ID, &product.Name, &product.Price, &product.Weight, &product.Description,
+			&product.Image)
+		if err != nil {
+			r.l.Errorf("error getting products from db: %v", err)
+			return nil, err
+		}
+		products = append(products, product)
+	}
+
+	r.l.Info("getting products from db")
+	return products, nil
 }

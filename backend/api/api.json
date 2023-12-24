@@ -155,7 +155,7 @@
         }
       }
     },
-    "/administrator/login": {
+    "/admin/login": {
       "post": {
         "summary": "sign in administrator",
         "tags": [
@@ -355,7 +355,7 @@
         }
       }
     },
-    "/administrator/register": {
+    "/admin/register": {
       "post": {
         "summary": "sign up administrator",
         "tags": [

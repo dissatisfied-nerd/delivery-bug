@@ -62,7 +62,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 			orders.POST("/take", h.OrderHandler.TakeOrder)
 			orders.POST("/finish", h.OrderHandler.FinishOrder)
 		}
-		administrator := router.Group("/administrator")
+		administrator := router.Group("/admin")
 		{
 			administrator.POST("/login", h.AdministratorAuthHandler.SignInAdministrator)
 			administrator.POST("/register", h.AdministratorAuthHandler.SignUpAdministrator)

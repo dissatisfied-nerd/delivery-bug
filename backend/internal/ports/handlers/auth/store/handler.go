@@ -17,6 +17,7 @@ const role = "store"
 type StoresHandler interface {
 	SignUpStore(ctx *gin.Context)
 	SignInStore(ctx *gin.Context)
+	GetInfoByID(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -98,4 +99,16 @@ func (h *Handler) SignInStore(ctx *gin.Context) {
 		os.Getenv("HOST"), true, true)
 
 	ctx.JSON(http.StatusOK, gin.H{"store_id": ID})
+}
+
+func (h *Handler) GetInfoByID(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	info, err := h.service.GetInfoByID(ctx, id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"store": info})
 }

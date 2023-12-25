@@ -112,13 +112,6 @@ CREATE TABLE IF NOT EXISTS products
     store_id UUID REFERENCES stores (id)
 );
 
-CREATE TABLE IF NOT EXISTS products_stores
-(
-    product_id UUID REFERENCES products (id),
-    store_id   UUID REFERENCES stores (id),
-    PRIMARY KEY (product_id, store_id)
-);
-
 CREATE TABLE IF NOT EXISTS orders
 (
     id            UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -136,17 +129,6 @@ CREATE TABLE IF NOT EXISTS order_products
     amount     int,
 
     order_id   UUID REFERENCES orders (id),
-    product_id UUID REFERENCES products (id),
+    product_id UUID REFERENCES products (id) ON DELETE CASCADE,
     PRIMARY KEY (order_id, product_id)
-);
-
-CREATE TABLE IF NOT EXISTS reviews
-(
-    id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-
-    mark       int,
-
-    client_id  UUID REFERENCES clients (id),
-    order_id   UUID REFERENCES orders (id),
-    product_id UUID REFERENCES products (id)
 );

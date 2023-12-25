@@ -5,6 +5,7 @@ import (
 	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/models"
 	"delivery-bug/pkg/logging"
+	"errors"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -98,10 +99,17 @@ func (r *Repository) SelectProductsByStore(ctx context.Context, storeID string) 
 }
 
 func (r *Repository) DeleteProductById(ctx context.Context, productID string) error {
-	err := r.db.QueryRow(ctx, deleteProductById, productID).Scan()
+	result, err := r.db.Exec(ctx, deleteProductById, productID)
 	if err != nil {
-		r.l.Errorf("error deleting product %s: %v", productID, err)
+		r.l.Errorf("error while deleting product %s: %v", productID, err)
 		return err
 	}
+
+	rowsAffected := result.RowsAffected()
+	if rowsAffected == 0 {
+		r.l.Errorf("no products with id %s", productID)
+		return errors.New("no products with such id")
+	}
+
 	return nil
 }

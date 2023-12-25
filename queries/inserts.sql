@@ -65,6 +65,14 @@ VALUES
     ('admin4', 'adminpass4', (SELECT id FROM administrators WHERE first_name = 'Admin4_First')),
     ('admin5', 'adminpass5', (SELECT id FROM administrators WHERE first_name = 'Admin5_First'));
 
+INSERT INTO administrators_passphrases (passphrase)
+VALUES
+    ('Славяне'),
+    ('Славянка'),
+    ('Славянин'),
+    ('Славянёнок'),
+    ('Славянята');
+
 -- Заполнение таблицы "stores"
 INSERT INTO stores (reputation, name, first_name, surname, last_name, address_id)
 VALUES
@@ -83,13 +91,13 @@ VALUES
     ('store5', 'storepass5', (SELECT id FROM stores WHERE name = 'Store5'));
 
 -- Заполнение таблицы "products"
-INSERT INTO products (name, price, weight, description, image)
+INSERT INTO products (name, price, weight, description, image, store_id)
 VALUES
-    ('Product1', 19.99, 0.5, 'Description1', NULL),
-    ('Product2', 29.99, 1.0, 'Description2', NULL),
-    ('Product3', 39.99, 1.5, 'Description3', NULL),
-    ('Product4', 49.99, 2.0, 'Description4', NULL),
-    ('Product5', 59.99, 2.5, 'Description5', NULL);
+    ('Product1', 19.99, 0.5, 'Description1', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1)),
+    ('Product2', 29.99, 1.0, 'Description2', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1)),
+    ('Product3', 39.99, 1.5, 'Description3', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1)),
+    ('Product4', 49.99, 2.0, 'Description4', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1)),
+    ('Product5', 59.99, 2.5, 'Description5', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1));
 
 -- Заполнение таблицы "orders"
 INSERT INTO orders (price, creation_time, delivery_time, status, client_id, courier_id)
@@ -108,12 +116,3 @@ VALUES
     (3, (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1)),
     (4, (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1)),
     (5, (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1));
-
--- Заполнение таблицы "reviews"
-INSERT INTO reviews (mark, client_id, order_id, product_id)
-VALUES
-    (5, (SELECT id FROM clients WHERE first_name = 'Client1_First'), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1)),
-    (4, (SELECT id FROM clients WHERE first_name = 'Client2_First'), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1)),
-    (3, (SELECT id FROM clients WHERE first_name = 'Client3_First'), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1)),
-    (2, (SELECT id FROM clients WHERE first_name = 'Client4_First'), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1)),
-    (1, (SELECT id FROM clients WHERE first_name = 'Client5_First'), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1));

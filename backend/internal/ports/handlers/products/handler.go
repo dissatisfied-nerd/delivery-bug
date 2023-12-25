@@ -5,7 +5,6 @@ import (
 	"delivery-bug/internal/repo/product"
 	"delivery-bug/pkg/logging"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -64,23 +63,12 @@ func (h *Handler) CreateProduct(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	//template
-	price, err := strconv.ParseFloat(input.Price, 32)
-	if err != nil {
-		h.l.Error(err)
-	}
-	weight, err := strconv.ParseFloat(input.Weight, 32)
+
+	payload, err := dtos.ToProductDTO(input)
 	if err != nil {
 		h.l.Error(err)
 	}
 
-	var payload dtos.ProductDTO
-	payload.Name = input.Name
-	payload.Price = float32(price)
-	payload.Weight = float32(weight)
-	payload.Description = input.Description
-	payload.Image = input.Image
-	//template
 	res, err := h.repo.InsertProductByStore(ctx, payload, storeID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

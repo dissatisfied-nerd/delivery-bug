@@ -1,15 +1,13 @@
 drop table order_products;
-drop table reviews cascade;
 drop table orders cascade;
-drop table products_stores;
 drop table products cascade;
-drop table stores cascade;
 drop table stores_loginform cascade;
-drop table administrators cascade;
+drop table stores cascade;
 drop table administrators_loginform cascade;
+drop table administrators cascade;
 drop table administrators_passphrases cascade;
-drop table couriers cascade;
 drop table couriers_loginform cascade;
+drop table couriers cascade;
 drop table clients_loginform cascade;
 drop table clients cascade;
 drop table addresses cascade;

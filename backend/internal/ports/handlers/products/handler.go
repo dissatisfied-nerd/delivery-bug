@@ -85,7 +85,7 @@ func (h *Handler) GetProductsByStore(ctx *gin.Context) {
 }
 
 func (h *Handler) DeleteProductById(ctx *gin.Context) {
-	productID := ctx.Param("productID")
+	productID := ctx.Param("id")
 	err := h.repo.DeleteProductById(ctx, productID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

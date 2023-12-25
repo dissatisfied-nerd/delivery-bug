@@ -188,20 +188,6 @@ func upCreateTables(tx *sql.Tx) error {
 		return err
 	}
 
-	_, err = tx.Exec(`CREATE TABLE IF NOT EXISTS reviews
-(
-    id        UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-
-    mark int,
-
-    client_id UUID REFERENCES clients (id),
-    order_id  UUID REFERENCES orders (id),
-    product_id UUID REFERENCES products (id)
-)`)
-	if err != nil {
-		return err
-	}
-
 	return nil
 }
 

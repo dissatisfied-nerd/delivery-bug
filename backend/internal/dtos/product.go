@@ -7,3 +7,11 @@ type ProductDTO struct {
 	Description string  `json:"description"`
 	Image       string  `json:"image"`
 }
+
+type ProductDTOInput struct {
+	Name        string `json:"name"`
+	Price       string `json:"price"`
+	Weight      string `json:"weight"`
+	Description string `json:"description"`
+	Image       string `json:"image"`
+}

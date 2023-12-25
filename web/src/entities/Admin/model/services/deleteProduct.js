@@ -10,11 +10,12 @@ export const deleteProduct = createAsyncThunk(
         const { extra, rejectWithValue, dispatch, getState } = thunkAPI;
 
         try {
-            // const response = await extra.api.get(`/admin/delete/${id}`);
-            // if (!response.data) {
-            //     throw new Error();
-            // }
-            // return response.data;
+            const response = await extra.api.delete(`/products/${id}`);
+            if (!response.data) {
+                throw new Error();
+            }
+            console.log(response.data);
+            return response.data;
         } catch (e) {
             return rejectWithValue(
                 e?.response?.data?.error ||

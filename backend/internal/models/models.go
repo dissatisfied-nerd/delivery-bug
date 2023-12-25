@@ -52,9 +52,9 @@ type CouriersLoginForm struct {
 type Admins struct {
 	ID string `db:"id"`
 
-	FirstName string `db:"first_name"`
-	Surname   string `db:"surname"`
-	LastName  string `db:"last_name"`
+	FirstName  string `db:"first_name"`
+	MiddleName string `db:"middle_name"`
+	LastName   string `db:"last_name"`
 }
 
 type AdminsLoginForm struct {
@@ -71,7 +71,7 @@ type Stores struct {
 	Reputation float64 `db:"reputation"`
 	Name       string  `db:"name"`
 	FirstName  string  `db:"first_name"`
-	Surname    string  `db:"surname"`
+	MiddleName string  `db:"middle_name"`
 	LastName   string  `db:"last_name"`
 
 	AddressId string `db:"address_id"`
@@ -113,16 +113,6 @@ type Order struct {
 type OrderProducts struct {
 	Amount int `db:"amount"`
 
-	OrderId   string `db:"order_id"`
-	ProductId string `db:"product_id"`
-}
-
-type Reviews struct {
-	ID string `db:"id"`
-
-	Mark int `db:"mark"`
-
-	ClientId  string `db:"client_id"`
 	OrderId   string `db:"order_id"`
 	ProductId string `db:"product_id"`
 }

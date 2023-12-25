@@ -55,7 +55,7 @@ func (s *Service) CreateAdmin(ctx context.Context, input auth.SignUpAdminInput) 
 		return "", errors.New("no such passphrase")
 	}
 
-	admin := dtos.AdminDTO{FirstName: input.FirstName, Surname: input.Surname, LastName: input.LastName}
+	admin := dtos.AdminDTO{FirstName: input.FirstName, MiddleName: input.MiddleName, LastName: input.LastName}
 	adminID, err := s.repo.InsertAdminQuery(ctx, admin)
 	if err != nil {
 		return "", err

@@ -52,14 +52,14 @@ func (r *Repository) CheckLoginTaken(ctx context.Context, login string) error {
 
 func (r *Repository) InsertAdminQuery(ctx context.Context, adminDto dtos.AdminDTO) (string, error) {
 	var insertedAdminID string
-	err := r.db.QueryRow(ctx, insertAdminQuery, adminDto.FirstName, adminDto.Surname,
+	err := r.db.QueryRow(ctx, insertAdminQuery, adminDto.FirstName, adminDto.MiddleName,
 		adminDto.LastName).Scan(&insertedAdminID)
 	if err != nil {
 		r.l.Errorf("ERROR while inserting admin %s %s %s in db: %v",
-			adminDto.FirstName, adminDto.Surname, adminDto.LastName, err)
+			adminDto.FirstName, adminDto.MiddleName, adminDto.LastName, err)
 		return "", err
 	}
-	r.l.Infof("insert user %s %s %s in db", adminDto.FirstName, adminDto.Surname, adminDto.LastName)
+	r.l.Infof("insert user %s %s %s in db", adminDto.FirstName, adminDto.MiddleName, adminDto.LastName)
 	return insertedAdminID, nil
 }
 

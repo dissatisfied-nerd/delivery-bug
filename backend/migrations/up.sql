@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS administrators
     id         UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 
     first_name varchar(128),
-    surname    varchar(128),
+    middle_name    varchar(128),
     last_name  varchar(128)
 );
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS stores
     reputation int,                      -- Считается как-нибудь
     name       varchar(128),             -- Имя магазина
     first_name varchar(128),             -- Данные юрлица-представителя
-    surname    varchar(128),
+    middle_name    varchar(128),
     last_name  varchar(128),
 
     address_id UUID REFERENCES addresses (id) -- Юридический адрес

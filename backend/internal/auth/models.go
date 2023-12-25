@@ -20,22 +20,25 @@ type SignUpInput struct {
 }
 
 type SignUpStoreInput struct {
-	Login     string `json:"login" validate:"required"`
-	Password  string `json:"password" validate:"required"`
-	Name      string `json:"name" validate:"required"`
-	City      string `json:"city" validate:"required"`
-	Street    string `json:"street" validate:"required"`
-	Building  int    `json:"building" validate:"required"`
-	Entrance  int    `json:"entrance" validate:"required"`
-	Floor     int    `json:"floor" validate:"required"`
-	Apartment int    `json:"apartment" validate:"required"`
+	Login      string `json:"login" validate:"required"`
+	Password   string `json:"password" validate:"required"`
+	Name       string `json:"name" validate:"required"`
+	FirstName  string `json:"first_name" validate:"required"`
+	MiddleName string `json:"middle_name" validate:"required"`
+	LastName   string `json:"last_name" validate:"required"`
+	City       string `json:"city" validate:"required"`
+	Street     string `json:"street" validate:"required"`
+	Building   int    `json:"building" validate:"required"`
+	Entrance   int    `json:"entrance" validate:"required"`
+	Floor      int    `json:"floor" validate:"required"`
+	Apartment  int    `json:"apartment" validate:"required"`
 }
 
 type SignUpAdminInput struct {
 	Login      string `json:"login" validate:"required"`
 	Password   string `json:"password" validate:"required"`
 	FirstName  string `json:"first_name" validate:"required"`
-	Surname    string `json:"surname" validate:"required"`
+	MiddleName string `json:"middle_name" validate:"required"`
 	LastName   string `json:"last_name" validate:"required"`
 	Passphrase string `json:"passphrase"`
 }

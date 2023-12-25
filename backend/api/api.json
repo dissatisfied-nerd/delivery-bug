@@ -159,7 +159,7 @@
       "post": {
         "summary": "sign in administrator",
         "tags": [
-          "administrator"
+          "admin"
         ],
         "requestBody": {
           "content": {
@@ -179,7 +179,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "client_id": {
+                    "admin_id": {
                       "type": "string"
                     }
                   }
@@ -359,7 +359,7 @@
       "post": {
         "summary": "sign up administrator",
         "tags": [
-          "administrator"
+          "admin"
         ],
         "requestBody": {
           "content": {
@@ -379,7 +379,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "client_id": {
+                    "admin_id": {
                       "type": "string"
                     }
                   }

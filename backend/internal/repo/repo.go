@@ -1,7 +1,7 @@
 package repo
 
 import (
-	"delivery-bug/internal/repo/administrator"
+	"delivery-bug/internal/repo/admin"
 	"delivery-bug/internal/repo/courier"
 	"delivery-bug/internal/repo/order"
 	"delivery-bug/internal/repo/product"
@@ -13,21 +13,21 @@ import (
 )
 
 type Repository struct {
-	UserRepo          user.UsersRepository
-	CourierRepo       courier.CouriersRepository
-	OrderRepo         order.OrdersRepository
-	ProductRepo       product.ProductsRepository
-	StoreRepo         store.StoresRepository
-	AdministratorRepo administrator.AdministratorsRepository
+	UserRepo    user.UsersRepository
+	CourierRepo courier.CouriersRepository
+	OrderRepo   order.OrdersRepository
+	ProductRepo product.ProductsRepository
+	StoreRepo   store.StoresRepository
+	AdminRepo   admin.AdminsRepository
 }
 
 func NewRepository(db *pgxpool.Pool, l logging.Logger) Repository {
 	return Repository{
-		UserRepo:          user.NewRepository(db, l),
-		CourierRepo:       courier.NewRepository(db, l),
-		OrderRepo:         order.NewRepository(db, l),
-		ProductRepo:       product.NewRepository(db, l),
-		StoreRepo:         store.NewRepository(db, l),
-		AdministratorRepo: administrator.NewRepository(db, l),
+		UserRepo:    user.NewRepository(db, l),
+		CourierRepo: courier.NewRepository(db, l),
+		OrderRepo:   order.NewRepository(db, l),
+		ProductRepo: product.NewRepository(db, l),
+		StoreRepo:   store.NewRepository(db, l),
+		AdminRepo:   admin.NewRepository(db, l),
 	}
 }

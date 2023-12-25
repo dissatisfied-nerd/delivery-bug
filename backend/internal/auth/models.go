@@ -31,7 +31,7 @@ type SignUpStoreInput struct {
 	Apartment int    `json:"apartment" validate:"required"`
 }
 
-type SignUpAdministratorInput struct {
+type SignUpAdminInput struct {
 	Login      string `json:"login" validate:"required"`
 	Password   string `json:"password" validate:"required"`
 	FirstName  string `json:"first_name" validate:"required"`

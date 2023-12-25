@@ -49,7 +49,7 @@ type CouriersLoginForm struct {
 	CourierId string `db:"courier_id"`
 }
 
-type Administrators struct {
+type Admins struct {
 	ID string `db:"id"`
 
 	FirstName string `db:"first_name"`
@@ -57,12 +57,12 @@ type Administrators struct {
 	LastName  string `db:"last_name"`
 }
 
-type AdministratorsLoginForm struct {
+type AdminsLoginForm struct {
 	Login string `db:"login"`
 
 	Password string `db:"password"`
 
-	AdministratorId string `db:"administrator_id"`
+	AdminId string `db:"administrator_id"`
 }
 
 type Stores struct {
@@ -94,8 +94,8 @@ type Product struct {
 	Description string  `db:"description" json:"description"`
 	Image       []byte  `db:"image" json:"image"`
 
-	Administrator_id string `db:"administrator_id"`
-	StoreId          string `db:"store_id"`
+	Admin_id string `db:"administrator_id"`
+	StoreId  string `db:"store_id"`
 }
 
 type Order struct {

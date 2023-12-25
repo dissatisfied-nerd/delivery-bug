@@ -1,32 +1,32 @@
-package administrator
+package admin
 
 import (
 	"context"
 	"delivery-bug/internal/auth"
 	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/models"
-	"delivery-bug/internal/repo/administrator"
+	"delivery-bug/internal/repo/admin"
 	"delivery-bug/pkg/logging"
 	"errors"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
-type AdministratorService interface {
-	CreateAdministrator(ctx context.Context, input auth.SignUpAdministratorInput) (string, error)
-	CheckAdministrator(ctx context.Context, input auth.SignInInput) (string, error)
+type AdminService interface {
+	CreateAdmin(ctx context.Context, input auth.SignUpAdminInput) (string, error)
+	CheckAdmin(ctx context.Context, input auth.SignInInput) (string, error)
 }
 
 type Service struct {
-	repo administrator.AdministratorsRepository
+	repo admin.AdminsRepository
 	l    *logging.Logger
 }
 
-func NewService(repo administrator.AdministratorsRepository, l logging.Logger) *Service {
+func NewService(repo admin.AdminsRepository, l logging.Logger) *Service {
 	return &Service{repo: repo, l: &l}
 }
 
-func (s *Service) CheckAdministrator(ctx context.Context, input auth.SignInInput) (string, error) {
+func (s *Service) CheckAdmin(ctx context.Context, input auth.SignInInput) (string, error) {
 	form, err := s.repo.CheckLogin(ctx, input.Login)
 	if err != nil {
 		s.l.Error("there is no admin with such login")
@@ -39,10 +39,10 @@ func (s *Service) CheckAdministrator(ctx context.Context, input auth.SignInInput
 		return "", errors.New("invalid password")
 	}
 
-	return form.AdministratorId, nil
+	return form.AdminId, nil
 }
 
-func (s *Service) CreateAdministrator(ctx context.Context, input auth.SignUpAdministratorInput) (string, error) {
+func (s *Service) CreateAdmin(ctx context.Context, input auth.SignUpAdminInput) (string, error) {
 	err := s.repo.CheckLoginTaken(ctx, input.Login)
 	if err != nil && !errors.Is(err, errors.New("no rows in result set")) {
 		s.l.Error(err)
@@ -55,8 +55,8 @@ func (s *Service) CreateAdministrator(ctx context.Context, input auth.SignUpAdmi
 		return "", errors.New("no such passphrase")
 	}
 
-	admin := dtos.AdministratorDTO{FirstName: input.FirstName, Surname: input.Surname, LastName: input.LastName}
-	adminID, err := s.repo.InsertAdministratorQuery(ctx, admin)
+	admin := dtos.AdminDTO{FirstName: input.FirstName, Surname: input.Surname, LastName: input.LastName}
+	adminID, err := s.repo.InsertAdminQuery(ctx, admin)
 	if err != nil {
 		return "", err
 	}
@@ -68,7 +68,7 @@ func (s *Service) CreateAdministrator(ctx context.Context, input auth.SignUpAdmi
 		return "", err
 	}
 
-	form := models.AdministratorsLoginForm{Login: input.Login, Password: string(hashedPassword), AdministratorId: adminID}
+	form := models.AdminsLoginForm{Login: input.Login, Password: string(hashedPassword), AdminId: adminID}
 	err = s.repo.InsertLoginForm(ctx, form)
 	if err != nil {
 		return "", err

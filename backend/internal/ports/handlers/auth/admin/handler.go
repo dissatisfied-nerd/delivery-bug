@@ -1,8 +1,8 @@
-package administrator
+package admin
 
 import (
 	"delivery-bug/internal/auth"
-	"delivery-bug/internal/service/administrator"
+	"delivery-bug/internal/service/admin"
 	"delivery-bug/pkg/logging"
 	"errors"
 	"net/http"
@@ -13,28 +13,28 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-const role = "administrator"
+const role = "admin"
 
-type AdministratorAuthHandler interface {
-	SignUpAdministrator(ctx *gin.Context)
-	SignInAdministrator(ctx *gin.Context)
+type AdminAuthHandler interface {
+	SignUpAdmin(ctx *gin.Context)
+	SignInAdmin(ctx *gin.Context)
 	Logout(ctx *gin.Context)
 }
 
 type Handler struct {
-	service   administrator.AdministratorService
+	service   admin.AdminService
 	auth      auth.Auth
 	validator *validator.Validate
 	l         *logging.Logger
 }
 
-func NewHandler(service administrator.AdministratorService, l logging.Logger,
+func NewHandler(service admin.AdminService, l logging.Logger,
 	validator *validator.Validate, auth auth.Auth) *Handler {
 	return &Handler{service: service, l: &l, validator: validator, auth: auth}
 }
 
-func (h *Handler) SignUpAdministrator(ctx *gin.Context) {
-	var payload auth.SignUpAdministratorInput
+func (h *Handler) SignUpAdmin(ctx *gin.Context) {
+	var payload auth.SignUpAdminInput
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		h.l.Errorf("ERROR can't bind json: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -49,7 +49,7 @@ func (h *Handler) SignUpAdministrator(ctx *gin.Context) {
 		return
 	}
 
-	adminID, err := h.service.CreateAdministrator(ctx, payload)
+	adminID, err := h.service.CreateAdmin(ctx, payload)
 	if err != nil && !errors.Is(err, errors.New("no rows in result set")) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -65,10 +65,10 @@ func (h *Handler) SignUpAdministrator(ctx *gin.Context) {
 	ctx.SetCookie("jwt", tokenString, int(time.Now().Add(time.Hour*24*3).Unix()), "/",
 		os.Getenv("HOST"), true, true)
 
-	ctx.JSON(http.StatusOK, gin.H{"administrator_id": adminID})
+	ctx.JSON(http.StatusOK, gin.H{"admin_id": adminID})
 }
 
-func (h *Handler) SignInAdministrator(ctx *gin.Context) {
+func (h *Handler) SignInAdmin(ctx *gin.Context) {
 	var payload auth.SignInInput
 
 	if err := ctx.ShouldBindJSON(&payload); err != nil {
@@ -83,7 +83,7 @@ func (h *Handler) SignInAdministrator(ctx *gin.Context) {
 		return
 	}
 
-	adminID, err := h.service.CheckAdministrator(ctx, payload)
+	adminID, err := h.service.CheckAdmin(ctx, payload)
 	if err != nil {
 		h.l.Error(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -100,7 +100,7 @@ func (h *Handler) SignInAdministrator(ctx *gin.Context) {
 	ctx.SetCookie("jwt", tokenString, int(time.Now().Add(time.Hour*24*3).Unix()), "/",
 		os.Getenv("HOST"), true, true)
 
-	ctx.JSON(http.StatusOK, gin.H{"administrator_id": adminID})
+	ctx.JSON(http.StatusOK, gin.H{"admin_id": adminID})
 }
 
 func (h *Handler) Logout(ctx *gin.Context) {

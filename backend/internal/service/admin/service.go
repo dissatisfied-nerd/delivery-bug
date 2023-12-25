@@ -15,6 +15,7 @@ import (
 type AdminService interface {
 	CreateAdmin(ctx context.Context, input auth.SignUpAdminInput) (string, error)
 	CheckAdmin(ctx context.Context, input auth.SignInInput) (string, error)
+	GetInfoByID(ctx context.Context, id string) (dtos.AdminDTO, error)
 }
 
 type Service struct {
@@ -75,4 +76,8 @@ func (s *Service) CreateAdmin(ctx context.Context, input auth.SignUpAdminInput) 
 	}
 
 	return adminID, nil
+}
+
+func (s *Service) GetInfoByID(ctx context.Context, id string) (dtos.AdminDTO, error) {
+	return s.repo.SelectInfoById(ctx, id)
 }

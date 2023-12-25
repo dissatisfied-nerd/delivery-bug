@@ -19,6 +19,7 @@ type AdminAuthHandler interface {
 	SignUpAdmin(ctx *gin.Context)
 	SignInAdmin(ctx *gin.Context)
 	Logout(ctx *gin.Context)
+	GetInfoByID(ctx *gin.Context)
 }
 
 type Handler struct {
@@ -107,4 +108,16 @@ func (h *Handler) Logout(ctx *gin.Context) {
 	ctx.SetCookie("jwt", "", 0, "/", h.auth.GetHost(), true, true)
 
 	ctx.Status(http.StatusOK)
+}
+
+func (h *Handler) GetInfoByID(ctx *gin.Context) {
+	id := ctx.Param("adminID")
+
+	info, err := h.service.GetInfoByID(ctx, id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"admin": info})
 }

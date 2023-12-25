@@ -66,6 +66,7 @@ func SetupRoutes(service service.Service, repo repo.Repository, logger logging.L
 		{
 			admin.POST("/login", h.AdminAuthHandler.SignInAdmin)
 			admin.POST("/register", h.AdminAuthHandler.SignUpAdmin)
+			admin.GET("/:adminID", h.AdminAuthHandler.GetInfoByID)
 		}
 		router.POST("/logout", h.ClientAuthHandler.Logout)
 	}

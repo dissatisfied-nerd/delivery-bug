@@ -111,5 +111,6 @@ func (r *Repository) DeleteProductById(ctx context.Context, productID string) er
 		return errors.New("no products with such id")
 	}
 
+	r.l.Infof("deleting product with id %s", productID)
 	return nil
 }

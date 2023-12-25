@@ -16,6 +16,7 @@ type AdminsRepository interface {
 	InsertAdminQuery(ctx context.Context, adminDto dtos.AdminDTO) (string, error)
 	InsertLoginForm(ctx context.Context, form models.AdminsLoginForm) error
 	CheckPassPhrase(ctx context.Context, passphrase string) error
+	SelectInfoById(ctx context.Context, adminID string) (dtos.AdminDTO, error)
 }
 
 type Repository struct {
@@ -85,9 +86,23 @@ func (r *Repository) CheckPassPhrase(ctx context.Context, passphrase string) err
 		r.l.Infof("No such passphrase %s", passphrase)
 		return err
 	} else if err != nil {
-		r.l.Infof("ERROR while checking passphrase %s %v", passphrase, err)
+		r.l.Errorf("ERROR while checking passphrase %s %v", passphrase, err)
 		return err
 	}
 
 	return nil
+}
+
+func (r *Repository) SelectInfoById(ctx context.Context, adminID string) (dtos.AdminDTO, error) {
+	var adminDto dtos.AdminDTO
+	err := r.db.QueryRow(ctx, selectAdminQuery, adminID).Scan(&adminDto.FirstName,
+		&adminDto.MiddleName, &adminDto.LastName)
+
+	if err != nil {
+		r.l.Errorf("ERROR while selecting admin %s %v", adminID, err)
+		return adminDto, err
+	}
+
+	r.l.Infof("selected admin with id %s", adminID)
+	return adminDto, nil
 }

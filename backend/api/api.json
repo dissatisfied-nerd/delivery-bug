@@ -661,6 +661,52 @@
         }
       }
     },
+    "/admin/:adminID": {
+      "get": {
+        "summary": "get info by id",
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "name": "adminID",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/store/products/:storeID": {
       "get": {
         "summary": "get all products in this store",
@@ -1550,6 +1596,25 @@
           "apartment": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "AdminInfo": {
+        "required": [
+          "first_name",
+          "middle_name",
+          "last_name"
+        ],
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string"
+          },
+          "middle_name": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
           }
         }
       },

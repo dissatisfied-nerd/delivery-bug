@@ -77,7 +77,6 @@ export const CreateProduct = ({ className }) => {
     return (
         <div className={classNames(cls.CreateProduct, {}, [className])}>
             <span className={cls.title}> Создание товара </span>
-            <div className={cls.error}>{error}</div>
             <Input
                 label="Название"
                 className={cls.input}
@@ -115,6 +114,7 @@ export const CreateProduct = ({ className }) => {
             >
                 Создать
             </Button>
+            {error && <div className={cls.error}>{error}</div>}
         </div>
     );
 };

@@ -29,7 +29,10 @@ export const sendCreateProductData = createAsyncThunk(
 
             // return response.data;
         } catch (e) {
-            return rejectWithValue("error");
+            return rejectWithValue(
+                e?.response?.data?.error ||
+                    "Что-то пошло не так. Попробуйте еще раз"
+            );
         }
     }
 );

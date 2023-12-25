@@ -12,9 +12,9 @@ export const ProductsPageAdmin = () => {
     const error = useSelector(getAdminError);
 
     const onDeleteProduct = useCallback(
-        (id) => {
+        async (id) => {
             console.log(id);
-            dispatch(deleteProduct(id));
+            await dispatch(deleteProduct(id));
             if (!error) {
                 dispatch(fetchProductsPageData());
             }

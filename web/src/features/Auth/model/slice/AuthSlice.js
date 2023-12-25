@@ -8,7 +8,7 @@ const initialState = {
         name: "",
         first_name: "",
         last_name: "",
-        father_name: "",
+        middle_name: "",
         login: "",
         city: "",
         street: "",
@@ -17,7 +17,7 @@ const initialState = {
         floor: "",
         apartment: "",
         password: "",
-        secret_word: "",
+        passphrase: "",
     },
     type: "client",
     isAuth: false,
@@ -47,7 +47,7 @@ export const authSlice = createSlice({
             const profile =
                 JSON.parse(localStorage.getItem(PROFILE_LOCALSTORAGE_KEY)) ||
                 {};
-            const { password, secret_word, ...data } = state.data;
+            const { password, passphrase, ...data } = state.data;
             localStorage.setItem(
                 PROFILE_LOCALSTORAGE_KEY,
                 JSON.stringify({

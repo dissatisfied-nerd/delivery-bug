@@ -1158,6 +1158,9 @@
           "login",
           "password",
           "name",
+          "first_name",
+          "middle_name",
+          "last_name",
           "city",
           "street",
           "building",
@@ -1174,6 +1177,15 @@
             "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "middle_name": {
+            "type": "string"
+          },
+          "last_name": {
             "type": "string"
           },
           "city": {
@@ -1493,6 +1505,9 @@
       "StoreInfo": {
         "required": [
           "name",
+          "first_name",
+          "middle_name",
+          "last_name",
           "city",
           "street",
           "building",
@@ -1503,6 +1518,15 @@
         "type": "object",
         "properties": {
           "name": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "middle_name": {
+            "type": "string"
+          },
+          "lastname": {
             "type": "string"
           },
           "city": {

@@ -13,15 +13,26 @@ export const sendCreateProductData = createAsyncThunk(
                 return rejectWithValue("Все поля должны быть заполнены");
             }
 
-            const formData = new FormData();
-            Object.entries(createProductData).forEach(([key, value]) => {
-                formData.append(key, value);
-            });
+            const blobToDataUrl = (blob) =>
+                new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
 
-            const response = await extra.api.post(
-                `/store/products/${id}`,
-                formData
-            );
+            const blobToBase64 = (blob) =>
+                blobToDataUrl(blob).then((text) =>
+                    text.slice(text.indexOf(","))
+                );
+
+            const base64 = await blobToBase64(createProductData.image);
+            console.log(base64);
+
+            const response = await extra.api.post(`/store/products/${id}`, {
+                ...createProductData,
+                image: base64,
+            });
 
             if (!response.data) {
                 throw new Error();

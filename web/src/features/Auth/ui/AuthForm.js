@@ -25,7 +25,7 @@ export const AuthForm = () => {
         name = "",
         first_name = "",
         last_name = "",
-        father_name = "",
+        middle_name = "",
         login = "",
         city = "",
         building = "",
@@ -34,7 +34,7 @@ export const AuthForm = () => {
         entrance = "",
         apartment = "",
         password = "",
-        secret_word = "",
+        passphrase = "",
     } = data;
     const navigate = useNavigate();
 
@@ -73,7 +73,7 @@ export const AuthForm = () => {
 
     const onChangeFatherName = useCallback(
         (data) => {
-            dispatch(authActions.changeData({ father_name: data }));
+            dispatch(authActions.changeData({ middle_name: data }));
         },
         [dispatch]
     );
@@ -142,7 +142,7 @@ export const AuthForm = () => {
 
     const onChangeSecretWord = useCallback(
         (data) => {
-            dispatch(authActions.changeData({ secret_word: data }));
+            dispatch(authActions.changeData({ passphrase: data }));
         },
         [dispatch]
     );
@@ -162,29 +162,19 @@ export const AuthForm = () => {
     const onSignUp = useCallback(async () => {
         let signUpData;
         if (type === "client" || type === "courier") {
-            const { name, father_name, secret_word, ...restData } = data;
+            const { name, middle_name, passphrase, ...restData } = data;
             signUpData = restData;
         } else if (type === "store") {
-            const { secret_word, ...restData } = data;
-            signUpData = {
-                name: name,
-                password,
-                login,
-                city,
-                street,
-                building,
-                entrance,
-                floor,
-                apartment,
-            };
+            const { passphrase, ...restData } = data;
+            signUpData = restData;
         } else {
             signUpData = {
                 first_name,
                 last_name,
-                surname: father_name,
+                middle_name,
                 login,
                 password,
-                // secret_word,
+                passphrase,
             };
         }
         const result = await dispatch(sendRegisterData(signUpData));
@@ -277,7 +267,7 @@ export const AuthForm = () => {
                     onChange={onChangeStoreName}
                     autoFocus
                 />
-                {/* <Input
+                <Input
                     className={cls.input}
                     label="Имя"
                     value={first_name}
@@ -294,10 +284,10 @@ export const AuthForm = () => {
                 <Input
                     className={cls.input}
                     label="Отчество"
-                    value={father_name}
+                    value={middle_name}
                     onChange={onChangeFatherName}
                     autoFocus
-                /> */}
+                />
                 <Input
                     className={cls.input}
                     label="Почта"
@@ -366,7 +356,7 @@ export const AuthForm = () => {
                 <Input
                     className={cls.input}
                     label="Отчество"
-                    value={father_name}
+                    value={middle_name}
                     onChange={onChangeFatherName}
                     autoFocus
                 />
@@ -382,12 +372,12 @@ export const AuthForm = () => {
                     label="Пароль"
                     value={password}
                 />
-                {/* <Input
+                <Input
                     className={cls.input}
                     onChange={onChangeSecretWord}
                     label="Кодовое слово"
-                    value={secret_word}
-                /> */}
+                    value={passphrase}
+                />
             </>
         );
 
@@ -437,14 +427,6 @@ export const AuthForm = () => {
                     label="Пароль"
                     value={password}
                 />
-                {/* {type === "admin" && (
-                    <Input
-                        className={cls.input}
-                        onChange={onChangeSecretWord}
-                        label="Кодовое слово"
-                        value={secret_word}
-                    />
-                )} */}
                 {(type === "client" || type === "courier") && (
                     <select
                         className={cls.input}

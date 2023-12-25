@@ -7,10 +7,10 @@ const initialState = {
     data: {
         first_name: "",
         last_name: "",
-        father_name: "",
+        middle_name: "",
         login: "",
         password: "",
-        secret_word: "",
+        passphrase: "",
     },
     admin_id: "",
     error: "",

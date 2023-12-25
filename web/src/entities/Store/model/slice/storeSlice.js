@@ -9,7 +9,7 @@ const initialState = {
         name: "",
         first_name: "",
         last_name: "",
-        father_name: "",
+        middle_name: "",
         login: "",
         city: "",
         street: "",

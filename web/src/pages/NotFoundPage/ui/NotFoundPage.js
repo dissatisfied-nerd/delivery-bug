@@ -8,20 +8,9 @@ export const NotFoundPage = () => {
     const isAuth = useSelector(getAuthIsAuth);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!isAuth) {
-            navigate("/auth", { replace: true });
-        }
-    }, [isAuth, navigate]);
-
-    // useEffect(() => {
-    //     console.log(isAuth);
-
-    //     if (!isAuth) {
-    //         console.log(1);
-    //         navigate("/auth", { replace: true });
-    //     }
-    // }, [navigate, isAuth]);
+    if (!isAuth) {
+        navigate("/auth", { replace: true });
+    }
 
     return <Page>Страница не найдена</Page>;
 };

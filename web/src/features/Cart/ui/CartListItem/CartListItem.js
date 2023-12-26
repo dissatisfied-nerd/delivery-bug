@@ -12,7 +12,7 @@ export const CartListItem = (props) => {
                 <TrashBinSVG />
             </Button>
             <img src={product.image} alt={product.title} className={cls.img} />
-            <div className={cls.titleWrapper}>{product.title}</div>
+            <div className={cls.titleWrapper}>{product.name}</div>
             <span className={cls.price}>{product.price} ₽</span>
             <div className={cls.countsControlWrapper}>
                 <Button onClick={() => onRemoveFromCart([product.id, false])}>

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { revertAll } from "shared/actions/actions";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 import { sendLoginData } from "../services/sendLoginData/sendLoginData";
 import { sendRegisterData } from "../services/sendRegisterData/sendRegisterData";
@@ -87,7 +88,8 @@ export const authSlice = createSlice({
             })
             .addCase(sendLoginData.rejected, (state, action) => {
                 state.error = action.payload;
-            });
+            })
+            .addCase(revertAll, () => initialState);
     },
 });
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { revertAll } from "shared/actions/actions";
 import { fetchProductsPageData } from "../services/fetchProductsPageData";
 
 const initialState = {
@@ -12,19 +13,21 @@ export const productsPageSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(fetchProductsPageData.pending, (state, action) => {
-            state.isLoading = true;
-            state.error = "";
-        });
-        builder.addCase(fetchProductsPageData.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.error = "";
-            state.products = action.payload ?? [];
-        });
-        builder.addCase(fetchProductsPageData.rejected, (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        });
+        builder
+            .addCase(fetchProductsPageData.pending, (state, action) => {
+                state.isLoading = true;
+                state.error = "";
+            })
+            .addCase(fetchProductsPageData.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.error = "";
+                state.products = action.payload ?? [];
+            })
+            .addCase(fetchProductsPageData.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(revertAll, () => initialState);
     },
 });
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { revertAll } from "shared/actions/actions";
 import { fetchOrdersPageData } from "../services/fetchOrdersPageData/fetchOrdersPageData";
 import { takeOrder } from "../services/takeOrder/takeOrder";
 
@@ -64,7 +65,8 @@ export const ordersPageSlice = createSlice({
             .addCase(takeOrder.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
-            });
+            })
+            .addCase(revertAll, () => initialState);
     },
 });
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { revertAll } from "shared/actions/actions";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 import { fetchClientData } from "../services/fetchClientData/fetchClientData";
 import { fetchClientOrders } from "../services/fetchClientOrders/fetchClientOrders";
@@ -65,7 +66,8 @@ export const clientSlice = createSlice({
             .addCase(fetchClientOrders.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
-            });
+            })
+            .addCase(revertAll, () => initialState);
     },
 });
 

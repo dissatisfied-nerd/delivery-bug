@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { revertAll } from "shared/actions/actions";
 import { CART_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 import { createOrder } from "../services/createOrder/createOrder";
 
@@ -104,7 +105,8 @@ export const cartSlice = createSlice({
             .addCase(createOrder.rejected, (state, action) => {
                 state.isOrderCreated = false;
                 state.error = action.payload;
-            });
+            })
+            .addCase(revertAll, () => initialState);
     },
 });
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { revertAll } from "shared/actions/actions";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 import { deleteProduct } from "../services/deleteProduct";
 
@@ -35,10 +36,12 @@ export const adminSlice = createSlice({
             state.isLoading = false;
             state.error = "";
         });
-        builder.addCase(deleteProduct.rejected, (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        });
+        builder
+            .addCase(deleteProduct.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(revertAll, () => initialState);
     },
 });
 

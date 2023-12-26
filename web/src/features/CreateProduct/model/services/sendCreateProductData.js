@@ -22,9 +22,10 @@ export const sendCreateProductData = createAsyncThunk(
                 });
 
             const blobToBase64 = (blob) =>
-                blobToDataUrl(blob).then((text) =>
-                    text.slice(text.indexOf(","))
-                );
+                blobToDataUrl(blob).then((text) => {
+                    console.log(text);
+                    return text;
+                });
 
             const base64 = await blobToBase64(createProductData.image);
             console.log(base64);

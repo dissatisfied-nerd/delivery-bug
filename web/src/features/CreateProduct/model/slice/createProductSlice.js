@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { revertAll } from "shared/actions/actions";
 import { sendCreateProductData } from "../services/sendCreateProductData";
 
 const initialState = {
@@ -33,7 +34,8 @@ export const createProductSlice = createSlice({
             })
             .addCase(sendCreateProductData.rejected, (state, action) => {
                 state.error = action.payload;
-            });
+            })
+            .addCase(revertAll, () => initialState);
     },
 });
 

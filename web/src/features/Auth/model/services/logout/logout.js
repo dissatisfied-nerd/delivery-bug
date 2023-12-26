@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { cartActions } from "features/Cart";
+import { revertAll } from "shared/actions/actions";
 import { authActions } from "../../slice/AuthSlice";
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
@@ -8,7 +9,7 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
     try {
         await extra.api.post(`/logout`);
         dispatch(authActions.logout());
-        dispatch(cartActions.emptyCart());
+        dispatch(revertAll());
         // return response.data;
     } catch (e) {
         return rejectWithValue("error");

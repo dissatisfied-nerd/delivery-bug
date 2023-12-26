@@ -9,6 +9,8 @@ import {
     getCourierData,
     getCourierError,
     getCourierId,
+    getCourierIsLoadingData,
+    getCourierIsLoadingOrders,
     getCourierOrders,
 } from "entities/Courier";
 import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
@@ -21,8 +23,10 @@ export const ProfileCourier = () => {
     const profile = useSelector(getCourierData);
     const orders = useSelector(getCourierOrders);
     const error = useRef(null);
-    const errorCourier = useSelector(getCourierError);
     const errorClient = useSelector(getClientError);
+    const errorCourier = useSelector(getCourierError);
+    const isLoadingData = useSelector(getCourierIsLoadingData);
+    const isLoadingOrders = useSelector(getCourierIsLoadingOrders);
 
     useEffect(() => {
         dispatch(fetchProfileOrders("courier"));
@@ -46,10 +50,12 @@ export const ProfileCourier = () => {
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
+                <span className={cls.pageTitle}> Профиль </span>
                 <ProfileCard
                     profile={profile}
                     error={errorCourier || errorClient}
                     type={"courier"}
+                    isLoading={isLoadingData}
                 />
                 <div className={cls.title}>Активные заказы</div>
                 <div className={cls.error} ref={error}></div>
@@ -61,6 +67,7 @@ export const ProfileCourier = () => {
                         (order) => order.status !== "finished"
                     )}
                     onCancelOrder={onCancelOrder}
+                    isLoading={isLoadingOrders}
                 />
                 <div className={cls.title}>История заказов</div>
                 <OrderList
@@ -69,6 +76,7 @@ export const ProfileCourier = () => {
                     orders={orders.filter(
                         (order) => order.status === "finished"
                     )}
+                    isLoading={isLoadingOrders}
                 />
             </Card>
         </Page>

@@ -13,10 +13,12 @@ import { Route, Routes } from "react-router-dom";
 export const RouterProvider = () => {
     const isAuth = useSelector(getAuthIsAuth);
     const type = useSelector(getAuthType);
+    console.log(isAuth);
 
     let routes = null;
 
     if (!isAuth) {
+        console.log("tut");
         routes = (
             <>
                 <Route element={<AuthPage />} path="/auth" />

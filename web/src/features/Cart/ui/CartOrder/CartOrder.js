@@ -4,7 +4,7 @@ import { Button } from "shared/ui/Button/Button";
 import cls from "./CartOrder.module.scss";
 
 export const CartOrder = (props) => {
-    const { className, count, weight, cost, onCreateOrder } = props;
+    const { className, count, weight, cost, onCreateOrder, isLoading } = props;
 
     return (
         <div className={classNames(cls.CartOrder, {}, [className])}>
@@ -21,7 +21,11 @@ export const CartOrder = (props) => {
                 <span>К оплате</span>
                 <span className={cls.cost}>{cost} ₽</span>
             </div>
-            <Button className={cls.orderBtn} onClick={onCreateOrder}>
+            <Button
+                className={cls.orderBtn}
+                onClick={onCreateOrder}
+                disabled={isLoading && "disabled"}
+            >
                 Оформить заказ
             </Button>
         </div>

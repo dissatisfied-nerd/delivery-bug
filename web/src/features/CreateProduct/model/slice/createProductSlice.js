@@ -9,6 +9,7 @@ const initialState = {
         weight: "",
         description: "",
     },
+    isLoading: false,
     isProductCreated: false,
     error: "",
 };
@@ -29,18 +30,20 @@ export const createProductSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // .addCase(loginByFirstName.pending, (state) => {
-            //     state.data.error = undefined;
-            //     state.data.isLoading = true;
-            // })
+            .addCase(sendCreateProductData.pending, (state) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
             .addCase(sendCreateProductData.fulfilled, (state) => {
                 state.error = "";
                 state.data = initialState.data;
                 state.isProductCreated = true;
+                state.isLoading = false;
             })
             .addCase(sendCreateProductData.rejected, (state, action) => {
                 state.error = action.payload;
                 state.isProductCreated = false;
+                state.isLoading = false;
             })
             .addCase(revertAll, () => initialState);
     },

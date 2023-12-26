@@ -18,6 +18,8 @@ const initialState = {
         apartment: "",
         password: "",
     },
+    isLoadingData: false,
+    isLoadingOrders: false,
     courier_id: "",
     orders: [],
     error: "",
@@ -45,25 +47,28 @@ export const courierSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchCourierData.pending, (state) => {
-                state.isLoading = true;
+                state.isLoadingData = true;
                 state.error = "";
             })
             .addCase(fetchCourierData.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingData = false;
                 state.error = action.payload;
             })
             .addCase(fetchCourierData.fulfilled, (state, action) => {
                 state.error = "";
-                state.isLoading = false;
+                state.isLoadingData = false;
                 state.data = action.payload.courier;
             })
             .addCase(fetchCourierOrders.pending, (state) => {
-                state.isLoading = true;
+                state.isLoadingOrders = true;
                 state.error = "";
             })
             .addCase(fetchCourierOrders.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingOrders = false;
                 state.error = action.payload;
+            })
+            .addCase(fetchCourierOrders.fulfilled, (state, action) => {
+                state.isLoadingOrders = false;
             })
             .addCase(revertAll, () => initialState);
     },

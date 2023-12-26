@@ -11,12 +11,18 @@ import {
     getClientOrders,
 } from "entities/Client";
 import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
+import {
+    getClientIsLoadingData,
+    getClientIsLoadingOrders,
+} from "entities/Client/model/selectors/getClientData";
 
 export const ProfileClient = () => {
     const dispatch = useDispatch();
     const profile = useSelector(getClientData);
     const orders = useSelector(getClientOrders);
     const error = useSelector(getClientError);
+    const isLoadingData = useSelector(getClientIsLoadingData);
+    const isLoadingOrders = useSelector(getClientIsLoadingOrders);
 
     useEffect(() => {
         dispatch(fetchProfileOrders("client"));
@@ -25,7 +31,12 @@ export const ProfileClient = () => {
     return (
         <Page>
             <Card className={cls.ProfilePageCard}>
-                <ProfileCard profile={profile} error={error} />
+                <span className={cls.pageTitle}> Профиль </span>
+                <ProfileCard
+                    profile={profile}
+                    error={error}
+                    isLoading={isLoadingData}
+                />
                 <div className={cls.title}>Активные заказы</div>
                 <OrderList
                     page="profile"
@@ -33,6 +44,7 @@ export const ProfileClient = () => {
                     orders={orders.filter(
                         (order) => order.status !== "finished"
                     )}
+                    isLoading={isLoadingOrders}
                 />
                 <div className={cls.title}>История заказов</div>
                 <OrderList
@@ -41,6 +53,7 @@ export const ProfileClient = () => {
                     orders={orders.filter(
                         (order) => order.status === "finished"
                     )}
+                    isLoading={isLoadingOrders}
                 />
             </Card>
         </Page>

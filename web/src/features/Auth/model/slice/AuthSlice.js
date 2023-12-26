@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { revertAll } from "shared/actions/actions";
 import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
+import { logout } from "../services/logout/logout";
 import { sendLoginData } from "../services/sendLoginData/sendLoginData";
 import { sendRegisterData } from "../services/sendRegisterData/sendRegisterData";
 
@@ -20,9 +21,11 @@ const initialState = {
         password: "",
         passphrase: "",
     },
+    isLoading: false,
     type: "client",
     isAuth: false,
     error: "",
+    inited: false,
 };
 
 export const authSlice = createSlice({
@@ -34,6 +37,7 @@ export const authSlice = createSlice({
             state.isAuth = true;
             state.data = data;
             state.type = type;
+            state.inited = true;
         },
         changeData: (state, action) => {
             state.data = {
@@ -62,34 +66,57 @@ export const authSlice = createSlice({
         emptyError: (state, action) => {
             state.error = "";
         },
-        logout: (state, action) => {
-            state.data = {};
-            state.type = "client";
-            state.isAuth = false;
-            localStorage.removeItem(PROFILE_LOCALSTORAGE_KEY);
-        },
+        // logout: (state, action) => {
+        //     state.data = {};
+        //     state.type = "client";
+        //     state.isAuth = false;
+        //     localStorage.removeItem(PROFILE_LOCALSTORAGE_KEY);
+        // },
     },
     extraReducers: (builder) => {
         builder
-            // .addCase(loginByFirstName.pending, (state) => {
-            //     state.data.error = undefined;
-            //     state.data.isLoading = true;
-            // })
+            .addCase(sendRegisterData.pending, (state) => {
+                state.error = "";
+                state.isLoading = true;
+            })
             .addCase(sendRegisterData.fulfilled, (state) => {
                 state.isAuth = true;
                 state.error = "";
+                state.isLoading = false;
             })
             .addCase(sendRegisterData.rejected, (state, action) => {
                 state.error = action.payload;
+                state.isLoading = false;
+                state.isAuth = false;
+            })
+            .addCase(sendLoginData.pending, (state) => {
+                state.error = "";
+                state.isLoading = true;
             })
             .addCase(sendLoginData.fulfilled, (state) => {
                 state.isAuth = true;
                 state.error = "";
+                state.isLoading = false;
             })
             .addCase(sendLoginData.rejected, (state, action) => {
                 state.error = action.payload;
+                state.isLoading = false;
+                state.isAuth = false;
             })
-            .addCase(revertAll, () => initialState);
+            .addCase(logout.fulfilled, (state) => {
+                state.data = {};
+                state.type = "client";
+                state.isAuth = false;
+                localStorage.removeItem(PROFILE_LOCALSTORAGE_KEY);
+            })
+            .addCase(revertAll, (state) => {
+                state.data = initialState.data;
+                state.isLoading = false;
+                state.type = "client";
+                state.isAuth = false;
+                state.error = "";
+                state.inited = true;
+            });
     },
 });
 

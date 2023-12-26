@@ -2,14 +2,23 @@ import { OrderList } from "entities/Order";
 import React from "react";
 import { classNames } from "shared/lib/classNames/classNames";
 import { Card } from "shared/ui/Card/Card";
+import { Loader } from "shared/ui/Loader/Loader";
 import cls from "./ProfileCard.module.scss";
 
 export const ProfileCard = (props) => {
-    const { className, profile, error, type } = props;
+    const { className, profile, error, type, isLoading } = props;
     console.log(profile);
+
+    if (isLoading) {
+        return (
+            <div className={cls.ProfileCard}>
+                <Loader />
+            </div>
+        );
+    }
     return (
         <div className={cls.ProfileCard}>
-            <span className={cls.pageTitle}> Профиль </span>
+            {/* <span className={cls.pageTitle}> Профиль </span> */}
             <div className={cls.error}>{error}</div>
             <div className={cls.header}>
                 {type === "store" ? (

@@ -3,6 +3,8 @@ import {
     getStoreProducts,
     getStoreId,
     getStoreError,
+    getStoreIsLoadingData,
+    getStoreIsLoadingProducts,
 } from "./model/selectors/getStoreData";
 import { fetchStoreData } from "./model/services/fetchStoreData/fetchStoreData";
 import { fetchStoreProducts } from "./model/services/fetchStoreProducts/fetchStoreProducts";
@@ -17,4 +19,6 @@ export {
     fetchStoreData,
     getStoreError,
     fetchStoreProducts,
+    getStoreIsLoadingData,
+    getStoreIsLoadingProducts,
 };

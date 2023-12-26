@@ -4,6 +4,7 @@ import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { classNames } from "shared/lib/classNames/classNames";
+import { Button } from "shared/ui/Button/Button";
 import cls from "./Navbar.module.scss";
 
 export default function Navbar() {
@@ -87,15 +88,12 @@ export default function Navbar() {
                     >
                         Профиль
                     </NavLink>
-                    <NavLink
+                    <Button
                         onClick={onLogout}
-                        to={"/auth"}
-                        className={({ isActive }) =>
-                            classNames(cls.link, { [cls.active]: isActive }, [])
-                        }
+                        className={classNames(cls.link, {}, [cls.logoutBtn])}
                     >
                         Выйти
-                    </NavLink>
+                    </Button>
                 </>
             );
         } else if (type === "courier") {
@@ -117,15 +115,12 @@ export default function Navbar() {
                     >
                         Профиль
                     </NavLink>
-                    <NavLink
+                    <Button
                         onClick={onLogout}
-                        to={"/auth"}
-                        className={({ isActive }) =>
-                            classNames(cls.link, { [cls.active]: isActive }, [])
-                        }
+                        className={classNames(cls.link, {}, [cls.logoutBtn])}
                     >
                         Выйти
-                    </NavLink>
+                    </Button>
                 </>
             );
         } else if (type === "store") {
@@ -147,15 +142,12 @@ export default function Navbar() {
                     >
                         Профиль
                     </NavLink>
-                    <NavLink
+                    <Button
                         onClick={onLogout}
-                        to={"/auth"}
-                        className={({ isActive }) =>
-                            classNames(cls.link, { [cls.active]: isActive }, [])
-                        }
+                        className={classNames(cls.link, {}, [cls.logoutBtn])}
                     >
                         Выйти
-                    </NavLink>
+                    </Button>
                 </>
             );
         } else if (type === "admin") {
@@ -169,15 +161,12 @@ export default function Navbar() {
                     >
                         Товары
                     </NavLink>
-                    <NavLink
+                    <Button
                         onClick={onLogout}
-                        to={"/auth"}
-                        className={({ isActive }) =>
-                            classNames(cls.link, { [cls.active]: isActive }, [])
-                        }
+                        className={classNames(cls.link, {}, [cls.logoutBtn])}
                     >
                         Выйти
-                    </NavLink>
+                    </Button>
                 </>
             );
         }

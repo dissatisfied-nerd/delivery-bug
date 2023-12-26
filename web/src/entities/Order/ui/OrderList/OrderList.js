@@ -1,5 +1,6 @@
 import React from "react";
 import { classNames } from "shared/lib/classNames/classNames";
+import { Loader } from "shared/ui/Loader/Loader";
 import { OrderListItem } from "../OrderListItem/OrderListItem";
 import cls from "./OrderList.module.scss";
 
@@ -11,7 +12,17 @@ export const OrderList = (props) => {
         page,
         onTakeOrder = () => {},
         onCancelOrder = () => {},
+        isLoading,
     } = props;
+
+    if (isLoading) {
+        return (
+            <div className={classNames(cls.OrderList, {}, [className])}>
+                <Loader />
+            </div>
+        );
+    }
+
     return (
         <div className={classNames(cls.OrderList, {}, [className])}>
             {orders.length ? (

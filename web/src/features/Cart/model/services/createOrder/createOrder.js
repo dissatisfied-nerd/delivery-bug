@@ -24,14 +24,6 @@ export const createOrder = createAsyncThunk(
             }
 
             dispatch(cartActions.emptyCart());
-            // const data = { ...registerData, ...response.data };
-            // if (type === "client") {
-            //     dispatch(clientActions.setClientData(data));
-            // } else {
-            //     dispatch(courierActions.setCourierData(data));
-            // }
-            // dispatch(authActions.saveAuthData(response.data));
-            // return response.data;
         } catch (e) {
             return rejectWithValue(
                 e?.response?.data?.error ||

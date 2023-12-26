@@ -9,6 +9,7 @@ import {
     getCartCost,
     getCartCount,
     getCartData,
+    getCartIsLoading,
     getCartWeight,
 } from "../../model/selectors/getCartData";
 import { createOrder } from "../../model/services/createOrder/createOrder";
@@ -21,6 +22,7 @@ export const Cart = (props) => {
     const weight = useSelector(getCartWeight);
     const count = useSelector(getCartCount);
     const cost = useSelector(getCartCost);
+    const isLoading = useSelector(getCartIsLoading);
 
     const onAddToCart = useCallback(
         (product) => {
@@ -53,6 +55,7 @@ export const Cart = (props) => {
                 cost={cost}
                 weight={weight}
                 onCreateOrder={onCreateOrder}
+                isLoading={isLoading}
             />
         </div>
     );

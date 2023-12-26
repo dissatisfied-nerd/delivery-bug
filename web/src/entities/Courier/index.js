@@ -11,6 +11,8 @@
 // import { getCourierType } from "./model/selectors/getProfleData";
 import {
     getCourierError,
+    getCourierIsLoadingData,
+    getCourierIsLoadingOrders,
     getCourierOrders,
 } from "./model/selectors/getCourierData";
 
@@ -45,4 +47,6 @@ export {
     fetchCourierData,
     fetchCourierOrders,
     getCourierError,
+    getCourierIsLoadingData,
+    getCourierIsLoadingOrders,
 };

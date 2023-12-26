@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductsPageData } from "../../model/selectors/getProductsPageData";
 import cls from "../ProductsPage.module.scss";
 
-export const ProductsPageClient = () => {
+export const ProductsPageClient = ({ isLoading }) => {
     const dispatch = useDispatch();
     const cart = useSelector(getCartData);
     const products = useSelector(getProductsPageData);
@@ -35,6 +35,7 @@ export const ProductsPageClient = () => {
             cart={cart}
             className={cls.ProductList}
             products={products}
+            isLoading={isLoading}
         />
     );
 };

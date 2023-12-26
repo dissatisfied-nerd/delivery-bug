@@ -5,3 +5,4 @@ export const getCartCost = (state) => state.cart.cost || 0;
 export const getCartIsOrderCreated = (state) =>
     state.cart.isOrderCreated || false;
 export const getCartError = (state) => state.cart.error || "";
+export const getCartIsLoading = (state) => state.cart.isLoading || false;

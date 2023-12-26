@@ -9,6 +9,7 @@ import { sendRegisterData } from "../model/services/sendRegisterData/sendRegiste
 import {
     getAuthData,
     getAuthError,
+    getAuthIsLoading,
     getAuthType,
 } from "../model/selectors/getAuthData";
 import { authActions } from "../model/slice/AuthSlice";
@@ -21,6 +22,7 @@ export const AuthForm = () => {
     const data = useSelector(getAuthData);
     const type = useSelector(getAuthType);
     const error = useSelector(getAuthError);
+    const isLoading = useSelector(getAuthIsLoading);
     const {
         name = "",
         first_name = "",
@@ -401,11 +403,19 @@ export const AuthForm = () => {
                         </option>
                     </select>
                 )}
-                <Button theme="primary" onClick={onSignUp}>
+                <Button
+                    theme="primary"
+                    onClick={onSignUp}
+                    disabled={isLoading && "disabled"}
+                >
                     Зарегистрироваться
                 </Button>
                 <div className={cls.error}>{error}</div>
-                <Button className={cls.changeForm} onClick={onChangeForm}>
+                <Button
+                    className={cls.changeForm}
+                    onClick={onChangeForm}
+                    disabled={isLoading && "disabled"}
+                >
                     Я уже смешарик
                 </Button>
             </div>
@@ -442,11 +452,19 @@ export const AuthForm = () => {
                     </select>
                 )}
 
-                <Button theme="primary" onClick={onLogin}>
+                <Button
+                    theme="primary"
+                    onClick={onLogin}
+                    disabled={isLoading && "disabled"}
+                >
                     Войти
                 </Button>
                 <div className={cls.error}>{error}</div>
-                <Button className={cls.changeForm} onClick={onChangeForm}>
+                <Button
+                    className={cls.changeForm}
+                    onClick={onChangeForm}
+                    disabled={isLoading && "disabled"}
+                >
                     ЭЭЭ бля я не смешарик еще
                 </Button>
             </div>

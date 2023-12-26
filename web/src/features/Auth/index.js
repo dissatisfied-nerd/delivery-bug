@@ -1,6 +1,8 @@
 import {
     getAuthData,
+    getAuthInited,
     getAuthIsAuth,
+    getAuthIsLoading,
     getAuthType,
 } from "./model/selectors/getAuthData";
 import { logout } from "./model/services/logout/logout";
@@ -15,4 +17,6 @@ export {
     getAuthIsAuth,
     getAuthType,
     logout,
+    getAuthIsLoading,
+    getAuthInited,
 };

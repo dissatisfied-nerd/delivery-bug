@@ -5,7 +5,6 @@ import { fetchClientData } from "../services/fetchClientData/fetchClientData";
 import { fetchClientOrders } from "../services/fetchClientOrders/fetchClientOrders";
 
 const initialState = {
-    isLoading: false,
     data: {
         first_name: "",
         last_name: "",
@@ -19,6 +18,8 @@ const initialState = {
         password: "",
         balance: 0,
     },
+    isLoadingData: false,
+    isLoadingOrders: false,
     client_id: "",
     orders: [],
     error: "",
@@ -43,28 +44,28 @@ export const clientSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchClientData.pending, (state) => {
-                state.isLoading = true;
+                state.isLoadingData = true;
                 state.error = "";
             })
             .addCase(fetchClientData.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingData = false;
                 state.error = action.payload;
             })
             .addCase(fetchClientData.fulfilled, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingData = false;
                 state.error = "";
             })
             .addCase(fetchClientOrders.pending, (state) => {
-                state.isLoading = true;
+                state.isLoadingOrders = true;
                 state.error = "";
             })
             .addCase(fetchClientOrders.fulfilled, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingOrders = false;
                 state.orders = action.payload;
                 state.error = "";
             })
             .addCase(fetchClientOrders.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingOrders = false;
                 state.error = action.payload;
             })
             .addCase(revertAll, () => initialState);

@@ -10,6 +10,7 @@ const initialState = {
     count: 0,
     isOrderCreated: false,
     error: "",
+    isLoading: false,
 };
 
 export const cartSlice = createSlice({
@@ -98,11 +99,17 @@ export const cartSlice = createSlice({
     },
     extraReducers: (build) => {
         build
+            .addCase(createOrder.pending, (state, action) => {
+                state.isLoading = true;
+                state.error = "";
+            })
             .addCase(createOrder.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.isOrderCreated = true;
                 state.error = "";
             })
             .addCase(createOrder.rejected, (state, action) => {
+                state.isLoading = false;
                 state.isOrderCreated = false;
                 state.error = action.payload;
             })

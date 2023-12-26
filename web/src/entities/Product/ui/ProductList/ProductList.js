@@ -1,5 +1,6 @@
 import React, { memo, useCallback } from "react";
 import { classNames } from "shared/lib/classNames/classNames";
+import { Loader } from "shared/ui/Loader/Loader";
 import { ProductListItem } from "../ProductListItem/ProductListItem";
 import cls from "./ProductList.module.scss";
 
@@ -13,9 +14,24 @@ export const ProductList = memo((props) => {
         type = "small",
         isAdmin = false,
         onDeleteProduct,
+        isLoading,
     } = props;
 
     let content;
+
+    if (isLoading) {
+        return (
+            <div
+                className={classNames(
+                    cls.ProductList,
+                    { [cls.empty]: !products.length },
+                    [className, cls[type]]
+                )}
+            >
+                <Loader />
+            </div>
+        );
+    }
 
     if (type === "small") {
         content = products.map((product) => {

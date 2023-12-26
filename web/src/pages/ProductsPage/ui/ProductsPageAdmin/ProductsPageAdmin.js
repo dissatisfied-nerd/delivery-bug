@@ -6,7 +6,7 @@ import { getProductsPageData } from "../../model/selectors/getProductsPageData";
 import { fetchProductsPageData } from "../../model/services/fetchProductsPageData/fetchProductsPageData";
 import cls from "../ProductsPage.module.scss";
 
-export const ProductsPageAdmin = () => {
+export const ProductsPageAdmin = ({ isLoading }) => {
     const dispatch = useDispatch();
     const products = useSelector(getProductsPageData);
 
@@ -29,6 +29,7 @@ export const ProductsPageAdmin = () => {
                 type="big"
                 isAdmin={true}
                 onDeleteProduct={onDeleteProduct}
+                isLoading={isLoading}
             />
         </>
     );

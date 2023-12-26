@@ -13,6 +13,7 @@ import {
 import { fetchOrdersPageData } from "../model/services/fetchOrdersPageData/fetchOrdersPageData";
 import { takeOrder } from "../model/services/takeOrder/takeOrder";
 import { ordersPageActions } from "../model/slice/ordersPageSlice";
+import { Loader } from "shared/ui/Loader/Loader";
 
 export const OrdersPage = () => {
     const dispatch = useDispatch();
@@ -42,7 +43,12 @@ export const OrdersPage = () => {
     );
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <Page>
+                <span className={cls.title}> Заказы </span>
+                <Loader />
+            </Page>
+        );
     }
 
     if (error && !orders.length) {

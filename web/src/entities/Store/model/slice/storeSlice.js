@@ -5,7 +5,8 @@ import { fetchStoreData } from "../services/fetchStoreData/fetchStoreData";
 import { fetchStoreProducts } from "../services/fetchStoreProducts/fetchStoreProducts";
 
 const initialState = {
-    isLoading: false,
+    isLoadingData: false,
+    isLoadingProducts: false,
     data: {
         name: "",
         first_name: "",
@@ -39,28 +40,28 @@ export const storeSlice = createSlice({
         builder
             .addCase(fetchStoreData.pending, (state) => {
                 state.error = "";
-                state.isLoading = true;
+                state.isLoadingData = true;
             })
             .addCase(fetchStoreData.fulfilled, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingData = false;
                 state.error = "";
                 state.data = action.payload.store;
             })
             .addCase(fetchStoreData.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingData = false;
                 state.error = action.payload;
             })
             .addCase(fetchStoreProducts.pending, (state) => {
                 state.error = "";
-                state.isLoading = true;
+                state.isLoadingProducts = true;
             })
             .addCase(fetchStoreProducts.fulfilled, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingProducts = false;
                 state.error = "";
                 state.products = action.payload.products || [];
             })
             .addCase(fetchStoreProducts.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoadingProducts = false;
                 state.error = action.payload;
             })
             .addCase(revertAll, () => initialState);

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     getCreateProductData,
     getCreateProductError,
+    getCreateProductIsLoading,
 } from "../model/selectors/getCreateProductData";
 import { createProductActions } from "../model/slice/createProductSlice";
 import { validateFloat } from "shared/lib/validateForm/validateFloat";
@@ -19,6 +20,7 @@ export const CreateProduct = ({ className }) => {
     const data = useSelector(getCreateProductData);
     const { name = "", price = "", weight = "", description = "" } = data;
     const error = useSelector(getCreateProductError);
+    const isLoading = useSelector(getCreateProductIsLoading);
 
     useEffect(() => {
         const firstInput = [
@@ -119,6 +121,7 @@ export const CreateProduct = ({ className }) => {
                 theme="primary"
                 className={cls.createBtn}
                 onClick={onCreateProduct}
+                disabled={isLoading && "disabled"}
             >
                 Создать
             </Button>

@@ -8,6 +8,7 @@ import { Page } from "widgets/Page/Page";
 import {
     getProductsPageData,
     getProductsPageError,
+    getProductsPageIsLoading,
 } from "../model/selectors/getProductsPageData";
 import { fetchProductsPageData } from "../model/services/fetchProductsPageData/fetchProductsPageData";
 import cls from "./ProductsPage.module.scss";
@@ -18,8 +19,7 @@ export const ProductsPage = () => {
     const dispatch = useDispatch();
     const type = useSelector(getAuthType);
     const error = useSelector(getProductsPageError);
-    // TESTING
-    // const type = "admin";
+    const isLoading = useSelector(getProductsPageIsLoading);
 
     useEffect(() => {
         dispatch(fetchProductsPageData());
@@ -29,7 +29,11 @@ export const ProductsPage = () => {
         <Page className={classNames(cls.ProductsPage, {}, [])}>
             <span className={cls.title}> Товары </span>
             <div className={cls.error}>{error}</div>
-            {type === "admin" ? <ProductsPageAdmin /> : <ProductsPageClient />}
+            {type === "admin" ? (
+                <ProductsPageAdmin isLoading={isLoading} />
+            ) : (
+                <ProductsPageClient isLoading={isLoading} />
+            )}
         </Page>
     );
 };

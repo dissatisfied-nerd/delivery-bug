@@ -1,4 +1,7 @@
-import { getCreateProductIsProductCreated } from "./model/selectors/getCreateProductData";
+import {
+    getCreateProductIsLoading,
+    getCreateProductIsProductCreated,
+} from "./model/selectors/getCreateProductData";
 import {
     createProductActions,
     createProductReducer,
@@ -10,4 +13,5 @@ export {
     createProductActions,
     createProductReducer,
     getCreateProductIsProductCreated,
+    getCreateProductIsLoading,
 };

@@ -33,7 +33,8 @@ export const ProfileStore = () => {
             <Card className={cls.ProfilePageCard}>
                 <ProfileCard profile={profile} error={error} type={"store"} />
                 <div className={cls.title}>Товары</div>
-                <ProductList
+                <ProductList products={products} type="big" />
+                {/* <ProductList
                     products={[
                         {
                             id: 0,
@@ -72,7 +73,7 @@ export const ProfileStore = () => {
                         },
                     ]}
                     type="big"
-                />
+                /> */}
             </Card>
         </Page>
     );

@@ -92,10 +92,9 @@ type Product struct {
 	Price       float32 `db:"price" json:"price"`
 	Weight      float32 `db:"weight" json:"weight"`
 	Description string  `db:"description" json:"description"`
-	Image       []byte  `db:"image" json:"image"`
+	Image       string  `db:"image" json:"image"`
 
-	Admin_id string `db:"administrator_id"`
-	StoreId  string `db:"store_id"`
+	StoreId string `db:"store_id"`
 }
 
 type Order struct {

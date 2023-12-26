@@ -91,6 +91,7 @@ func (r *Repository) SelectProductsByStore(ctx context.Context, storeID string) 
 			r.l.Errorf("error getting products from db: %v", err)
 			return nil, err
 		}
+		product.StoreId = storeID
 		products = append(products, product)
 	}
 

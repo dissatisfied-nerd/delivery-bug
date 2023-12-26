@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS products
     price            float CHECK (price > 0),
     weight           float,
     description      varchar(512),
-    image            bytea,
+    image            text,
 
     store_id UUID REFERENCES stores (id)
 );

@@ -1,30 +1,28 @@
-import { deleteProduct, getAdminError } from "entities/Admin";
 import { ProductList } from "entities/Product";
+import { deleteProduct } from "../../model/services/deleteProducts/deleteProduct";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsPageData } from "../../model/selectors/getProductsPageData";
-import { fetchProductsPageData } from "../../model/services/fetchProductsPageData";
+import { fetchProductsPageData } from "../../model/services/fetchProductsPageData/fetchProductsPageData";
 import cls from "../ProductsPage.module.scss";
 
 export const ProductsPageAdmin = () => {
     const dispatch = useDispatch();
     const products = useSelector(getProductsPageData);
-    const error = useSelector(getAdminError);
 
     const onDeleteProduct = useCallback(
         async (id) => {
             console.log(id);
-            await dispatch(deleteProduct(id));
-            if (!error) {
+            const result = await dispatch(deleteProduct(id));
+            if (!result.meta.rejectedWithValue) {
                 dispatch(fetchProductsPageData());
             }
         },
-        [dispatch, error]
+        [dispatch]
     );
 
     return (
         <>
-            <div className={cls.error}>{error}</div>
             <ProductList
                 className={cls.ProductList}
                 products={products}

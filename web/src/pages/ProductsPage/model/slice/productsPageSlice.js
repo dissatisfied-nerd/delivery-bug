@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { revertAll } from "shared/actions/actions";
-import { fetchProductsPageData } from "../services/fetchProductsPageData";
+import { deleteProduct } from "../services/deleteProducts/deleteProduct";
+import { fetchProductsPageData } from "../services/fetchProductsPageData/fetchProductsPageData";
 
 const initialState = {
     products: [],
@@ -24,6 +25,18 @@ export const productsPageSlice = createSlice({
                 state.products = action.payload ?? [];
             })
             .addCase(fetchProductsPageData.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(deleteProduct.pending, (state) => {
+                state.isLoading = true;
+                state.error = "";
+            })
+            .addCase(deleteProduct.fulfilled, (state) => {
+                state.isLoading = false;
+                state.error = "";
+            })
+            .addCase(deleteProduct.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             })

@@ -70,8 +70,15 @@ export const CreateProduct = ({ className }) => {
         [setImage]
     );
 
-    const onCreateProduct = useCallback(() => {
-        dispatch(sendCreateProductData({ ...data, image }));
+    const onCreateProduct = useCallback(async () => {
+        const result = await dispatch(
+            sendCreateProductData({ ...data, image })
+        );
+        if (!result.meta.rejectedWithValue) {
+            setImage(null);
+            const inputFile = document.getElementsByName("file")[0];
+            inputFile.value = "";
+        }
     }, [dispatch, data, image]);
 
     return (
@@ -106,6 +113,7 @@ export const CreateProduct = ({ className }) => {
                 className={cls.input}
                 label="Фотография"
                 onChange={onChangeFile}
+                name="file"
             />
             <Button
                 theme="primary"

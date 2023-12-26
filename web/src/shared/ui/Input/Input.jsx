@@ -3,7 +3,7 @@ import cls from "./Input.module.scss";
 import { classNames } from "shared/lib/classNames/classNames";
 
 export const Input = (props) => {
-    const { className, onChange, label, value, type = "text" } = props;
+    const { className, onChange, label, value, type = "text", name } = props;
 
     const onChangeHandler = (e) => {
         if (type === "file") {
@@ -21,6 +21,7 @@ export const Input = (props) => {
                 type={type}
                 onChange={onChangeHandler}
                 className={classNames(cls.input, {}, [cls[type]])}
+                name={name}
             />
         </div>
     );

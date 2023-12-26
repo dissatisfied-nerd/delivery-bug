@@ -4,3 +4,10 @@
 .createProductForm {
     margin: 0 auto;
 }
+
+.message {
+    font: var(--font-l);
+    color: var(--secondary-color);
+    text-align: center;
+    margin-bottom: 20px;
+}

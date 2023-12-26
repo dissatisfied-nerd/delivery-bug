@@ -9,7 +9,7 @@ import {
     getProductsPageData,
     getProductsPageError,
 } from "../model/selectors/getProductsPageData";
-import { fetchProductsPageData } from "../model/services/fetchProductsPageData";
+import { fetchProductsPageData } from "../model/services/fetchProductsPageData/fetchProductsPageData";
 import cls from "./ProductsPage.module.scss";
 import { ProductsPageAdmin } from "./ProductsPageAdmin/ProductsPageAdmin";
 import { ProductsPageClient } from "./ProductsPageClient/ProductsPageClient";

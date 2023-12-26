@@ -52,9 +52,9 @@ export const authSlice = createSlice({
             localStorage.setItem(
                 PROFILE_LOCALSTORAGE_KEY,
                 JSON.stringify({
-                    ...data,
-                    type: state.type,
                     ...profile,
+                    type: state.type,
+                    ...data,
                     ...action.payload,
                 })
             );

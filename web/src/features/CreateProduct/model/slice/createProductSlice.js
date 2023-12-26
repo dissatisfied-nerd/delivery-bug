@@ -9,6 +9,7 @@ const initialState = {
         weight: "",
         description: "",
     },
+    isProductCreated: false,
     error: "",
 };
 
@@ -22,6 +23,9 @@ export const createProductSlice = createSlice({
                 ...action.payload,
             };
         },
+        setIsProductCreated: (state, action) => {
+            state.isProductCreated = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -31,9 +35,12 @@ export const createProductSlice = createSlice({
             // })
             .addCase(sendCreateProductData.fulfilled, (state) => {
                 state.error = "";
+                state.data = initialState.data;
+                state.isProductCreated = true;
             })
             .addCase(sendCreateProductData.rejected, (state, action) => {
                 state.error = action.payload;
+                state.isProductCreated = false;
             })
             .addCase(revertAll, () => initialState);
     },

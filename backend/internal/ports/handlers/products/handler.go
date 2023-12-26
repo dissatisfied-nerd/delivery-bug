@@ -40,7 +40,7 @@ func (h *Handler) GetProducts(ctx *gin.Context) {
 }
 
 func (h *Handler) GetProductByID(ctx *gin.Context) {
-	productID := ctx.Param("productID")
+	productID := ctx.Param("id")
 	h.l.Info(productID)
 
 	info, err := h.repo.SelectProductByID(ctx, productID)

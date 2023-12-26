@@ -571,7 +571,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "productID",
             "in": "path",
             "description": "id",
             "required": true,

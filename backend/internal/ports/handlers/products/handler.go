@@ -40,7 +40,7 @@ func (h *Handler) GetProducts(ctx *gin.Context) {
 }
 
 func (h *Handler) GetProductByID(ctx *gin.Context) {
-	productID := ctx.Param("id")
+	productID := ctx.Param("productID")
 	h.l.Info(productID)
 
 	info, err := h.repo.SelectProductByID(ctx, productID)
@@ -90,7 +90,7 @@ func (h *Handler) GetProductsByStore(ctx *gin.Context) {
 }
 
 func (h *Handler) DeleteProductById(ctx *gin.Context) {
-	productID := ctx.Param("id")
+	productID := ctx.Param("productID")
 	err := h.repo.DeleteProductById(ctx, productID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

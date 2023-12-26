@@ -5,8 +5,9 @@ import (
 	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/models"
 	"delivery-bug/pkg/logging"
-	"github.com/jackc/pgx/v5/pgxpool"
 	"time"
+
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 const (
@@ -246,7 +247,7 @@ func (r *Repository) SetOrderTaken(ctx context.Context, orderID, courierID strin
 }
 
 func (r *Repository) SetOrderFinished(ctx context.Context, orderID, courierID string) (models.Order, error) {
-	_, err := r.db.Exec(ctx, setOrderFinishedQuery, statusFinished, courierID, orderID)
+	_, err := r.db.Exec(ctx, setOrderFinishedQuery, statusFinished, time.Now(), courierID, orderID)
 	if err != nil {
 		r.l.Errorf("error setting status finished in db: %v", err)
 		return models.Order{}, err

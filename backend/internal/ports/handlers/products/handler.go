@@ -49,7 +49,7 @@ func (h *Handler) GetProductByID(ctx *gin.Context) {
 		return
 	}
 
-	h.l.Info(info)
+	h.l.Info(info.Name, info.Price, info.Weight, info.Description)
 	ctx.JSON(http.StatusOK, gin.H{"product": info})
 }
 

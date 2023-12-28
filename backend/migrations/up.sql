@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS order_products
 (
     amount     int,
 
-    order_id   UUID REFERENCES orders (id),
+    order_id   UUID REFERENCES orders (id) ON DELETE CASCADE,
     product_id UUID REFERENCES products (id) ON DELETE CASCADE,
     PRIMARY KEY (order_id, product_id)
 );

@@ -100,6 +100,12 @@ func (r *Repository) SelectProductsByStore(ctx context.Context, storeID string) 
 }
 
 func (r *Repository) DeleteProductById(ctx context.Context, productID string) error {
+	rowsOrderID, err := r.db.Query(ctx, selectOrderByProduct, productID)
+	if err != nil {
+		r.l.Errorf("Error while getting order id %v", err)
+		return err
+	}
+
 	result, err := r.db.Exec(ctx, deleteProductById, productID)
 	if err != nil {
 		r.l.Errorf("error while deleting product %s: %v", productID, err)
@@ -110,6 +116,15 @@ func (r *Repository) DeleteProductById(ctx context.Context, productID string) er
 	if rowsAffected == 0 {
 		r.l.Errorf("no products with id %s", productID)
 		return errors.New("no products with such id")
+	}
+
+	for rowsOrderID.Next() {
+		var orderID string
+		rowsOrderID.Scan(&orderID)
+		_, err := r.db.Exec(ctx, deleteOrderById, orderID)
+		if err != nil {
+			r.l.Errorf("Error while deleting order %v", err)
+		}
 	}
 
 	r.l.Infof("deleting product with id %s", productID)

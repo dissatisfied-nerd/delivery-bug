@@ -115,7 +115,7 @@ func (h *Handler) GetInfoByID(ctx *gin.Context) {
 
 	info, err := h.service.GetInfoByID(ctx, id)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 

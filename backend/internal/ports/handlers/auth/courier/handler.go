@@ -5,11 +5,12 @@ import (
 	"delivery-bug/internal/service/courier"
 	"delivery-bug/pkg/logging"
 	"errors"
-	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 const role = "courier"
@@ -105,7 +106,7 @@ func (h *Handler) GetInfoByID(ctx *gin.Context) {
 
 	info, err := h.service.GetInfoByID(ctx, id)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 

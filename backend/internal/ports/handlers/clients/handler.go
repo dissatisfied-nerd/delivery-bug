@@ -3,8 +3,9 @@ package clients
 import (
 	"delivery-bug/internal/service/user"
 	"delivery-bug/pkg/logging"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ClientHandler interface {
@@ -28,7 +29,7 @@ func (h *Handler) GetInfoByID(ctx *gin.Context) {
 
 	info, err := h.service.GetInfoById(ctx, id)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 

@@ -5,9 +5,10 @@ import (
 	"delivery-bug/internal/repo/order"
 	"delivery-bug/pkg/logging"
 	"errors"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"net/http"
 )
 
 type OrderHandler interface {
@@ -38,12 +39,12 @@ func (h *Handler) CreateOrder(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&input)
 	if err != nil {
 		h.l.Error(err)
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	res, err := h.repo.CreateOrder(ctx, &input)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -53,7 +54,7 @@ func (h *Handler) CreateOrder(ctx *gin.Context) {
 func (h *Handler) GetFreeOrders(ctx *gin.Context) {
 	orders, err := h.repo.GetFreeOrders(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -65,7 +66,7 @@ func (h *Handler) GetOrdersByCourierID(ctx *gin.Context) {
 
 	ordersCouriers, err := h.repo.GetOrdersByCourierID(ctx, courierID)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -77,7 +78,7 @@ func (h *Handler) GetOrdersByUserID(ctx *gin.Context) {
 
 	ordersUsers, err := h.repo.GetOrdersByUserID(ctx, userID)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -100,7 +101,7 @@ func (h *Handler) TakeOrder(ctx *gin.Context) {
 
 	info, err := h.repo.SetOrderTaken(ctx, orderID, courierID)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{"order": info})
@@ -122,7 +123,7 @@ func (h *Handler) FinishOrder(ctx *gin.Context) {
 
 	info, err := h.repo.SetOrderFinished(ctx, orderID, courierID)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{"order": info})

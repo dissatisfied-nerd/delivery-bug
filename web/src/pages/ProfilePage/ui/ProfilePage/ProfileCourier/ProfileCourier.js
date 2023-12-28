@@ -7,15 +7,16 @@ import cls from "../ProfilePage.module.scss";
 import { ProfileCard } from "../../ProfileCard/ProfileCard";
 import {
     getCourierData,
-    getCourierError,
+    getCourierErrorData,
+    getCourierErrorOrders,
     getCourierId,
     getCourierIsLoadingData,
     getCourierIsLoadingOrders,
     getCourierOrders,
 } from "entities/Courier";
-import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
+import { fetchProfileOrders } from "../../../model/sevices/fetchProfileOrders/fetchProfileOrders";
 import { finishOrder } from "../../../model/sevices/finishOrder/finishOrder";
-import { getClientError } from "entities/Client";
+import { getClientError, getClientErrorData } from "entities/Client";
 
 export const ProfileCourier = () => {
     const dispatch = useDispatch();
@@ -23,8 +24,9 @@ export const ProfileCourier = () => {
     const profile = useSelector(getCourierData);
     const orders = useSelector(getCourierOrders);
     const error = useRef(null);
-    const errorClient = useSelector(getClientError);
-    const errorCourier = useSelector(getCourierError);
+    const errorClient = useSelector(getClientErrorData);
+    const errorCourierData = useSelector(getCourierErrorData);
+    const errorCourierOrders = useSelector(getCourierErrorOrders);
     const isLoadingData = useSelector(getCourierIsLoadingData);
     const isLoadingOrders = useSelector(getCourierIsLoadingOrders);
 
@@ -53,7 +55,9 @@ export const ProfileCourier = () => {
                 <span className={cls.pageTitle}> Профиль </span>
                 <ProfileCard
                     profile={profile}
-                    error={errorCourier || errorClient}
+                    error={
+                        errorCourierData || errorCourierOrders || errorClient
+                    }
                     type={"courier"}
                     isLoading={isLoadingData}
                 />

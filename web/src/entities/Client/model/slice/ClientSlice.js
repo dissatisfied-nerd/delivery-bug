@@ -22,7 +22,8 @@ const initialState = {
     isLoadingOrders: false,
     client_id: "",
     orders: [],
-    error: "",
+    errorData: "",
+    errorOrders: "",
 };
 
 export const clientSlice = createSlice({
@@ -45,28 +46,28 @@ export const clientSlice = createSlice({
         builder
             .addCase(fetchClientData.pending, (state) => {
                 state.isLoadingData = true;
-                state.error = "";
+                state.errorData = "";
             })
             .addCase(fetchClientData.rejected, (state, action) => {
                 state.isLoadingData = false;
-                state.error = action.payload;
+                state.errorData = action.payload;
             })
             .addCase(fetchClientData.fulfilled, (state, action) => {
                 state.isLoadingData = false;
-                state.error = "";
+                state.errorData = "";
             })
             .addCase(fetchClientOrders.pending, (state) => {
                 state.isLoadingOrders = true;
-                state.error = "";
+                state.errorOrders = "";
             })
             .addCase(fetchClientOrders.fulfilled, (state, action) => {
                 state.isLoadingOrders = false;
                 state.orders = action.payload;
-                state.error = "";
+                state.errorOrders = "";
             })
             .addCase(fetchClientOrders.rejected, (state, action) => {
                 state.isLoadingOrders = false;
-                state.error = action.payload;
+                state.errorOrders = action.payload;
             })
             .addCase(revertAll, () => initialState);
     },

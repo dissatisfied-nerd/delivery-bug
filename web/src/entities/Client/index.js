@@ -10,7 +10,10 @@
 // import { getClientPassword } from "./model/selectors/getProfleData";
 // import { getClientType } from "./model/selectors/getProfleData";
 import {
-    getClientError,
+    getClientErrorData,
+    getClientErrorOrders,
+    getClientIsLoadingData,
+    getClientIsLoadingOrders,
     getClientOrders,
 } from "./model/selectors/getClientData";
 
@@ -44,5 +47,8 @@ export {
     getClientId,
     fetchClientData,
     fetchClientOrders,
-    getClientError,
+    getClientErrorData,
+    getClientErrorOrders,
+    getClientIsLoadingData,
+    getClientIsLoadingOrders,
 };

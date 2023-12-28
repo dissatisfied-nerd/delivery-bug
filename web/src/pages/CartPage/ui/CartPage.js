@@ -21,9 +21,9 @@ export const CartPage = () => {
         dispatch(cartActions.initCart());
 
         return () => {
-            dispatch(cartActions.setIsOrderCreated(false));
+            isOrderCreated && dispatch(cartActions.setIsOrderCreated(false));
         };
-    }, [dispatch]);
+    }, [dispatch, isOrderCreated]);
 
     return (
         <Page>

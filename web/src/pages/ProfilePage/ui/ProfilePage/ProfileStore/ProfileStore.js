@@ -10,15 +10,14 @@ import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfile
 import {
     fetchStoreProducts,
     getStoreData,
-    getStoreError,
+    getStoreErrorData,
+    getStoreErrorProducts,
     getStoreId,
-    getStoreIsLoading,
     getStoreIsLoadingData,
     getStoreIsLoadingProducts,
     getStoreProducts,
 } from "entities/Store";
 import { ProductList } from "entities/Product";
-import { Loader } from "shared/ui/Loader/Loader";
 
 export const ProfileStore = () => {
     const dispatch = useDispatch();
@@ -26,7 +25,8 @@ export const ProfileStore = () => {
     const profile = useSelector(getStoreData);
     const products = useSelector(getStoreProducts);
     console.log(products);
-    const error = useSelector(getStoreError);
+    const errorData = useSelector(getStoreErrorData);
+    const errorProducts = useSelector(getStoreErrorProducts);
     const isLoadingData = useSelector(getStoreIsLoadingData);
     const isLoadingProducts = useSelector(getStoreIsLoadingProducts);
 
@@ -40,7 +40,7 @@ export const ProfileStore = () => {
                 <span className={cls.pageTitle}> Профиль </span>
                 <ProfileCard
                     profile={profile}
-                    error={error}
+                    error={errorData || errorProducts}
                     type={"store"}
                     isLoading={isLoadingData}
                 />

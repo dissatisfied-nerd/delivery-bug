@@ -10,7 +10,8 @@
 // import { getCourierPassword } from "./model/selectors/getProfleData";
 // import { getCourierType } from "./model/selectors/getProfleData";
 import {
-    getCourierError,
+    getCourierErrorData,
+    getCourierErrorOrders,
     getCourierIsLoadingData,
     getCourierIsLoadingOrders,
     getCourierOrders,
@@ -46,7 +47,8 @@ export {
     getCourierId,
     fetchCourierData,
     fetchCourierOrders,
-    getCourierError,
     getCourierIsLoadingData,
     getCourierIsLoadingOrders,
+    getCourierErrorData,
+    getCourierErrorOrders,
 };

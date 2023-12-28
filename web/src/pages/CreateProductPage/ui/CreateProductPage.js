@@ -15,9 +15,10 @@ export const CreateProductPage = () => {
 
     useEffect(() => {
         return () => {
-            dispatch(createProductActions.setIsProductCreated(false));
+            isOrderCreated &&
+                dispatch(createProductActions.setIsProductCreated(false));
         };
-    }, [dispatch]);
+    }, [dispatch, isOrderCreated]);
 
     return (
         <Page className={classNames(cls.CreateProductPage, {}, [])}>

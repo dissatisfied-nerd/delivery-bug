@@ -23,7 +23,8 @@ const initialState = {
     },
     store_id: "",
     products: [],
-    error: "",
+    errorData: "",
+    errorProducts: "",
 };
 
 export const storeSlice = createSlice({
@@ -39,30 +40,30 @@ export const storeSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchStoreData.pending, (state) => {
-                state.error = "";
+                state.errorData = "";
                 state.isLoadingData = true;
             })
             .addCase(fetchStoreData.fulfilled, (state, action) => {
                 state.isLoadingData = false;
-                state.error = "";
+                state.errorData = "";
                 state.data = action.payload.store;
             })
             .addCase(fetchStoreData.rejected, (state, action) => {
                 state.isLoadingData = false;
-                state.error = action.payload;
+                state.errorData = action.payload;
             })
             .addCase(fetchStoreProducts.pending, (state) => {
-                state.error = "";
+                state.errorProducts = "";
                 state.isLoadingProducts = true;
             })
             .addCase(fetchStoreProducts.fulfilled, (state, action) => {
                 state.isLoadingProducts = false;
-                state.error = "";
+                state.errorProducts = "";
                 state.products = action.payload.products || [];
             })
             .addCase(fetchStoreProducts.rejected, (state, action) => {
                 state.isLoadingProducts = false;
-                state.error = action.payload;
+                state.errorProducts = action.payload;
             })
             .addCase(revertAll, () => initialState);
     },

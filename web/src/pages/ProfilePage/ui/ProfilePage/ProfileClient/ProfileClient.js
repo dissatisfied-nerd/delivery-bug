@@ -7,20 +7,20 @@ import cls from "../ProfilePage.module.scss";
 import { ProfileCard } from "../../ProfileCard/ProfileCard";
 import {
     getClientData,
-    getClientError,
+    getClientErrorData,
+    getClientErrorOrders,
     getClientOrders,
-} from "entities/Client";
-import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
-import {
     getClientIsLoadingData,
     getClientIsLoadingOrders,
-} from "entities/Client/model/selectors/getClientData";
+} from "entities/Client";
+import { fetchProfileOrders } from "../../../model/sevices/fetchProfileOrders/fetchProfileOrders";
 
 export const ProfileClient = () => {
     const dispatch = useDispatch();
     const profile = useSelector(getClientData);
     const orders = useSelector(getClientOrders);
-    const error = useSelector(getClientError);
+    const errorData = useSelector(getClientErrorData);
+    const errorOrders = useSelector(getClientErrorOrders);
     const isLoadingData = useSelector(getClientIsLoadingData);
     const isLoadingOrders = useSelector(getClientIsLoadingOrders);
 
@@ -34,7 +34,7 @@ export const ProfileClient = () => {
                 <span className={cls.pageTitle}> Профиль </span>
                 <ProfileCard
                     profile={profile}
-                    error={error}
+                    error={errorData || errorOrders}
                     isLoading={isLoadingData}
                 />
                 <div className={cls.title}>Активные заказы</div>

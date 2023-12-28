@@ -21,7 +21,10 @@ export const fetchProfileOrders = createAsyncThunk(
         try {
             if (type === "client") {
                 const id = getClientId(getState());
-                dispatch(fetchClientOrders(id));
+                const response = await dispatch(fetchClientOrders(id));
+                if (!response.data) {
+                    throw new Error();
+                }
             } else {
                 const id = getCourierId(getState());
                 let { payload: orders } = await dispatch(

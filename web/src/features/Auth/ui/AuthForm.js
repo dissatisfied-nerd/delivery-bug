@@ -465,7 +465,7 @@ export const AuthForm = () => {
                     onClick={onChangeForm}
                     disabled={isLoading && "disabled"}
                 >
-                    ЭЭЭ бля я не смешарик еще
+                    Я еще не смешарик
                 </Button>
             </div>
         );

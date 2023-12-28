@@ -18,17 +18,13 @@ export const ProfileCard = (props) => {
     }
     return (
         <div className={cls.ProfileCard}>
-            {/* <span className={cls.pageTitle}> Профиль </span> */}
             <div className={cls.error}>{error}</div>
             <div className={cls.header}>
-                {type === "store" ? (
+                {type === "store" && (
                     <span className={cls.name}>{profile.name}</span>
-                ) : (
-                    <>
-                        <span className={cls.name}>{profile.last_name}</span>
-                        <span className={cls.name}>{profile.first_name}</span>
-                    </>
                 )}
+                <span className={cls.name}>{profile.last_name}</span>
+                <span className={cls.name}>{profile.first_name}</span>
                 {type === "client" && <span>Баланс: {profile.balance} ₽</span>}
             </div>
             <div className={cls.line}></div>

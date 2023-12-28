@@ -67,7 +67,7 @@ export const ProductList = memo((props) => {
                 [className, cls[type]]
             )}
         >
-            {!products.length && <span>Товаров нет</span>}
+            {!products.length && <div className={cls.message}>Товаров нет</div>}
             {content}
         </div>
     );

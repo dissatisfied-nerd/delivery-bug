@@ -33,6 +33,7 @@ export const ProfileClient = () => {
             <Card className={cls.ProfilePageCard}>
                 <span className={cls.pageTitle}> Профиль </span>
                 <ProfileCard
+                    type="client"
                     profile={profile}
                     error={errorData || errorOrders}
                     isLoading={isLoadingData}

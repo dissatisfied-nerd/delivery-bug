@@ -13,12 +13,19 @@ import { createProductActions } from "../model/slice/createProductSlice";
 import { validateFloat } from "shared/lib/validateForm/validateFloat";
 import { Button } from "shared/ui/Button/Button";
 import { sendCreateProductData } from "../model/services/sendCreateProductData";
+import { validateNumber } from "shared/lib/validateForm/validateNumber";
 
 export const CreateProduct = ({ className }) => {
     const [image, setImage] = useState(null);
     const dispatch = useDispatch();
     const data = useSelector(getCreateProductData);
-    const { name = "", price = "", weight = "", description = "" } = data;
+    const {
+        name = "",
+        price = "",
+        weight = "",
+        quantity = "",
+        description = "",
+    } = data;
     const error = useSelector(getCreateProductError);
     const isLoading = useSelector(getCreateProductIsLoading);
 
@@ -52,6 +59,17 @@ export const CreateProduct = ({ className }) => {
             dispatch(
                 createProductActions.changeData({
                     weight: validateFloat(weight),
+                })
+            );
+        },
+        [dispatch]
+    );
+
+    const onChangeQuantity = useCallback(
+        (quantity) => {
+            dispatch(
+                createProductActions.changeData({
+                    quantity: validateNumber(quantity),
                 })
             );
         },
@@ -103,6 +121,12 @@ export const CreateProduct = ({ className }) => {
                 className={cls.input}
                 value={weight}
                 onChange={onChangeWeight}
+            />
+            <Input
+                label="Количество"
+                className={cls.input}
+                value={quantity}
+                onChange={onChangeQuantity}
             />
             <TextArea
                 label={"Описание"}

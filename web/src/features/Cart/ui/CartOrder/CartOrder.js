@@ -19,7 +19,7 @@ export const CartOrder = (props) => {
             </div>
             <div className={cls.information}>
                 <span>К оплате</span>
-                <span className={cls.cost}>{cost} ₽</span>
+                <span className={cls.cost}>{cost.toLocaleString("ru")} ₽</span>
             </div>
             <Button
                 className={cls.orderBtn}

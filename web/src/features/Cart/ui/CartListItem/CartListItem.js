@@ -6,6 +6,7 @@ import { ReactComponent as TrashBinSVG } from "shared/assets/trash-bin.svg";
 
 export const CartListItem = (props) => {
     const { className, count, product, onAddToCart, onRemoveFromCart } = props;
+
     return (
         <div className={classNames(cls.CartListItem, {}, [className])}>
             <Button onClick={() => onRemoveFromCart([product.id, true])}>
@@ -13,13 +14,20 @@ export const CartListItem = (props) => {
             </Button>
             <img src={product.image} alt={product.title} className={cls.img} />
             <div className={cls.titleWrapper}>{product.name}</div>
-            <span className={cls.price}>{product.price} ₽</span>
+            <span className={cls.price}>
+                {product.price.toLocaleString("ru")} ₽
+            </span>
             <div className={cls.countsControlWrapper}>
                 <Button onClick={() => onRemoveFromCart([product.id, false])}>
                     -
                 </Button>
                 <span className={cls.count}>{count}</span>
-                <Button onClick={() => onAddToCart(product)}>+</Button>
+                <Button
+                    onClick={() => onAddToCart(product)}
+                    disabled={count === product.quantity && "disabled"}
+                >
+                    +
+                </Button>
             </div>
         </div>
     );

@@ -32,15 +32,27 @@ export const fetchProfileOrders = createAsyncThunk(
                 );
                 if (orders) {
                     const response = await orders.map(async (order) => {
+                        const productsData = await order.products.map(
+                            async (product) => {
+                                const { payload } = await dispatch(
+                                    fetchProductData(product.product_id)
+                                );
+                                return { amount: product.amount, ...payload };
+                            }
+                        );
+                        const productsResult = await Promise.all(productsData);
+
                         const { payload: client } = await dispatch(
                             fetchClientData({
                                 id: order.client_id,
                                 isAuth: true,
                             })
                         );
+
                         return {
                             ...order,
                             ...client,
+                            products: productsResult,
                         };
                     });
                     orders = await Promise.all(response);

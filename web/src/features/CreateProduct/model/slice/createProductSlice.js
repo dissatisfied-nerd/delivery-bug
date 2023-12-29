@@ -7,6 +7,7 @@ const initialState = {
         name: "",
         price: "",
         weight: "",
+        quantity: "",
         description: "",
     },
     isLoading: false,

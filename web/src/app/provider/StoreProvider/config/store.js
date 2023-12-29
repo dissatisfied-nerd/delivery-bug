@@ -9,6 +9,7 @@ import { createProductReducer } from "features/CreateProduct";
 import { productsPageReducer } from "pages/ProductsPage";
 import { ordersPageReducer } from "pages/OrdersPage";
 import { $api } from "shared/api/api";
+import { productDetailsReducer } from "entities/Product";
 
 const extraArg = {
     api: $api,
@@ -25,6 +26,7 @@ export const store = configureStore({
         productsPage: productsPageReducer,
         ordersPage: ordersPageReducer,
         createProduct: createProductReducer,
+        productDetails: productDetailsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

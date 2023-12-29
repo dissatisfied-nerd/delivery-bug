@@ -1625,7 +1625,8 @@
           "price",
           "weight",
           "description",
-          "image"
+          "image",
+          "quantity"
         ],
         "type": "object",
         "properties": {
@@ -1648,6 +1649,10 @@
           },
           "image": {
             "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "int32"
           }
         }
       },
@@ -1657,7 +1662,8 @@
           "price",
           "weight",
           "description",
-          "image"
+          "image",
+          "quantity"
         ],
         "type": "object",
         "properties": {
@@ -1677,6 +1683,10 @@
           },
           "image": {
             "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "int32"
           }
         }
       },

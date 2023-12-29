@@ -56,17 +56,12 @@ func (h *Handler) GetProductByID(ctx *gin.Context) {
 func (h *Handler) CreateProduct(ctx *gin.Context) {
 	storeID := ctx.Param("storeID")
 	h.l.Debugf("store:%s", storeID)
-	var input dtos.ProductDTOInput
+	var payload dtos.ProductDTO
 
-	if err := ctx.ShouldBindJSON(&input); err != nil {
+	if err := ctx.ShouldBindJSON(&payload); err != nil {
 		h.l.Error(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
-	}
-
-	payload, err := dtos.ToProductDTO(input)
-	if err != nil {
-		h.l.Error(err)
 	}
 
 	res, err := h.repo.InsertProductByStore(ctx, payload, storeID)

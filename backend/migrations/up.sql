@@ -107,6 +107,7 @@ CREATE TABLE IF NOT EXISTS products
     weight           float,
     description      text,
     image            text,
+    quantity         int,
 
     store_id UUID REFERENCES stores (id)
 );

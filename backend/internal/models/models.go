@@ -93,6 +93,7 @@ type Product struct {
 	Weight      float32 `db:"weight" json:"weight"`
 	Description string  `db:"description" json:"description"`
 	Image       string  `db:"image" json:"image"`
+	Quantity    int     `db:"quantity" json:"quantity"`
 
 	StoreId string `db:"store_id"`
 }

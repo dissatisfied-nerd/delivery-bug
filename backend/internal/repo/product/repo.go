@@ -11,8 +11,8 @@ import (
 )
 
 type ProductsRepository interface {
-	SelectProducts(ctx context.Context) ([]models.Product, error)
-	SelectProductByID(ctx context.Context, productID string) (models.Product, error)
+	SelectProducts(ctx context.Context) ([]dtos.ProductDTOOutput, error)
+	SelectProductByID(ctx context.Context, productID string) (dtos.ProductDTOOutput, error)
 	InsertProductByStore(ctx context.Context, product dtos.ProductDTO, storeID string) (string, error)
 	SelectProductsByStore(ctx context.Context, storeID string) ([]models.Product, error)
 	DeleteProductById(ctx context.Context, productID string) error
@@ -27,39 +27,58 @@ func NewRepository(db *pgxpool.Pool, l logging.Logger) *Repository {
 	return &Repository{db: db, l: &l}
 }
 
-func (r *Repository) SelectProducts(ctx context.Context) ([]models.Product, error) {
-	var products []models.Product
-	rows, err := r.db.Query(ctx, getProductsQuery)
+func (r *Repository) SelectProducts(ctx context.Context) ([]dtos.ProductDTOOutput, error) {
+	var products []dtos.ProductDTOOutput
+	rows, err := r.db.Query(ctx, selectProductsQuery)
 	if err != nil {
 		r.l.Errorf("error getting products from db: %v", err)
 		return nil, err
 	}
 	defer rows.Close()
 	for rows.Next() {
-		var product models.Product
-		err = rows.Scan(&product.ID, &product.Name, &product.Price, &product.Weight, &product.Description, &product.Image)
+		var product dtos.ProductDTOOutput
+		var storeId string
+		err = rows.Scan(&product.ID, &product.Name, &product.Price, &product.Weight, &product.Description,
+			&product.Image, &product.Quantity, &storeId)
 		if err != nil {
 			r.l.Error(err)
 			return nil, err
 		}
+
+		err := r.db.QueryRow(ctx, selectStoreNameById, storeId).Scan(&product.StoreName)
+		if err != nil {
+			r.l.Error(err)
+			return nil, err
+		}
+
 		products = append(products, product)
 	}
 
 	return products, nil
 }
 
-func (r *Repository) SelectProductByID(ctx context.Context, productID string) (models.Product, error) {
-	var product models.Product
-	err := r.db.QueryRow(ctx, getProductByID, productID).Scan(&product.ID,
+func (r *Repository) SelectProductByID(ctx context.Context, productID string) (dtos.ProductDTOOutput, error) {
+	var product dtos.ProductDTOOutput
+	var storeId string
+	err := r.db.QueryRow(ctx, selectProductByID, productID).Scan(
+		&product.ID,
 		&product.Name,
 		&product.Price,
 		&product.Weight,
 		&product.Description,
 		&product.Image,
+		&product.Quantity,
+		&storeId,
 	)
 	if err != nil {
 		r.l.Error(err)
-		return models.Product{}, err
+		return dtos.ProductDTOOutput{}, err
+	}
+
+	err = r.db.QueryRow(ctx, selectStoreNameById, storeId).Scan(&product.StoreName)
+	if err != nil {
+		r.l.Error(err)
+		return dtos.ProductDTOOutput{}, err
 	}
 
 	return product, nil
@@ -68,7 +87,7 @@ func (r *Repository) SelectProductByID(ctx context.Context, productID string) (m
 func (r *Repository) InsertProductByStore(ctx context.Context, product dtos.ProductDTO, storeID string) (string, error) {
 	var productID string
 	err := r.db.QueryRow(ctx, insertProductQuery, product.Name, product.Price, product.Weight, product.Description,
-		product.Image, storeID).Scan(&productID)
+		product.Image, product.Quantity, storeID).Scan(&productID)
 	if err != nil {
 		r.l.Errorf("error inserting product %s: %v", product.Name, err)
 		return "", err
@@ -86,7 +105,7 @@ func (r *Repository) SelectProductsByStore(ctx context.Context, storeID string) 
 	for rows.Next() {
 		var product models.Product
 		err = rows.Scan(&product.ID, &product.Name, &product.Price, &product.Weight, &product.Description,
-			&product.Image)
+			&product.Image, &product.Quantity)
 		if err != nil {
 			r.l.Errorf("error getting products from db: %v", err)
 			return nil, err
@@ -100,6 +119,7 @@ func (r *Repository) SelectProductsByStore(ctx context.Context, storeID string) 
 }
 
 func (r *Repository) DeleteProductById(ctx context.Context, productID string) error {
+	//Template
 	rowsOrderID, err := r.db.Query(ctx, selectOrderByProduct, productID)
 	if err != nil {
 		r.l.Errorf("Error while getting order id %v", err)
@@ -126,6 +146,7 @@ func (r *Repository) DeleteProductById(ctx context.Context, productID string) er
 			r.l.Errorf("Error while deleting order %v", err)
 		}
 	}
+	//Template
 
 	r.l.Infof("deleting product with id %s", productID)
 	return nil

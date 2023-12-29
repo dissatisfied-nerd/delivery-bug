@@ -91,13 +91,13 @@ VALUES
     ('store5', 'storepass5', (SELECT id FROM stores ORDER BY random() LIMIT 1));
 
 -- Заполнение таблицы "products"
-INSERT INTO products (name, price, weight, description, image, store_id)
+INSERT INTO products (name, price, weight, description, image, quantity, store_id)
 VALUES
-    ('Product1', 19.99, 0.5, 'Description1', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1)),
-    ('Product2', 29.99, 1.0, 'Description2', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1)),
-    ('Product3', 39.99, 1.5, 'Description3', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1)),
-    ('Product4', 49.99, 2.0, 'Description4', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1)),
-    ('Product5', 59.99, 2.5, 'Description5', 'some_path', (SELECT id FROM stores ORDER BY random() LIMIT 1));
+    ('Product1', 19.99, 0.5, 'Description1', 'some_path', 4, (SELECT id FROM stores ORDER BY random() LIMIT 1)),
+    ('Product2', 29.99, 1.0, 'Description2', 'some_path', 4, (SELECT id FROM stores ORDER BY random() LIMIT 1)),
+    ('Product3', 39.99, 1.5, 'Description3', 'some_path', 4, (SELECT id FROM stores ORDER BY random() LIMIT 1)),
+    ('Product4', 49.99, 2.0, 'Description4', 'some_path', 4, (SELECT id FROM stores ORDER BY random() LIMIT 1)),
+    ('Product5', 59.99, 2.5, 'Description5', 'some_path', 4, (SELECT id FROM stores ORDER BY random() LIMIT 1));
 
 -- Заполнение таблицы "orders"
 INSERT INTO orders (price, creation_time, delivery_time, status, client_id, courier_id)

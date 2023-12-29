@@ -5,6 +5,8 @@ import (
 	"delivery-bug/internal/dtos"
 	"delivery-bug/internal/models"
 	"delivery-bug/pkg/logging"
+	"errors"
+	"fmt"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -52,6 +54,32 @@ func (r *Repository) CreateOrder(ctx context.Context, order *dtos.OrderDTOInput)
 	}
 
 	for _, product := range order.Products {
+		var quantity int
+		var name string
+		err = tx.QueryRow(ctx, selectProductNameQuantity, product.ProductID).Scan(&name, &quantity)
+		if err != nil {
+			r.l.Errorf("Error getting product quantity: %v", err)
+			rollbackErr := tx.Rollback(ctx)
+			if rollbackErr != nil {
+				r.l.Errorf("Error rolling back transaction: %v", rollbackErr)
+			}
+			return models.Order{}, err
+		}
+
+		if quantity < product.Amount {
+			r.l.Infof("Quantity is less than amount for product with id %s", product.ProductID)
+			return models.Order{}, errors.New(fmt.Sprintf("Not enough %s left, avaliable : %d", name, quantity))
+		}
+
+		if _, err = tx.Exec(ctx, decreaseProductQuantity, product.Amount, product.ProductID); err != nil {
+			r.l.Errorf("Error inserting order_products into the database: %v", err)
+			rollbackErr := tx.Rollback(ctx)
+			if rollbackErr != nil {
+				r.l.Errorf("Error rolling back transaction: %v", rollbackErr)
+			}
+			return models.Order{}, err
+		}
+
 		if _, err = tx.Exec(ctx, createOrderProducts, product.Amount, orderID, product.ProductID); err != nil {
 			r.l.Errorf("Error inserting order_products into the database: %v", err)
 			rollbackErr := tx.Rollback(ctx)

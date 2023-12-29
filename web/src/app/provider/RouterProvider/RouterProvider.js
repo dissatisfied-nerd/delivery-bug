@@ -9,6 +9,7 @@ import { ProfilePage } from "pages/ProfilePage";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { ProductDetailsPage } from "pages/ProductDetailsPage";
 
 export const RouterProvider = () => {
     const isAuth = useSelector(getAuthIsAuth);
@@ -30,6 +31,10 @@ export const RouterProvider = () => {
         if (type === "client") {
             routes = (
                 <>
+                    <Route
+                        element={<ProductDetailsPage />}
+                        path="/product/:id"
+                    />
                     <Route element={<ProductsPage />} path="/" />
                     <Route element={<ProfilePage />} path="/profile" />
                     <Route element={<CartPage />} path="/cart" />

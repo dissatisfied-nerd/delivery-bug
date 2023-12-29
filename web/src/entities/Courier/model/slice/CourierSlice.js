@@ -5,7 +5,6 @@ import { fetchCourierData } from "../services/fetchCourierData/fetchCourierData"
 import { fetchCourierOrders } from "../services/fetchCourierOrders/fetchCourierOrders";
 
 const initialState = {
-    isLoading: false,
     data: {
         first_name: "",
         last_name: "",

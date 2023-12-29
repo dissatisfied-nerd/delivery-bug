@@ -1,5 +1,6 @@
 import { authActions, logout } from "features/Auth";
 import { getAuthIsAuth, getAuthType } from "features/Auth";
+import { cartActions } from "features/Cart";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -16,6 +17,7 @@ export default function Navbar() {
 
     const onLogout = useCallback(() => {
         dispatch(logout());
+        dispatch(cartActions.emptyCart());
         // dispatch(clientActions.logout());
         // dispatch(courierActions.logout());
     }, [dispatch]);

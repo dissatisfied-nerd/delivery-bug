@@ -14,12 +14,16 @@ export const TextArea = (props) => {
 
     return (
         <div className={classNames(cls.TextArea, {}, [className])}>
-            {label && <span className={cls.label}>{label}</span>}
+            {label && (
+                <span className={cls.label}>
+                    {label + " (максимальная длина - 1000 символов)"}
+                </span>
+            )}
             <textarea
                 className={cls.input}
                 value={value}
                 onChange={onChangeHandler}
-                maxLength="512"
+                maxLength="1000"
             ></textarea>
         </div>
     );

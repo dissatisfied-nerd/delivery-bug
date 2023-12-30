@@ -26,7 +26,7 @@ export const OrderListItem = (props) => {
             <>
                 <div className={cls.header}>
                     <span>Заказ от {creationTime}</span>
-                    <span>{order.price} ₽</span>
+                    <span>{order.price.toLocaleString("ru")} ₽</span>
                 </div>
                 <div className={cls.body}>
                     <span>
@@ -69,7 +69,7 @@ export const OrderListItem = (props) => {
                             {getWeight(order.products)} кг
                         </span>
                     </span>
-                    <span>{order.price} ₽</span>
+                    <span>{order.price.toLocaleString("ru")} ₽</span>
                 </div>
                 <div className={cls.body}>
                     <div className={cls.productsTitleList}>

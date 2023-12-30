@@ -14,8 +14,9 @@ export const sendLoginData = createAsyncThunk(
         const type = getAuthType(getState());
 
         try {
-            if (!validateForm(loginData)) {
-                return rejectWithValue("Все поля должны быть заполнены");
+            const validateError = validateForm(loginData);
+            if (validateError) {
+                return rejectWithValue(validateError);
             }
             const response = await extra.api.post(`/${type}/login`, loginData);
 

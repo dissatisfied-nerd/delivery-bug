@@ -14,8 +14,9 @@ export const sendRegisterData = createAsyncThunk(
         const type = getAuthType(getState());
 
         try {
-            if (!validateForm(registerData)) {
-                return rejectWithValue("Все поля должны быть заполнены");
+            const validateError = validateForm(registerData);
+            if (validateError) {
+                return rejectWithValue(validateError);
             }
             const response = await extra.api.post(
                 `/${type}/register`,

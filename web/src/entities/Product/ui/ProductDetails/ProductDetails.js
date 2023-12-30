@@ -43,7 +43,7 @@ export const ProductDetails = (props) => {
     if (error) {
         return (
             <div className={classNames(cls.ProductDetails, {}, [className])}>
-                Продукт не найден
+                {error}
             </div>
         );
     }

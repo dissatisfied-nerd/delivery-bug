@@ -14,10 +14,10 @@ export const fetchProductData = createAsyncThunk(
 
             return response.data.product;
         } catch (e) {
-            return rejectWithValue(
-                e?.response?.data?.error ||
-                    "Что-то пошло не так. Попробуйте еще раз"
-            );
+            console.log(e);
+            return e?.response?.status === 400
+                ? rejectWithValue("Товар не найден")
+                : rejectWithValue("Что-то пошло не так. Попробуйте еще раз");
         }
     }
 );

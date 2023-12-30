@@ -9,8 +9,9 @@ export const sendCreateProductData = createAsyncThunk(
         const id = getStoreId(getState());
 
         try {
-            if (!validateForm(createProductData)) {
-                return rejectWithValue("Все поля должны быть заполнены");
+            const validateError = validateForm(createProductData);
+            if (validateError) {
+                return rejectWithValue(validateError);
             }
 
             const blobToDataUrl = (blob) =>
@@ -23,15 +24,19 @@ export const sendCreateProductData = createAsyncThunk(
 
             const blobToBase64 = (blob) =>
                 blobToDataUrl(blob).then((text) => {
-                    console.log(text);
                     return text;
                 });
 
             const base64 = await blobToBase64(createProductData.image);
-            console.log(base64);
+
+            console.log(createProductData);
 
             const response = await extra.api.post(`/store/products/${id}`, {
-                ...createProductData,
+                ...{
+                    ...createProductData,
+                    price: Number.parseFloat(createProductData.price),
+                    weight: Number.parseFloat(createProductData.weight),
+                },
                 image: base64,
             });
 

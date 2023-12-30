@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { revertAll } from "shared/actions/actions";
-import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 import { fetchClientData } from "../services/fetchClientData/fetchClientData";
 import { fetchClientOrders } from "../services/fetchClientOrders/fetchClientOrders";
 
@@ -35,9 +34,6 @@ export const clientSlice = createSlice({
             state.client_id = client_id ? client_id : state.client_id;
             state.data = data;
         },
-        logout: (state, action) => {
-            state.data = {};
-        },
         setClientOrders: (state, action) => {
             state.orders = action.payload;
         },
@@ -52,7 +48,7 @@ export const clientSlice = createSlice({
                 state.isLoadingData = false;
                 state.errorData = action.payload;
             })
-            .addCase(fetchClientData.fulfilled, (state, action) => {
+            .addCase(fetchClientData.fulfilled, (state) => {
                 state.isLoadingData = false;
                 state.errorData = "";
             })

@@ -16,7 +16,7 @@ import {
 } from "entities/Courier";
 import { fetchProfileOrders } from "../../../model/sevices/fetchProfileOrders/fetchProfileOrders";
 import { finishOrder } from "../../../model/sevices/finishOrder/finishOrder";
-import { getClientError, getClientErrorData } from "entities/Client";
+import { getClientErrorData } from "entities/Client";
 
 export const ProfileCourier = () => {
     const dispatch = useDispatch();
@@ -32,12 +32,11 @@ export const ProfileCourier = () => {
 
     useEffect(() => {
         dispatch(fetchProfileOrders("courier"));
-    }, []);
+    }, [dispatch]);
 
     const onCancelOrder = useCallback(
         async (orderID) => {
             const result = await dispatch(finishOrder({ orderID, courierID }));
-            console.log(result);
             if (result.meta.rejectedWithValue) {
                 error.current.style.display = "block";
                 error.current.textContent = result.payload;

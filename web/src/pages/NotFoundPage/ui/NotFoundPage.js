@@ -10,9 +10,7 @@ export const NotFoundPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("isAuth", isAuth);
         if (inited && !isAuth) {
-            console.log("isAuth1", isAuth);
             navigate("/auth", { replace: true });
         }
     }, [isAuth, navigate, inited]);

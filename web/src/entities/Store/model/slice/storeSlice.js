@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { revertAll } from "shared/actions/actions";
-import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 import { fetchStoreData } from "../services/fetchStoreData/fetchStoreData";
 import { fetchStoreProducts } from "../services/fetchStoreProducts/fetchStoreProducts";
 

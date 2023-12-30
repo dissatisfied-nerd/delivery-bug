@@ -11,7 +11,6 @@ export const fetchProductsPageData = createAsyncThunk(
             const response = await extra.api.get("/products");
 
             let products = response.data.products;
-            console.log(products);
 
             if (products && type === "client") {
                 products = products.filter((product) => product.quantity);

@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchCourierOrders = createAsyncThunk(
     "courier/fetchCourierOrders",
     async (id, thunkAPI) => {
-        const { extra, rejectWithValue, dispatch, getState } = thunkAPI;
+        const { extra, rejectWithValue } = thunkAPI;
 
         try {
             const response = await extra.api.get(`/courier/orders/${id}`);

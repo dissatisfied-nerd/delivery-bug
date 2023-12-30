@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchClientData, getClientId } from "entities/Client";
 import { fetchCourierData, getCourierId } from "entities/Courier";
 import { fetchStoreData, getStoreId } from "entities/Store";
-import { authActions, getAuthType } from "features/Auth";
+import { authActions } from "features/Auth";
 
 export const getProfileData = createAsyncThunk(
     "profile/getProfileData",
     async (type, thunkAPI) => {
-        const { extra, rejectWithValue, dispatch, getState } = thunkAPI;
+        const { rejectWithValue, dispatch, getState } = thunkAPI;
 
         try {
             let data;

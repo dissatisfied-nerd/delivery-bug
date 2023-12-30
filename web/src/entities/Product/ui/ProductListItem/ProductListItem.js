@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { classNames } from "shared/lib/classNames/classNames";
 import { Button } from "shared/ui/Button/Button";
@@ -69,6 +69,9 @@ export const ProductListItem = (props) => {
                             <Button
                                 theme="primary"
                                 onClick={() => onAddToCart(product)}
+                                disabled={
+                                    count === product.quantity && "disabled"
+                                }
                             >
                                 +
                             </Button>

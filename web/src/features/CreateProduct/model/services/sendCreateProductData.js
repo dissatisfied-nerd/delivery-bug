@@ -5,7 +5,7 @@ import { validateForm } from "shared/lib/validateForm/validateForm";
 export const sendCreateProductData = createAsyncThunk(
     "createProduct/sendCreateProductData",
     async (createProductData, thunkAPI) => {
-        const { extra, rejectWithValue, dispatch, getState } = thunkAPI;
+        const { extra, rejectWithValue, getState } = thunkAPI;
         const id = getStoreId(getState());
 
         try {
@@ -29,8 +29,6 @@ export const sendCreateProductData = createAsyncThunk(
 
             const base64 = await blobToBase64(createProductData.image);
 
-            console.log(createProductData);
-
             const response = await extra.api.post(`/store/products/${id}`, {
                 ...{
                     ...createProductData,
@@ -43,8 +41,6 @@ export const sendCreateProductData = createAsyncThunk(
             if (!response.data) {
                 throw new Error();
             }
-
-            // return response.data;
         } catch (e) {
             return rejectWithValue(
                 e?.response?.data?.error ||

@@ -183,7 +183,18 @@ export const AuthForm = () => {
         if (!result.meta.rejectedWithValue) {
             onSuccess();
         }
-    }, [onSuccess, data, dispatch]);
+    }, [
+        type,
+        dispatch,
+        data,
+        first_name,
+        last_name,
+        middle_name,
+        login,
+        password,
+        passphrase,
+        onSuccess,
+    ]);
 
     const onLogin = useCallback(async () => {
         const loginData =
@@ -192,7 +203,7 @@ export const AuthForm = () => {
         if (!result.meta.rejectedWithValue) {
             onSuccess();
         }
-    }, [onSuccess, login, password, dispatch]);
+    }, [type, login, password, dispatch, onSuccess]);
 
     const signUpInputs =
         type === "client" || type === "courier" ? (
@@ -387,7 +398,6 @@ export const AuthForm = () => {
         return (
             <div className={classNames(cls.AuthForm, {}, [])}>
                 <span className={cls.title}>Регистрация</span>
-
                 {signUpInputs}
                 {(type === "client" || type === "courier") && (
                     <select
@@ -451,7 +461,6 @@ export const AuthForm = () => {
                         </option>
                     </select>
                 )}
-
                 <Button
                     theme="primary"
                     onClick={onLogin}

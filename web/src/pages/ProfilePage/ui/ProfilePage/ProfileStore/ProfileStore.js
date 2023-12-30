@@ -1,12 +1,9 @@
-import { OrderList } from "entities/Order";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "shared/ui/Card/Card";
 import { Page } from "widgets/Page/Page";
 import cls from "../ProfilePage.module.scss";
 import { ProfileCard } from "../../ProfileCard/ProfileCard";
-import { getClientData, getClientOrders } from "entities/Client";
-import { fetchProfileOrders } from "pages/ProfilePage/model/sevices/fetchProfileOrders/fetchProfileOrders";
 import {
     fetchStoreProducts,
     getStoreData,
@@ -24,7 +21,6 @@ export const ProfileStore = () => {
     const id = useSelector(getStoreId);
     const profile = useSelector(getStoreData);
     const products = useSelector(getStoreProducts);
-    console.log(products);
     const errorData = useSelector(getStoreErrorData);
     const errorProducts = useSelector(getStoreErrorProducts);
     const isLoadingData = useSelector(getStoreIsLoadingData);
@@ -32,7 +28,7 @@ export const ProfileStore = () => {
 
     useEffect(() => {
         dispatch(fetchStoreProducts(id));
-    }, []);
+    }, [dispatch, id]);
 
     return (
         <Page>

@@ -1,3 +1,3 @@
-const { default: Navbar } = require("./ui/Navbar");
+import { Navbar } from "./ui/Navbar";
 
 export { Navbar };

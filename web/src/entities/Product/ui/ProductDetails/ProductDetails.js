@@ -67,7 +67,7 @@ export const ProductDetails = (props) => {
                         {!count ? (
                             <Button
                                 theme="primary"
-                                onClick={(event) => onAddToCart(product)}
+                                onClick={() => onAddToCart(product)}
                             >
                                 В корзину
                             </Button>

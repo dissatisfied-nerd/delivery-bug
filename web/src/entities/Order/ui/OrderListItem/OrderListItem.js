@@ -1,10 +1,7 @@
-import { profileActions } from "entities/Client";
-import React, { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { classNames } from "shared/lib/classNames/classNames";
 import { getFormatedData } from "shared/lib/getFormattedDate/getFormattedDate";
 import { Button } from "shared/ui/Button/Button";
-import { Card } from "shared/ui/Card/Card";
 import cls from "./OrderListItem.module.scss";
 
 const getWeight = (products) => {

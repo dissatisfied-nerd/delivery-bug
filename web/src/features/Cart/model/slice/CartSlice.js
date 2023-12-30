@@ -29,7 +29,7 @@ export const cartSlice = createSlice({
             cartSlice.caseReducers.setCartCost(state);
             cartSlice.caseReducers.setCartCount(state);
         },
-        setCartWeight: (state, action) => {
+        setCartWeight: (state) => {
             let weight = 0;
             Object.values(state.cart).forEach(([product, count]) => {
                 weight += Number(product.weight) * 1000 * count;
@@ -38,7 +38,7 @@ export const cartSlice = createSlice({
         },
         setCartCount: (state, action) => {
             let cartCount = 0;
-            Object.values(state.cart).forEach(([product, count]) => {
+            Object.values(state.cart).forEach(([_, count]) => {
                 cartCount += count;
             });
 
@@ -99,11 +99,11 @@ export const cartSlice = createSlice({
     },
     extraReducers: (build) => {
         build
-            .addCase(createOrder.pending, (state, action) => {
+            .addCase(createOrder.pending, (state) => {
                 state.isLoading = true;
                 state.error = "";
             })
-            .addCase(createOrder.fulfilled, (state, action) => {
+            .addCase(createOrder.fulfilled, (state) => {
                 state.isLoading = false;
                 state.isOrderCreated = true;
                 state.error = "";
@@ -113,7 +113,16 @@ export const cartSlice = createSlice({
                 state.isOrderCreated = false;
                 state.error = action.payload;
             })
-            .addCase(revertAll, () => initialState);
+            .addCase(revertAll, (state) => {
+                state.cart = {};
+                state.weight = "";
+                state.cost = 0;
+                state.count = 0;
+                state.isOrderCreated = false;
+                state.error = "";
+                state.isLoading = false;
+                localStorage.removeItem(CART_LOCALSTORAGE_KEY);
+            });
     },
 });
 

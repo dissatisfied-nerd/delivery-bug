@@ -14,12 +14,10 @@ import { ProductDetailsPage } from "pages/ProductDetailsPage";
 export const RouterProvider = () => {
     const isAuth = useSelector(getAuthIsAuth);
     const type = useSelector(getAuthType);
-    console.log(isAuth);
 
     let routes = null;
 
     if (!isAuth) {
-        console.log("tut");
         routes = (
             <>
                 <Route element={<AuthPage />} path="/auth" />
@@ -62,14 +60,6 @@ export const RouterProvider = () => {
             );
         }
     }
-
-    // TESTING
-    // routes = (
-    //     <>
-    //         <Route element={<CreateProductPage />} path="/" />
-    //         <Route element={<ProfilePage />} path="/profile" />
-    //     </>
-    // );
 
     return (
         <Routes>

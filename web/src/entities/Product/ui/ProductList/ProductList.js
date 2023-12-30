@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo } from "react";
 import { classNames } from "shared/lib/classNames/classNames";
 import { Loader } from "shared/ui/Loader/Loader";
 import { ProductListItem } from "../ProductListItem/ProductListItem";

@@ -1,6 +1,6 @@
 import { ProductList } from "entities/Product";
 import { deleteProduct } from "../../model/services/deleteProducts/deleteProduct";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsPageData } from "../../model/selectors/getProductsPageData";
 import { fetchProductsPageData } from "../../model/services/fetchProductsPageData/fetchProductsPageData";
@@ -12,7 +12,6 @@ export const ProductsPageAdmin = ({ isLoading }) => {
 
     const onDeleteProduct = useCallback(
         async (id) => {
-            console.log(id);
             const result = await dispatch(deleteProduct(id));
             if (!result.meta.rejectedWithValue) {
                 dispatch(fetchProductsPageData());

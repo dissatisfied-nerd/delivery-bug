@@ -3,9 +3,9 @@ import { adminActions } from "entities/Admin";
 import { clientActions } from "entities/Client";
 import { courierActions } from "entities/Courier";
 import { storeActions } from "entities/Store";
+import { validateForm } from "shared/lib/validateForm/validateForm";
 import { getAuthType } from "../../selectors/getAuthData";
 import { authActions } from "../../slice/AuthSlice";
-import { validateForm } from "../../../../../shared/lib/validateForm/validateForm";
 
 export const sendLoginData = createAsyncThunk(
     "auth/sendLoginData",
@@ -35,7 +35,6 @@ export const sendLoginData = createAsyncThunk(
                 dispatch(adminActions.setAdminData(data));
             }
             dispatch(authActions.saveAuthData(response.data));
-            // return response.data;
         } catch (e) {
             return rejectWithValue(
                 e?.response?.data?.error ||

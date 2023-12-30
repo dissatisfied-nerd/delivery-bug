@@ -1,6 +1,5 @@
 import { authActions, logout } from "features/Auth";
 import { getAuthIsAuth, getAuthType } from "features/Auth";
-import { cartActions } from "features/Cart";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -8,7 +7,7 @@ import { classNames } from "shared/lib/classNames/classNames";
 import { Button } from "shared/ui/Button/Button";
 import cls from "./Navbar.module.scss";
 
-export default function Navbar() {
+export function Navbar() {
     const dispatch = useDispatch();
     const isAuth = useSelector(getAuthIsAuth);
     const type = useSelector(getAuthType);
@@ -17,9 +16,6 @@ export default function Navbar() {
 
     const onLogout = useCallback(() => {
         dispatch(logout());
-        dispatch(cartActions.emptyCart());
-        // dispatch(clientActions.logout());
-        // dispatch(courierActions.logout());
     }, [dispatch]);
 
     const onClickAuth = useCallback(
@@ -173,37 +169,6 @@ export default function Navbar() {
             );
         }
     }
-
-    // TESTING
-    // links = (
-    //     <>
-    //         <NavLink
-    //             to={"/"}
-    //             className={({ isActive }) =>
-    //                 classNames(cls.link, { [cls.active]: isActive }, [])
-    //             }
-    //         >
-    //             Создать товар
-    //         </NavLink>
-    //         <NavLink
-    //             to={"/profile"}
-    //             className={({ isActive }) =>
-    //                 classNames(cls.link, { [cls.active]: isActive }, [])
-    //             }
-    //         >
-    //             Профиль
-    //         </NavLink>
-    //         <NavLink
-    //             onClick={onLogout}
-    //             to={"/auth"}
-    //             className={({ isActive }) =>
-    //                 classNames(cls.link, { [cls.active]: isActive }, [])
-    //             }
-    //         >
-    //             Выйти
-    //         </NavLink>
-    //     </>
-    // );
 
     return (
         <header className={classNames(cls.Navbar, {}, [])}>

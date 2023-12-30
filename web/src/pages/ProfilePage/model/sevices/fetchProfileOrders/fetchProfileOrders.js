@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
-    clientActions,
     fetchClientData,
     fetchClientOrders,
     getClientId,
@@ -11,12 +10,11 @@ import {
     getCourierId,
 } from "entities/Courier";
 import { fetchProductData } from "entities/Product";
-import { authActions, getAuthType } from "features/Auth";
 
 export const fetchProfileOrders = createAsyncThunk(
     "profile/fetchProfileOrders",
     async (type, thunkAPI) => {
-        const { extra, rejectWithValue, dispatch, getState } = thunkAPI;
+        const { rejectWithValue, dispatch, getState } = thunkAPI;
 
         try {
             if (type === "client") {
@@ -56,7 +54,6 @@ export const fetchProfileOrders = createAsyncThunk(
                         };
                     });
                     orders = await Promise.all(response);
-                    console.log(orders);
                     dispatch(courierActions.setCourierOrders(orders));
                 }
             }

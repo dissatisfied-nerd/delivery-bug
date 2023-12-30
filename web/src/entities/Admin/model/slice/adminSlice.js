@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { revertAll } from "shared/actions/actions";
-import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
-import { deleteProduct } from "../../../../pages/ProductsPage/model/services/deleteProducts/deleteProduct";
 
 const initialState = {
     isLoading: false,

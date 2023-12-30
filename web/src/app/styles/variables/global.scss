@@ -1,6 +1,5 @@
 :root {
     --font-family-main: "Source Sans Pro";
-    // --font-family-main: consolas, "Times New Roman", serif;
 
     // s
     --font-size-s: 16px;
@@ -30,14 +29,11 @@
 
     // Размеры
     --navbar-height: 50px;
-    --sidebar-width: 300px;
-    --sidebar-width-collapsed: 80px;
 
     // z - Индексы
     --navbar-z-index: 10;
 
     // Цвета
-    --overlay-color: rgba(0 0 0 / 60%);
     --red-light: #f00;
     --red-dark: #ce0505;
 
@@ -49,18 +45,7 @@
     --secondary-color: #b3bcc5;
 
     --shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    // --inverted-secondary-color: #049604;
-
-    // // skeleton
-    // --skeleton-color: #fff;
-    // --skeleton-shadow: rgba(0 0 0 / 20%);
-
-    // // code
-    // --code-bg: #fff;
 
     // card
     --card-bg: #e6e6e64d;
-
-    // // listbox
-    // --listbox-bg: #d5d5d7;
 }

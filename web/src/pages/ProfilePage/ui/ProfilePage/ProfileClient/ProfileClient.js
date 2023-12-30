@@ -26,7 +26,7 @@ export const ProfileClient = () => {
 
     useEffect(() => {
         dispatch(fetchProfileOrders("client"));
-    }, []);
+    }, [dispatch]);
 
     return (
         <Page>

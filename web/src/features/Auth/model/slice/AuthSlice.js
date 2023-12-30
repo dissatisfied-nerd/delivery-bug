@@ -66,12 +66,6 @@ export const authSlice = createSlice({
         emptyError: (state, action) => {
             state.error = "";
         },
-        // logout: (state, action) => {
-        //     state.data = {};
-        //     state.type = "client";
-        //     state.isAuth = false;
-        //     localStorage.removeItem(PROFILE_LOCALSTORAGE_KEY);
-        // },
     },
     extraReducers: (builder) => {
         builder

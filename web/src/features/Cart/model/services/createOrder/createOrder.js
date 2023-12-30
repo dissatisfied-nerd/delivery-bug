@@ -15,7 +15,6 @@ export const createOrder = createAsyncThunk(
                 product_id: cartEl[0].id,
             })),
         };
-        console.log(data);
         try {
             const response = await extra.api.post(`/orders/`, data);
 

@@ -18,7 +18,6 @@ export const ordersPageSlice = createSlice({
             state.orders = action.payload;
         },
         setProductsDataByOrderId: (state, action) => {
-            console.log("PRODUCT");
             const { order_id, products } = action.payload;
             state.orders[order_id].products = state.orders[
                 order_id
@@ -40,7 +39,7 @@ export const ordersPageSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchOrdersPageData.pending, (state, action) => {
+            .addCase(fetchOrdersPageData.pending, (state) => {
                 state.isLoading = true;
                 state.error = "";
             })
@@ -53,11 +52,11 @@ export const ordersPageSlice = createSlice({
                 state.error = action.payload;
                 state.isLoading = false;
             })
-            .addCase(takeOrder.pending, (state, action) => {
+            .addCase(takeOrder.pending, (state) => {
                 state.isLoading = true;
                 state.error = "";
             })
-            .addCase(takeOrder.fulfilled, (state, action) => {
+            .addCase(takeOrder.fulfilled, (state) => {
                 state.isOrderTaken = true;
                 state.isLoading = false;
                 state.error = "";

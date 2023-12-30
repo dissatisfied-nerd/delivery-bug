@@ -17,9 +17,7 @@ export const takeOrder = createAsyncThunk(
             if (!response.data) {
                 throw new Error();
             }
-            console.log(response.data);
             dispatch(fetchOrdersPageData());
-            // return response.data.orders;
         } catch (e) {
             return rejectWithValue(
                 e?.response?.data?.error ||

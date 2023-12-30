@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchClientData } from "entities/Client";
 import { fetchProductData } from "entities/Product";
-import { ordersPageActions } from "../../slice/ordersPageSlice";
 
 export const fetchOrdersPageData = createAsyncThunk(
     "ordersPage/fetchOrdersPageData",
@@ -10,7 +9,6 @@ export const fetchOrdersPageData = createAsyncThunk(
 
         try {
             const response = await extra.api.get("/orders/free");
-            console.log(response);
             if (!response.data) {
                 throw new Error();
             }

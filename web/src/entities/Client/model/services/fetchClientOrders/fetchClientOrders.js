@@ -1,13 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { clientActions } from "entities/Client";
-import { courierActions } from "entities/Courier";
 import { fetchProductData } from "entities/Product";
-import { authActions, getAuthType } from "features/Auth";
 
 export const fetchClientOrders = createAsyncThunk(
     "client/fetchClientOrders",
     async (id, thunkAPI) => {
-        const { extra, rejectWithValue, dispatch, getState } = thunkAPI;
+        const { extra, rejectWithValue, dispatch } = thunkAPI;
 
         try {
             const response = await extra.api.get(`/client/orders/${id}`);
@@ -15,7 +12,6 @@ export const fetchClientOrders = createAsyncThunk(
             if (!response.data) {
                 throw new Error();
             }
-            console.log(response.data.orders);
 
             let orders = response.data.orders;
             if (orders) {

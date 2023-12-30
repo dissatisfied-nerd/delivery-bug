@@ -5,10 +5,6 @@ export const finishOrder = createAsyncThunk(
     "profilePage/finishOrder",
     async ({ orderID, courierID }, thunkAPI) => {
         const { extra, rejectWithValue, dispatch } = thunkAPI;
-        console.log({
-            orderID,
-            courierID,
-        });
 
         try {
             const response = await extra.api.post(

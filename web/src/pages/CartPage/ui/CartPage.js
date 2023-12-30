@@ -2,11 +2,10 @@ import {
     Cart,
     cartActions,
     getCartCount,
-    getCartData,
     getCartError,
     getCartIsOrderCreated,
 } from "features/Cart";
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Page } from "widgets/Page/Page";
 import cls from "./CartPage.module.scss";

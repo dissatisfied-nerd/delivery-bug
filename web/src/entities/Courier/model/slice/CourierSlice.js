@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { revertAll } from "shared/actions/actions";
-import { PROFILE_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 import { fetchCourierData } from "../services/fetchCourierData/fetchCourierData";
 import { fetchCourierOrders } from "../services/fetchCourierOrders/fetchCourierOrders";
 
@@ -34,14 +33,8 @@ export const courierSlice = createSlice({
             state.courier_id = courier_id;
             state.data = data;
         },
-        // addOrder: (state, action) => {
-        //     state.orders = [...state.orders, action.payload];
-        // },
         setCourierOrders: (state, action) => {
             state.orders = action.payload;
-        },
-        logout: (state, action) => {
-            state.data = {};
         },
     },
     extraReducers: (builder) => {
@@ -67,7 +60,7 @@ export const courierSlice = createSlice({
                 state.isLoadingOrders = false;
                 state.errorOrders = action.payload;
             })
-            .addCase(fetchCourierOrders.fulfilled, (state, action) => {
+            .addCase(fetchCourierOrders.fulfilled, (state) => {
                 state.isLoadingOrders = false;
                 state.errorOrders = "";
             })

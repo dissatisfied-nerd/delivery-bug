@@ -35,7 +35,7 @@ func (h *Handler) GetProducts(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	h.l.Info(products)
+	//h.l.Info(products)
 	ctx.JSON(http.StatusOK, gin.H{"products": products})
 }
 

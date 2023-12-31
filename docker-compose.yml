@@ -26,5 +26,16 @@ services:
     ports:
       - "5432:5432"
 
+  web:
+    restart: on-failure
+    build: web
+    container_name: web
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./web:/app
+    ports:
+      - "3000:3000"
+
 volumes:
   data-db:

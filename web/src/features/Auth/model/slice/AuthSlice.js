@@ -66,7 +66,7 @@ export const authSlice = createSlice({
                 })
             );
         },
-        emptyError: (state, action) => {
+        emptyError: (state) => {
             state.error = "";
         },
     },

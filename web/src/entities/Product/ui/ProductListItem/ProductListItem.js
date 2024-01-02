@@ -124,12 +124,14 @@ export const ProductListItem = (props) => {
                         {product.price.toLocaleString("ru")} ₽
                     </div>
                     <div>
-                        <span className={cls.bold}>Вес </span> {product.weight}
+                        <span className={cls.bold}>Вес </span> {product.weight}{" "}
                         кг
                     </div>
                     <div>
                         <span className={cls.bold}>Описание </span>
-                        <p className={cls.description}>{product.description}</p>
+                        <div className={cls.description}>
+                            {product.description}
+                        </div>
                     </div>
                 </div>
             </Card>

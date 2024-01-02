@@ -7,6 +7,7 @@ import { clientActions } from "entities/Client";
 import { courierActions } from "entities/Courier";
 import { authActions } from "features/Auth";
 import { storeActions } from "entities/Store";
+import { adminActions } from "entities/Admin";
 
 function App() {
     const dispatch = useDispatch();
@@ -31,6 +32,8 @@ function App() {
                 );
             } else if (profile?.type === "store") {
                 dispatch(storeActions.setStoreData({ store_id: id, ...data }));
+            } else if (profile?.type === "admin") {
+                dispatch(adminActions.setAdminData({ admin_id: id, ...data }));
             }
         }
         dispatch(authActions.setInited());

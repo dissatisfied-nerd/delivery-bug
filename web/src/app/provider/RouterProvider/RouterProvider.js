@@ -33,7 +33,7 @@ export const RouterProvider = () => {
                         element={<ProductDetailsPage />}
                         path="/product/:id"
                     />
-                    <Route element={<ProductsPage />} path="/" />
+                    <Route element={<ProductsPage />} path="/products" />
                     <Route element={<ProfilePage />} path="/profile" />
                     <Route element={<CartPage />} path="/cart" />
                 </>
@@ -41,21 +41,24 @@ export const RouterProvider = () => {
         } else if (type === "courier") {
             routes = (
                 <>
-                    <Route element={<OrdersPage />} path="/" />
+                    <Route element={<OrdersPage />} path="/orders" />
                     <Route element={<ProfilePage />} path="/profile" />
                 </>
             );
         } else if (type === "store") {
             routes = (
                 <>
-                    <Route element={<CreateProductPage />} path="/" />
+                    <Route
+                        element={<CreateProductPage />}
+                        path="/create-product"
+                    />
                     <Route element={<ProfilePage />} path="/profile" />
                 </>
             );
         } else if (type === "admin") {
             routes = (
                 <>
-                    <Route element={<ProductsPage />} path="/" />
+                    <Route element={<ProductsPage />} path="/delete-product" />
                 </>
             );
         }

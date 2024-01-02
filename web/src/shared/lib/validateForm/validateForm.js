@@ -19,6 +19,12 @@ export const validateForm = (data) => {
         if (key === "password" && value.length < 6) {
             return "Длина пароля должна быть от 6 символов";
         }
+        if (key === "price" && Number.parseFloat(value) === 0) {
+            return "Цена не может быть 0";
+        }
+        if (key === "weight" && Number.parseFloat(value) === 0) {
+            return "Вес не может быть 0";
+        }
     }
     return "";
 };

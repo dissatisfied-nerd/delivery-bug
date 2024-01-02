@@ -157,9 +157,17 @@ export const AuthForm = () => {
     );
 
     const onSuccess = useCallback(() => {
-        navigate("/", { replace: true });
+        if (type === "client") {
+            navigate("/products", { replace: true });
+        } else if (type === "courier") {
+            navigate("/orders", { replace: true });
+        } else if (type === "store") {
+            navigate("/create-product", { replace: true });
+        } else if (type === "admin") {
+            navigate("/delete-product", { replace: true });
+        }
         window.scrollTo(0, 0);
-    }, [navigate]);
+    }, [navigate, type]);
 
     const onSignUp = useCallback(async () => {
         let signUpData;

@@ -20,6 +20,7 @@ export function Navbar() {
 
     const onClickAuth = useCallback(
         (type) => {
+            dispatch(authActions.emptyError());
             dispatch(authActions.setType(type));
             dispatch(authActions.saveAuthData({ type }));
         },
@@ -63,7 +64,7 @@ export function Navbar() {
             links = (
                 <>
                     <NavLink
-                        to={"/"}
+                        to={"/products"}
                         className={({ isActive }) =>
                             classNames(cls.link, { [cls.active]: isActive }, [])
                         }
@@ -98,7 +99,7 @@ export function Navbar() {
             links = (
                 <>
                     <NavLink
-                        to={"/"}
+                        to={"/orders"}
                         className={({ isActive }) =>
                             classNames(cls.link, { [cls.active]: isActive }, [])
                         }
@@ -125,7 +126,7 @@ export function Navbar() {
             links = (
                 <>
                     <NavLink
-                        to={"/"}
+                        to={"/create-product"}
                         className={({ isActive }) =>
                             classNames(cls.link, { [cls.active]: isActive }, [])
                         }
@@ -152,7 +153,7 @@ export function Navbar() {
             links = (
                 <>
                     <NavLink
-                        to={"/"}
+                        to={"/delete-product"}
                         className={({ isActive }) =>
                             classNames(cls.link, { [cls.active]: isActive }, [])
                         }

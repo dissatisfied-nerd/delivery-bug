@@ -67,8 +67,11 @@ export const ProductList = memo((props) => {
                 [className, cls[type]]
             )}
         >
-            {!products.length && <div className={cls.message}>Товаров нет</div>}
-            {content}
+            {!products.length ? (
+                <div className={cls.message}>Товаров нет</div>
+            ) : (
+                content
+            )}
         </div>
     );
 });

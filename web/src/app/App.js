@@ -18,10 +18,7 @@ function App() {
 
         if (profile?.type && !profile?.login) {
             dispatch(authActions.setType(profile.type));
-            dispatch(authActions.setInited());
-        }
-
-        if (profile?.login) {
+        } else if (profile?.login) {
             const { type, [`${type}_id`]: id, ...data } = profile;
             dispatch(authActions.initAuthData({ ...data, type }));
             if (profile?.type === "client") {
@@ -36,6 +33,7 @@ function App() {
                 dispatch(storeActions.setStoreData({ store_id: id, ...data }));
             }
         }
+        dispatch(authActions.setInited());
     }, [dispatch]);
 
     return (

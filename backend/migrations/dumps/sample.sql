@@ -297,6 +297,9 @@ COPY public.administrators_loginform (login, password, administrator_id) FROM st
 --
 
 COPY public.administrators_passphrases (id, passphrase) FROM stdin;
+01f293fd-fd16-40ec-9de4-1714dc59c817	Славяне
+d8d348e5-9f8d-4567-a1d0-c4ec46bce373	Славянин
+8327e806-73ea-4d1f-aac9-73e38b55bcdb	Славянка
 \.
 
 

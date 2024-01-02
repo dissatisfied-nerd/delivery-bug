@@ -30,6 +30,8 @@ services:
     restart: on-failure
     build: web
     container_name: web
+    depends_on:
+      - backend
     stdin_open: true
     tty: true
     volumes:

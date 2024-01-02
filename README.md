@@ -33,7 +33,7 @@ make down_db
 
 Для восстановления тестового дампа
 ```bash
-source .env && docker-compose exec -T db psql "dbname=${DB_NAME} user=${DB_USER} password=${DB_PASSWORD}" <backend/migrations/dumps/sample.sql
+source .env && docker-compose exec -T db psql "dbname=${DB_NAME} user=${DB_USER} password=${DB_PASSWORD}" <backend/migrations/down.sql && docker-compose exec -T db psql "dbname=${DB_NAME} user=${DB_USER} password=${DB_PASSWORD}" <backend/migrations/dumps/sample.sql
 ```
 
 ## Swagger doc

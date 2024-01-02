@@ -4,6 +4,7 @@ import (
 	"delivery-bug/pkg/logging"
 	"delivery-bug/pkg/storage/postgres"
 	"fmt"
+
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose"
 )

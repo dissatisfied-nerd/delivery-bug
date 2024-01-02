@@ -39,6 +39,9 @@ export const authSlice = createSlice({
             state.type = type;
             state.inited = true;
         },
+        setInited: (state) => {
+            state.inited = true;
+        },
         changeData: (state, action) => {
             state.data = {
                 ...state.data,

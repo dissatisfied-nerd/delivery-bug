@@ -16,8 +16,9 @@ function App() {
             localStorage.getItem(PROFILE_LOCALSTORAGE_KEY)
         );
 
-        if (profile?.type) {
+        if (profile?.type && !profile?.login) {
             dispatch(authActions.setType(profile.type));
+            dispatch(authActions.setInited());
         }
 
         if (profile?.login) {

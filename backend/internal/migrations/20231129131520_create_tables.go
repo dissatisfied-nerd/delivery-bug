@@ -153,6 +153,7 @@ func upCreateTables(tx *sql.Tx) error {
     weight           float,
     description      varchar(512),
     image            varchar(255),
+	quantity 		 int,
 
 	administrator_id UUID REFERENCES administrators (id),
 	store_id UUID REFERENCES stores (id)
